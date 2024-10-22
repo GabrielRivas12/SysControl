@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista;
 
 import controlador.DAOModoPago;
@@ -23,11 +19,13 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  *
  * @author gabriel rivas
  */
+
 public class JFrameVenta extends javax.swing.JFrame {
 
     private ImageIcon imagen;
@@ -58,7 +56,6 @@ public class JFrameVenta extends javax.swing.JFrame {
                 "src\\Imagenes\\Back.png");
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Icono.png")).getImage());
 
-        //---- LLAMA DEL METODO PARA LLENAR COMBO BOX -------------//
         try {
             llenarCombModoPago();
 
@@ -69,6 +66,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         modeloTablaVenta = (DefaultTableModel) jTableProductosVenta.getModel();
     }
 
+    //================================================================================//
     private void ObtenerProductos() throws SQLException {
 
         List<Producto> proo = new DAOProducto().ObtenerProducto();
@@ -85,6 +83,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         jTableBuscarProducto.setModel(modelo);
 
     }
+    //================================================================================//
 
     public void limpiarCamposProductos() {
         jTextIdProducto.setText("ID");
@@ -94,7 +93,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         jTextCantProducto.setText(" ");
     }
 
-    //----------------------Metodo para llenar combobox modo pago------------///
+    //================================================================================//
     public void llenarCombModoPago() throws SQLException {
 
         List<ModoPago> modoPago = new DAOModoPago().ObtenerDatos();
@@ -106,6 +105,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         }
     }
 
+    //================================================================================//
     private void buscarDatosProductos(String dato) throws SQLException {
         List<Producto> productos = new DAOProducto().busquedaProducto(dato);
 
@@ -489,6 +489,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextIdProductoActionPerformed
 
+    //=====================================================================================//
     private void jBbuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarProductoActionPerformed
         try {
             ObtenerProductos();
@@ -501,7 +502,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         jDialogProducto.setLocationRelativeTo(null);
         // TODO add your handling code here:
     }//GEN-LAST:event_jBbuscarProductoActionPerformed
-
+    //=========================================================================================//
     private void jBDbuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDbuscarProductoActionPerformed
 
         if (jTextDbuscarProducto.getText().contentEquals("")) {
@@ -527,6 +528,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBDbuscarProductoActionPerformed
 
+    //=========================================================================================//
     private void jBDagregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDagregarProductoActionPerformed
 
         int fila = this.jTableBuscarProducto.getSelectedRow();
@@ -560,6 +562,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBDagregarProductoActionPerformed
 
+    //=========================================================================================//
     private void jBagregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBagregarProductoActionPerformed
 
          // Obtener la cantidad disponible desde la base de datos para el producto (por ejemplo, usando un método de consulta SQL)
@@ -604,6 +607,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBagregarProductoActionPerformed
 
+    //==============================================================================//
     private void jBguardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBguardarVentaActionPerformed
 
         try {
@@ -615,15 +619,26 @@ public class JFrameVenta extends javax.swing.JFrame {
             Logger.getLogger(JFrameVenta.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
+        
+        DAOVenta daoventa = new DAOVenta();
+        try {
+            daoventa.factura();
+        } catch (JRException ex) {
+            Logger.getLogger(JFrameVenta.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jBguardarVentaActionPerformed
 
+    //=============================================================================//
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
         int n = 0;
         limpiartabla();
     }//GEN-LAST:event_jBCancelarActionPerformed
 
+    //==============================================================================//
+    
     private void jBquitaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBquitaProductoActionPerformed
         int fila = this.jTableBuscarProducto.getSelectedRow();
         if (fila == -1) {
@@ -659,6 +674,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBquitaProductoActionPerformed
 
+    //=======================================================================================//
     private void jComboModoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboModoPagoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboModoPagoActionPerformed
@@ -668,6 +684,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextCantProductoActionPerformed
 
+    //=======================================================================================//
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
@@ -679,6 +696,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //=======================================================================================//
     private void jLabelBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBackMouseClicked
 
         JframeHome _home = new JframeHome(); // TODO add your handling code here:
@@ -686,15 +704,12 @@ public class JFrameVenta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabelBackMouseClicked
 
+    //=======================================================================================//
     private void jTextDbuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDbuscarProductoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextDbuscarProductoActionPerformed
 
     private void jTextDbuscarProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextDbuscarProductoKeyPressed
-        // TODO add your handling code here:
-
-
-        // TODO add your handling code here:
     }//GEN-LAST:event_jTextDbuscarProductoKeyPressed
 
     private void jTextDbuscarProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextDbuscarProductoKeyTyped
@@ -706,6 +721,8 @@ public class JFrameVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextDbuscarProductoKeyTyped
 
+    
+    //=======================================================================================//
     private void jTextDbuscarProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextDbuscarProductoKeyReleased
          String datoprod = jTextDbuscarProducto.getText().trim();
     
@@ -727,7 +744,7 @@ public class JFrameVenta extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextDbuscarProductoKeyReleased
-
+//=======================================================================================//
     public void guardarDetalleVenta() throws SQLException {
 
         double precio;
@@ -771,12 +788,13 @@ public class JFrameVenta extends javax.swing.JFrame {
         
 
     }
+    //=======================================================================================//
 
     public void limpiartabla() {
         DefaultTableModel model = (DefaultTableModel) jTableProductosVenta.getModel();
     model.setRowCount(0); // Borra todas las filas
     }
-
+//=======================================================================================//
     public void actualizaExistencia() {
         int existenciaActual;
         int nuevaExistencia;
@@ -815,6 +833,7 @@ public class JFrameVenta extends javax.swing.JFrame {
             }
         }
     }
+    //=======================================================================================//
 
     public void guardarVenta() throws SQLException {
         int numpago = 0, idcliente;
@@ -861,7 +880,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, "Error al guardar los detalles de la venta o actualizar existencias: " + e.getMessage());
     }
 }
-        
+        //=======================================================================================//
 
     
 
@@ -876,7 +895,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         this.repaint();
 
     }
-
+//=======================================================================================//
     /**
      * @param args the command line arguments
      */

@@ -117,7 +117,7 @@ public class DAOVenta {
         conectar.Conectar();
         
         //ruta 
-        String path =  "src/Reportes/factura_Letter.jrxml";
+        String path =  "src/Reportes/Existencia.jrxml";
         
         JasperReport jr;
         
@@ -136,7 +136,7 @@ public class DAOVenta {
         conectar.Conectar();
         
         //ruta 
-        String path =  "src/Reportes/Blank_salida.jrxml";
+        String path =  "src/Reportes/Ganancias.jrxml";
         
         JasperReport jr;
         
@@ -151,4 +151,24 @@ public class DAOVenta {
             System.out.println("Error" + e);
         }
     }
+     
+      public void factura()throws JRException{
+        conectar.Conectar();
+        
+        //ruta 
+        String path =  "src/Reportes/Factura.jrxml";
+        
+        JasperReport jr;
+        
+        try{
+            jr = JasperCompileManager.compileReport(path);
+            JasperPrint mostrarReporte3 = JasperFillManager.fillReport
+                    (jr,null,conectar.Conectar());
+            
+            JasperViewer.viewReport(mostrarReporte3, false);
+        }catch(JRException e){
+            JOptionPane.showMessageDialog(null, e);
+            System.out.println("Error" + e);
+        }
+      }
 }

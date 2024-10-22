@@ -7,14 +7,13 @@
 		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
 		<queryString language="SQL">
-			<![CDATA[SELECT DATE_FORMAT(f.fecha, '%Y-%m-%d') AS fecha_str, 
+			<![CDATA[SELECT DATE_FORMAT(f.fecha, '%d-%m-%Y') AS fecha_str, 
        SUM(d.cantidad * d.precioventa) AS total_generado
 FROM detalle d
 JOIN factura f ON d.num_factura = f.num_factura
 WHERE f.fecha >= CURDATE() - INTERVAL 7 DAY
-GROUP BY DATE_FORMAT(f.fecha, '%Y-%m-%d') 
-ORDER BY DATE_FORMAT(f.fecha, '%Y-%m-%d') DESC;
-]]>
+GROUP BY DATE_FORMAT(f.fecha, '%d-%m-%Y') 
+ORDER BY DATE_FORMAT(f.fecha, '%d-%m-%Y') DESC;]]>
 		</queryString>
 		<field name="fecha_str" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.name" value="fecha_str"/>
@@ -30,9 +29,8 @@ ORDER BY DATE_FORMAT(f.fecha, '%Y-%m-%d') DESC;
        SUM(d.cantidad * d.precioventa) AS total_generado
 FROM detalle d
 JOIN factura f ON d.num_factura = f.num_factura
-WHERE f.fecha >= CURDATE() - INTERVAL 7 DAY
-GROUP BY d.num_factura
-]]>
+WHERE f.fecha >= CURDATE() - INTERVAL 30 DAY
+GROUP BY d.num_factura]]>
 	</queryString>
 	<field name="num_factura" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="num_factura"/>
@@ -47,28 +45,36 @@ GROUP BY d.num_factura
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="11" splitType="Stretch"/>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="10" width="240" height="30" uuid="1e6accb4-9ab4-4915-918e-c847e821f1b4"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Ganancias generadas los últimos 30 días ]]></text>
+			</staticText>
+		</band>
 	</title>
 	<detail>
-		<band height="21" splitType="Stretch"/>
+		<band height="2" splitType="Stretch"/>
 	</detail>
 	<summary>
 		<band height="250" splitType="Stretch">
 			<barChart>
 				<chart evaluationTime="Report">
-					<reportElement x="20" y="60" width="370" height="190" uuid="d0daa434-2862-427f-bc87-fa4f13033528"/>
+					<reportElement x="14" y="21" width="540" height="190" uuid="a0628067-2409-4e6b-ab20-423505b2558c"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<categoryDataset>
 					<dataset>
-						<datasetRun subDataset="Dataset1" uuid="8b22dc26-eacb-40bf-b8da-855bc3337ed4">
+						<datasetRun subDataset="Dataset1" uuid="caeada37-58d6-41ad-867a-4a2e319e7bfa">
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
 					</dataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["Generado los ultimos 7 dia"]]></seriesExpression>
+						<seriesExpression><![CDATA["Generado los últimos 30 días"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{fecha_str}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{total_generado}]]></valueExpression>
 					</categorySeries>

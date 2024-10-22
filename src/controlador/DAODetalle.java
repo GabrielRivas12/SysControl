@@ -108,7 +108,7 @@ public class DAODetalle {
         conectar.Conectar();
         
         //ruta 
-        String path =  "src/Reportes/Blank_salida.jrxml";
+        String path =  "src/Reportes/Ganancias.jrxml";
         
         JasperReport jr;
         
