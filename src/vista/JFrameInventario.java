@@ -70,12 +70,20 @@ public class JFrameInventario extends javax.swing.JFrame {
         List<Producto> proodd = new DAOProducto().ObtenerProducto();
 
         DefaultTableModel modelo = new DefaultTableModel();
-        String[] columnas = {"id_producto", "id_categoria", "Producto", "Precio", "Existencia"};
+        String[] columnas = {"id_producto", "id_categoria", "Producto", "Precio", "Existencia", "Iva"};
 
         modelo.setColumnIdentifiers(columnas);
         for (Producto pr : proodd) {
 
-            String[] renglon = {Integer.toString(pr.getId_producto()), Integer.toString(pr.getId_categoria()), pr.getNombreProducto(), Double.toString(pr.getPrecio()), Integer.toString(pr.getExistencia())};
+            String[] renglon = {Integer.toString(pr.getId_producto()),
+                Integer.toString(pr.getId_categoria()),
+                pr.getNombreProducto(),
+                Double.toString(pr.getPrecio()),
+                Integer.toString(pr.getExistencia()),
+                Double.toString(pr.getIva())
+                    
+            
+            };
             modelo.addRow(renglon);
         }
         jTable1.setModel(modelo);
@@ -113,6 +121,7 @@ public class JFrameInventario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jTextExistencia = new javax.swing.JTextField();
@@ -129,6 +138,7 @@ public class JFrameInventario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jComboCategoria = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabelBack = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -138,6 +148,17 @@ public class JFrameInventario extends javax.swing.JFrame {
         jBuscar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(211, 217, 254));
@@ -145,6 +166,8 @@ public class JFrameInventario extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(159, 175, 254));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jTextExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 397, 261, -1));
 
         jBorrar.setText("borrar");
         jBorrar.addActionListener(new java.awt.event.ActionListener() {
@@ -152,6 +175,7 @@ public class JFrameInventario extends javax.swing.JFrame {
                 jBorrarActionPerformed(evt);
             }
         });
+        jPanel2.add(jBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 90, 30));
 
         jBActualizar.setText("Actualizar");
         jBActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -159,6 +183,7 @@ public class JFrameInventario extends javax.swing.JFrame {
                 jBActualizarActionPerformed(evt);
             }
         });
+        jPanel2.add(jBActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 86, 30));
 
         jBEditar.setText("Editar");
         jBEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +191,7 @@ public class JFrameInventario extends javax.swing.JFrame {
                 jBEditarActionPerformed(evt);
             }
         });
+        jPanel2.add(jBEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, 90, 30));
 
         jBAgregar.setText("Añadir");
         jBAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -173,107 +199,40 @@ public class JFrameInventario extends javax.swing.JFrame {
                 jBAgregarActionPerformed(evt);
             }
         });
+        jPanel2.add(jBAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 88, 30));
+        jPanel2.add(jTextPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 320, 261, -1));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Precio");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 297, -1, -1));
+        jPanel2.add(jTextNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 249, 261, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Nombre del producto");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 226, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Categoria");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 149, -1, -1));
+        jPanel2.add(jTextID, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 114, 261, -1));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("ID_Producto");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 85, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Existencia");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 368, -1, -1));
 
         jComboCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboCategoriaActionPerformed(evt);
             }
         });
+        jPanel2.add(jComboCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 179, 132, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jTextID, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jTextNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jTextExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(jBActualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jLabel1)
-                .addGap(6, 6, 6)
-                .addComponent(jTextID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(jLabel3)
-                .addGap(12, 12, 12)
-                .addComponent(jTextNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addGap(12, 12, 12)
-                .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addComponent(jLabel6)
-                .addGap(6, 6, 6)
-                .addComponent(jTextExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jBAgregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1))
-        );
+        jButton2.setText("Añadir Categoria");
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 110, -1, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 310, 470, 480));
 
@@ -372,6 +331,7 @@ public class JFrameInventario extends javax.swing.JFrame {
         String nom = jTextNombreProducto.getText();
         String precio = jTextPrecio.getText();
         String existen = jTextExistencia.getText();
+       
 
         if (categoria == 0 || nom.equals("") || precio.equals("") || existen.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorios");
@@ -380,6 +340,7 @@ public class JFrameInventario extends javax.swing.JFrame {
 
                 double precioo = Double.parseDouble(precio);
                 int existenn = Integer.parseInt(existen);
+                
 
                 Producto pro = new Producto(categoria, nom, precioo, existenn);
                 DAOProducto dao = new DAOProducto();
@@ -483,7 +444,7 @@ public class JFrameInventario extends javax.swing.JFrame {
                 double precioo = Double.parseDouble(precio);
                 int existenn = Integer.parseInt(existen);
 
-                // Crear un objeto Autor con los nuevos datos
+                // Crear un objeto con los nuevos datos
                 Producto pro = new Producto(id_producto, categoria, nom, precioo, existenn);
 
                 // Actualizar el autor en la base de datos
@@ -497,10 +458,10 @@ public class JFrameInventario extends javax.swing.JFrame {
                     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
                     for (int i = 0; i < model.getRowCount(); i++) {
                         if (Integer.parseInt(model.getValueAt(i, 0).toString()) == id_producto) {
-                            model.setValueAt(categoria, i, 1); // Nombres
-                            model.setValueAt(nom, i, 2); // Apellidos
-                            model.setValueAt(precioo, i, 3); // Email
-                            model.setValueAt(existenn, i, 4); // Cedula
+                            model.setValueAt(categoria, i, 1); // 
+                            model.setValueAt(nom, i, 2); // 
+                            model.setValueAt(precioo, i, 3); // 
+                            model.setValueAt(existenn, i, 4); // 
                             break; // Salir del bucle una vez que se haya actualizado la fila
                         }
                     }
@@ -667,7 +628,9 @@ public class JFrameInventario extends javax.swing.JFrame {
     private javax.swing.JButton jBorrar;
     private javax.swing.JButton jBuscar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<Categorias> jComboCategoria;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

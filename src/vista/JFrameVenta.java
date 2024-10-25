@@ -167,6 +167,8 @@ public class JFrameVenta extends javax.swing.JFrame {
         jComboModoPago = new javax.swing.JComboBox<>();
         jBguardarVenta = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
+        JTextcantidadEfectivo = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
         jLabelFecha = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabelBack = new javax.swing.JLabel();
@@ -386,15 +388,15 @@ public class JFrameVenta extends javax.swing.JFrame {
         jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 210, 30));
 
         jLabel6.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        jLabel6.setText("Modo de Pago");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, -1, -1));
+        jLabel6.setText("Efectivo Recibido");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, -1, 20));
 
         jComboModoPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboModoPagoActionPerformed(evt);
             }
         });
-        jPanel4.add(jComboModoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, -1, -1));
+        jPanel4.add(jComboModoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, -1, -1));
 
         jBguardarVenta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jBguardarVenta.setText("Guardar");
@@ -413,6 +415,11 @@ public class JFrameVenta extends javax.swing.JFrame {
             }
         });
         jPanel4.add(jBCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 380, 90, 31));
+        jPanel4.add(JTextcantidadEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 140, -1));
+
+        jLabel11.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        jLabel11.setText("Modo de Pago");
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, -1, -1));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 529, 450));
 
@@ -611,23 +618,39 @@ public class JFrameVenta extends javax.swing.JFrame {
     private void jBguardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBguardarVentaActionPerformed
 
         try {
-            guardarVenta();
-            total = 0.0;
-            jLabelTotal.setText(total.toString());
+        // Obtener el total de la venta desde el jLabel
+        double totalVenta = Double.parseDouble(jLabelTotal.getText().trim());
 
-        } catch (SQLException ex) {
-            Logger.getLogger(JFrameVenta.class.getName()).
-                    log(Level.SEVERE, null, ex);
+        // Obtener el efectivo ingresado y verificar que no esté vacío
+        String efectivoStr = JTextcantidadEfectivo.getText().trim();
+        if (efectivoStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa la cantidad de efectivo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return; // Salir si no se ingresó efectivo
         }
-        
+
+        // Validar si el efectivo es suficiente en la misma línea
+        if (Double.parseDouble(efectivoStr) < totalVenta) {
+            JOptionPane.showMessageDialog(this, "Efectivo insuficiente. Total de la venta: " + totalVenta, "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return; // Salir si el efectivo es insuficiente
+        }
+
+        // Si todo está bien, continuar con la transacción
+        guardarVenta(); // Aquí puedes llamar a guardarVenta si no lo has hecho antes
+        total = 0.0; // Reinicia el total
+        jLabelTotal.setText(String.valueOf(total));
+        JTextcantidadEfectivo.setText(" "); // Limpia el campo de efectivo
+
+        // Llama a DAOVenta para procesar la factura
         DAOVenta daoventa = new DAOVenta();
-        try {
-            daoventa.factura();
-        } catch (JRException ex) {
-            Logger.getLogger(JFrameVenta.class.getName()).log(Level.SEVERE, null, ex);
+        daoventa.factura();
 
-        }
-
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El efectivo ingresado no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (SQLException ex) {
+        Logger.getLogger(JFrameVenta.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (JRException ex) {
+        Logger.getLogger(JFrameVenta.class.getName()).log(Level.SEVERE, null, ex);
+    }
         // TODO add your handling code here:
     }//GEN-LAST:event_jBguardarVentaActionPerformed
 
@@ -840,15 +863,31 @@ public class JFrameVenta extends javax.swing.JFrame {
 
         numpago = jComboModoPago.getItemAt(jComboModoPago.getSelectedIndex())
                 .getNum_pago();
+        
+         
+        double pago = 0;
+         String efectivoTexto = JTextcantidadEfectivo.getText().trim();
+    if (efectivoTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(rootPane, "El campo de efectivo no puede estar vacío.");
+        return; // Salir si el campo está vacío
+    }
+
+    try {
+        // Convertir el texto a un double
+        pago = Double.parseDouble(efectivoTexto);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(rootPane, "Por favor, ingresa un número válido para el efectivo.");
+        return; // Salir si la conversión falla
+    }
 
         if (jLabelFecha.getText().contentEquals("")
-                || numpago == 0 || jTableProductosVenta.getRowCount() == 0) {
+                || numpago == 0 || jTableProductosVenta.getRowCount() == 0 ) {
 
            
         }
          try {
         // Crear el objeto Venta con los datos necesarios
-        Venta vent = new Venta(numpago, fech);
+        Venta vent = new Venta(numpago, fech, pago);
 
         // Instancia de DAOVenta
         DAOVenta daoventa = new DAOVenta();
@@ -857,6 +896,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         if (daoventa.insertarVenta(vent) == 0) {
             // Si la inserción es exitosa, obtener el número de factura
             numfac = daoventa.obtenerUltimoNumFactura();
+            
              actualizaExistencia();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Ha ocurrido un error, no se insertó la venta");
@@ -938,6 +978,7 @@ public class JFrameVenta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField JTextcantidadEfectivo;
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBDagregarProducto;
     private javax.swing.JButton jBDbuscarProducto;
@@ -950,6 +991,7 @@ public class JFrameVenta extends javax.swing.JFrame {
     private javax.swing.JDialog jDialogProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

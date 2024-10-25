@@ -43,7 +43,8 @@ public class DAOProducto {
                             (int) registro.get("id_categoria"),
                             (String) registro.get("nombreProducto"),
                             (Double) registro.get("precio"), 
-                            (int) registro.get("Existencia")
+                            (int) registro.get("Existencia"),
+                              registro.get("IVA") != null ? (double) registro.get("IVA") : 0.0 // Manejo de null para IVA
                 );
                     productos.add(pro);
                 
@@ -88,8 +89,12 @@ public class DAOProducto {
               Producto proo= new Producto ((int) registro.get("id_producto"),
                       (int) registro.get("id_categoria"),
                       (String)registro.get("nombreProducto"),
-                      (Double)registro.get("precio"),
-                      (int) registro.get("Existencia"));
+                      (double)registro.get("precio"),
+                      (int) registro.get("Existencia"),
+                      (double) registro.get("iva")
+              
+              );
+                      
                       
                       
               products.add(proo);

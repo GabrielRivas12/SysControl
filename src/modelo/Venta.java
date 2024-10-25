@@ -21,9 +21,12 @@ public class Venta {
     Double precio;
     Double subtotal;  // sin usar
     Double total;    // sin usar
+
+   
+    Double cantidad_efectivo;
     
     // constructor con todas las variables
-    public Venta(int num_factura, int num_pago, Date fecha, int num_detalle, int id_producto, int cantidad, Double precio, Double subtotal, Double total) {
+    public Venta(int num_factura, int num_pago, Date fecha, int num_detalle, int id_producto, int cantidad, Double precio, Double subtotal, Double total, Double cantidad_efectivo) {
         this.num_factura = num_factura;
         this.num_pago = num_pago;
         this.fecha = fecha;
@@ -33,6 +36,7 @@ public class Venta {
         this.precio = precio;
         this.subtotal = subtotal;
         this.total = total;
+        this.cantidad_efectivo = cantidad_efectivo;
     }
     // un constructor para actualizar 
     public Venta(int num_pago, Date fecha, int id_producto, int cantidad, Double precio) {
@@ -45,10 +49,12 @@ public class Venta {
     }
 
    //-------------------- Para guardar en la tabla factura -------------------------//
-    public Venta(int num_pago, Date fecha) {
+    public Venta(int num_pago, Date fecha,  Double cantidad_efectivo ) {
        
         this.num_pago = num_pago;
         this.fecha = fecha;
+        this.cantidad_efectivo = cantidad_efectivo;
+        
     }
     //------------------------------------------------------------------------------//
 
@@ -138,6 +144,14 @@ public class Venta {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+ 
+    public Double getCantidad_efectivo() {
+        return cantidad_efectivo;
+    }
+
+    public void setCantidad_efectivo(Double cantidad_efectivo) {
+        this.cantidad_efectivo = cantidad_efectivo;
     }
     
 }

@@ -15,20 +15,34 @@ public class Producto {
     String nombreProducto;
     Double precio;
     int existencia;
+    double iva;
 
-    public Producto(int id_producto, int id_categoria, String nombreProducto, Double precio, int existencia) {
+    public Producto(int id_producto, int id_categoria, String nombreProducto, Double precio, int existencia,  double iva) {
         this.id_producto = id_producto;
         this.id_categoria = id_categoria;
         this.nombreProducto = nombreProducto;
         this.precio = precio;
         this.existencia = existencia;
+        this.iva = iva;
     }
+    
+      public Producto(int id_producto, int id_categoria, String nombreProducto, Double precio, int existencia) {
+        this.id_producto = id_producto;
+        this.id_categoria = id_categoria;
+        this.nombreProducto = nombreProducto;
+        this.precio = precio;
+        this.existencia = existencia;
+        
+    }
+
 
     public Producto(int id_categoria, String nombreProducto, Double precio, int existencia) {
         this.id_categoria = id_categoria;
         this.nombreProducto = nombreProducto;
         this.precio = precio;
         this.existencia = existencia;
+        
+        
     }
 
     public Producto(int id_producto, int existencia) {
@@ -76,5 +90,11 @@ public class Producto {
         this.existencia = existencia;
     }
     
+     public double getIva() {
+        return iva;
+    }
 
+    public void setIva(double iva) {
+        this.iva = iva;
+    }
 }

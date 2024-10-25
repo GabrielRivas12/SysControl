@@ -39,11 +39,12 @@ public class DAOVenta {
             
         //--------------LLAMA A PROCED ALMACENADO ----------//
          CallableStatement st = conectar.Conectar().
-                prepareCall("{CALL insertarventa(?,?)}"); // esto falta
+                prepareCall("{CALL insertarventa(?,?,?)}"); // esto falta
                        // cliente se quita
                 st.setInt(1, vent.getNum_pago());
                 // Convertir java.util.Date a java.sql.Date directamente en la línea
                 st.setDate(2, new java.sql.Date(vent.getFecha().getTime()));
+                st.setDouble(3, vent.getCantidad_efectivo());
                 st.executeUpdate();
                 
         }catch(SQLException e){
