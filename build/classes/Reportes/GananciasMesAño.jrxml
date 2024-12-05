@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_salida" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e87ce8b3-f8b7-4b8b-a59c-4967509cae71">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<subDataset name="Dataset1" uuid="1d9f2b50-1a6b-45e5-9f90-1a36180e34ef">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT DATE_FORMAT(f.fecha, '%d-%m-%Y') AS fecha_str, 
+       SUM(d.cantidad * d.precioventa) AS total_generado
+FROM detalle d
+JOIN factura f ON d.num_factura = f.num_factura
+WHERE f.fecha >= CURDATE() - INTERVAL 30 DAY
+GROUP BY DATE_FORMAT(f.fecha, '%d-%m-%Y') 
+ORDER BY DATE_FORMAT(f.fecha, '%d-%m-%Y') desc;]]>
+		</queryString>
+		<field name="fecha_str" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="fecha_str"/>
+			<property name="com.jaspersoft.studio.field.label" value="fecha_str"/>
+		</field>
+		<field name="total_generado" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="total_generado"/>
+			<property name="com.jaspersoft.studio.field.label" value="total_generado"/>
+		</field>
+	</subDataset>
+	<subDataset name="Dataset2" uuid="e0bb61ab-dbda-42e4-ae24-42716ba9f55e">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[SELECT p.nombreProducto AS nombre_producto, d.id_producto, SUM(d.cantidad) AS total_vendido
+FROM detalle d
+JOIN producto p ON d.id_producto = p.id_producto
+GROUP BY d.id_producto, p.nombreProducto
+ORDER BY total_vendido DESC
+LIMIT 10;]]>
+		</queryString>
+		<field name="nombre_producto" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="nombreProducto"/>
+			<property name="com.jaspersoft.studio.field.label" value="nombre_producto"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+		</field>
+		<field name="id_producto" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="id_producto"/>
+			<property name="com.jaspersoft.studio.field.label" value="id_producto"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="detalle"/>
+		</field>
+		<field name="total_vendido" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="total_vendido"/>
+			<property name="com.jaspersoft.studio.field.label" value="total_vendido"/>
+		</field>
+	</subDataset>
+	<subDataset name="Dataset3" uuid="91fd1f38-b0e1-4026-b3c5-3be7325ab7ce">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[SELECT DATE_FORMAT(f.fecha, '%Y-%m') AS mes_año, 
+       SUM(d.cantidad * d.precioventa) AS total_generado
+FROM detalle d
+JOIN factura f ON d.num_factura = f.num_factura
+WHERE f.fecha >= CURDATE() - INTERVAL 12 MONTH
+GROUP BY mes_año
+ORDER BY mes_año Desc;]]>
+		</queryString>
+		<field name="mes_año" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="mes_año"/>
+			<property name="com.jaspersoft.studio.field.label" value="mes_año"/>
+		</field>
+		<field name="total_generado" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="total_generado"/>
+			<property name="com.jaspersoft.studio.field.label" value="total_generado"/>
+		</field>
+	</subDataset>
+	<subDataset name="Dataset4" uuid="c30be082-f5fd-4449-9e2b-2237a768d7bb">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[SELECT DATE_FORMAT(f.fecha, '%Y') AS año, 
+       SUM(d.cantidad * d.precioventa) AS total_generado
+FROM detalle d
+JOIN factura f ON d.num_factura = f.num_factura
+WHERE f.fecha >= CURDATE() - INTERVAL 12 MONTH
+GROUP BY año
+ORDER BY año DESC;]]>
+		</queryString>
+		<field name="año" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="año"/>
+			<property name="com.jaspersoft.studio.field.label" value="año"/>
+		</field>
+		<field name="total_generado" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="total_generado"/>
+			<property name="com.jaspersoft.studio.field.label" value="total_generado"/>
+		</field>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT d.num_factura, 
+       SUM(d.cantidad * d.precioventa) AS total_generado
+FROM detalle d
+JOIN factura f ON d.num_factura = f.num_factura
+WHERE f.fecha >= CURDATE() - INTERVAL 30 DAY
+GROUP BY d.num_factura]]>
+	</queryString>
+	<field name="num_factura" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="num_factura"/>
+		<property name="com.jaspersoft.studio.field.label" value="num_factura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle"/>
+	</field>
+	<field name="total_generado" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_generado"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_generado"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch"/>
+	</title>
+	<summary>
+		<band height="652" splitType="Stretch">
+			<lineChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="80" width="570" height="230" uuid="179f293c-6020-46f8-9481-607e87155adc"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="Dataset3" uuid="d88a4d69-a19c-4733-ae8d-34733b5917e0"/>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Ganancias por mes "]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{mes_año}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total_generado}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot labelRotation="90.0"/>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<lineChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="380" width="570" height="230" uuid="34cdd7a5-b45e-4ba4-b06b-a3c7294c175f"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="Dataset4" uuid="dc13873c-5af6-49f8-a5e3-1e04955ab00e"/>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Ganancias por año"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{año}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total_generado}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot labelRotation="90.0"/>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>
