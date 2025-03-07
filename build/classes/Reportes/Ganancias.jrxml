@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_salida" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e87ce8b3-f8b7-4b8b-a59c-4967509cae71">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<subDataset name="Dataset1" uuid="1d9f2b50-1a6b-45e5-9f90-1a36180e34ef">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT DATE_FORMAT(f.fecha, '%d-%m-%Y') AS fecha_str, 
+       SUM(d.cantidad * d.precioventa) AS total_generado
+FROM detalle d
+JOIN factura f ON d.num_factura = f.num_factura
+WHERE f.fecha >= CURDATE() - INTERVAL 30 DAY
+GROUP BY DATE_FORMAT(f.fecha, '%d-%m-%Y') 
+ORDER BY DATE_FORMAT(f.fecha, '%d-%m-%Y') desc;]]>
+		</queryString>
+		<field name="fecha_str" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="fecha_str"/>
+			<property name="com.jaspersoft.studio.field.label" value="fecha_str"/>
+		</field>
+		<field name="total_generado" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="total_generado"/>
+			<property name="com.jaspersoft.studio.field.label" value="total_generado"/>
+		</field>
+	</subDataset>
+	<subDataset name="Dataset2" uuid="e0bb61ab-dbda-42e4-ae24-42716ba9f55e">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[SELECT p.nombreProducto AS nombre_producto, d.id_producto, SUM(d.cantidad) AS total_vendido
+FROM detalle d
+JOIN producto p ON d.id_producto = p.id_producto
+GROUP BY d.id_producto, p.nombreProducto
+ORDER BY total_vendido DESC
+LIMIT 10;
+]]>
+		</queryString>
+		<field name="nombre_producto" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="nombreProducto"/>
+			<property name="com.jaspersoft.studio.field.label" value="nombre_producto"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+		</field>
+		<field name="id_producto" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="id_producto"/>
+			<property name="com.jaspersoft.studio.field.label" value="id_producto"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="detalle"/>
+		</field>
+		<field name="total_vendido" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="total_vendido"/>
+			<property name="com.jaspersoft.studio.field.label" value="total_vendido"/>
+		</field>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT d.num_factura, 
+       SUM(d.cantidad * d.precioventa) AS total_generado
+FROM detalle d
+JOIN factura f ON d.num_factura = f.num_factura
+WHERE f.fecha >= CURDATE() - INTERVAL 30 DAY
+GROUP BY d.num_factura]]>
+	</queryString>
+	<field name="num_factura" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="num_factura"/>
+		<property name="com.jaspersoft.studio.field.label" value="num_factura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle"/>
+	</field>
+	<field name="total_generado" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_generado"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_generado"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch"/>
+	</title>
+	<detail>
+		<band height="2" splitType="Stretch"/>
+	</detail>
+	<summary>
+		<band height="619" splitType="Stretch">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="-10" y="0" width="590" height="319" uuid="a0628067-2409-4e6b-ab20-423505b2558c"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="Dataset1" uuid="caeada37-58d6-41ad-867a-4a2e319e7bfa">
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Generado los últimos 30 días"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{fecha_str}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total_generado}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot labelRotation="90.0"/>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="-9" y="340" width="588" height="279" uuid="539f5b86-6d22-44b6-aac1-33215454cf91"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="Dataset2" uuid="d453acaf-6182-42be-99b5-96cec72107b8"/>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Los 10 productos más vendidos"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nombre_producto}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total_vendido}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot labelRotation="90.0"/>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>
