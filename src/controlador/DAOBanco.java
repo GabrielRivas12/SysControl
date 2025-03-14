@@ -1,0 +1,39 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package controlador;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import modelo.Banco;
+import modelo.Conexion;
+import modelo.Database;
+
+/**
+ *
+ * @author Gabriel Rivas
+ */
+public class DAOBanco {
+     Conexion conectar = Conexion.getInstance();
+      
+      public List ObtenerBancos() throws SQLException {
+          //Nomnbre del procedimiento almacenado
+          String proced = "listarBancos()";
+          
+          //Llamada a metodo listar de database.java, se le pasa el proced
+          List<Map> registros = new Database().Listar(proced);
+          List<Banco> Bancos = new ArrayList(); //ARREGLO
+          
+          //-------ciclo que recorre cada registro y los add al array----------
+          for (Map registro : registros) {
+              Banco mp = new Banco((int) registro.get("id_banco"),
+              (String)registro.get("nombre")
+              );
+           Bancos.add(mp);
+          }
+          return Bancos; // retorna los  registros ubicados en la tabla BD
+      }   
+}
