@@ -10,10 +10,16 @@ package modelo;
  */
 public class Banco {
     
+    private int id_banco;
+    private String nombre;
+    
      @Override
     public String toString(){
-    return id_banco + " - " + nombre;
+    return nombre;
     }
+    
+    
+    
 
     public Banco(int id_banco, String nombre) {
         this.id_banco = id_banco;
@@ -40,6 +46,5 @@ public class Banco {
         this.nombre = nombre;
     }
     
-    int id_banco;
-    String nombre;
+   
 }

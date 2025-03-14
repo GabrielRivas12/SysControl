@@ -17,6 +17,10 @@ import modelo.Proveedor;
 import modelo.Banco;
 import controlador.DAOBanco;
 import controlador.DAOCategoria;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import javax.swing.plaf.ComboBoxUI;
 import modelo.Categorias;
 
 /**
@@ -32,15 +36,60 @@ public class JFrameProveedor extends javax.swing.JFrame {
         initComponents();
         
         ObtenerProveedor();
+        ComboBancos();
        
-      DAOBanco daobancos = new DAOBanco();
+     
+
+      
+     
+    }
+    
+    private void ComboBancos() throws SQLException{
+     DAOBanco daobancos = new DAOBanco();
       List<Banco> listarBanco = daobancos.ObtenerBancos();
        
-      JComboBox<Banco> comboBox = new JComboBox<>();
+      JComboBox<Banco> comboBoxbanco = new JComboBox<>();
       for (Banco bancos : listarBanco)
-          comboBox.addItem(bancos);
-      jTableProveedores.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(comboBox));
+          comboBoxbanco.addItem(bancos);
+
+      jTableProveedores.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(comboBoxbanco));
+      
+     Banco AgregarNuevo = new Banco (0,"Agregar Nuevo");comboBoxbanco.addItem(AgregarNuevo);
+     
+        // Manejar la acción del JComboBox
+comboBoxbanco.addActionListener(e -> {
+    Banco seleccionado = (Banco) comboBoxbanco.getSelectedItem();
+
+   if (seleccionado != null && "Agregar Nuevo".equals(seleccionado.getNombre())) {
+
+        // Si se selecciona "Agregar Nuevo", pedir el nombre
+        String nuevoNombre = JOptionPane.showInputDialog(jTableProveedores, "Ingrese el nombre del nuevo banco:");
+
+        if (nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
+            try {
+                Banco nuevoBanco = new Banco(daobancos.ObtenerBancos().size() + 1, nuevoNombre);
+                daobancos.InsertarNuevo(nuevoBanco); // Guardar en la BD
+
+                // Agregar al JComboBox
+                comboBoxbanco.insertItemAt(nuevoBanco, comboBoxbanco.getItemCount() - 1);
+                comboBoxbanco.setSelectedItem(nuevoBanco); // Seleccionar el nuevo banco
+
+                // 🔄 Forzar actualización de la tabla para reflejar el cambio
+                jTableProveedores.repaint();
+                jTableProveedores.revalidate();
+            } catch (SQLException ex) {
+                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            // Si no se ingresa nada, volver a la opción original
+            comboBoxbanco.setSelectedIndex(0);
+        }
     }
+});
+    
+    }
+        
+    
     
       private void ObtenerProveedor() throws SQLException {
 

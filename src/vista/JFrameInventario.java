@@ -21,8 +21,6 @@ import controlador.DAOFechaExpiracion;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.ToolTipManager;
-import org.codehaus.groovy.tools.shell.commands.HelpCommand;
-
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
