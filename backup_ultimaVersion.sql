@@ -26,7 +26,7 @@ CREATE TABLE `banco` (
   `id_banco` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id_banco`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `banco` (
 
 LOCK TABLES `banco` WRITE;
 /*!40000 ALTER TABLE `banco` DISABLE KEYS */;
-INSERT INTO `banco` VALUES (1,'BANPRO'),(2,'BAC'),(3,'LAFISE');
+INSERT INTO `banco` VALUES (1,'BANPRO'),(2,'BAC'),(3,'LAFISE'),(4,'Avanzas'),(5,'jjjj'),(6,'jajaja');
 /*!40000 ALTER TABLE `banco` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,14 +201,17 @@ DROP TABLE IF EXISTS `historial_transacciones`;
 CREATE TABLE `historial_transacciones` (
   `id_transaccion` int NOT NULL AUTO_INCREMENT,
   `id_proveedor` int DEFAULT NULL,
+  `id_producto` int DEFAULT NULL,
   `cantidad` int DEFAULT NULL,
   `monto` double DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `estado` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id_transaccion`),
   KEY `id_proveedor` (`id_proveedor`),
-  CONSTRAINT `historial_transacciones_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `id_producto` (`id_producto`),
+  CONSTRAINT `historial_transacciones_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`),
+  CONSTRAINT `historial_transacciones_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +220,7 @@ CREATE TABLE `historial_transacciones` (
 
 LOCK TABLES `historial_transacciones` WRITE;
 /*!40000 ALTER TABLE `historial_transacciones` DISABLE KEYS */;
-INSERT INTO `historial_transacciones` VALUES (1,1,20,100,'2025-03-15','pendiente');
+INSERT INTO `historial_transacciones` VALUES (1,1,1001,20,100,'2025-03-15','pendiente'),(2,2,1002,5,300,'2025-03-16','pendiente');
 /*!40000 ALTER TABLE `historial_transacciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,7 +337,7 @@ CREATE TABLE `proveedores` (
   PRIMARY KEY (`id_proveedor`),
   KEY `id_banco` (`id_banco`),
   CONSTRAINT `proveedores_ibfk_1` FOREIGN KEY (`id_banco`) REFERENCES `banco` (`id_banco`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,7 +346,7 @@ CREATE TABLE `proveedores` (
 
 LOCK TABLES `proveedores` WRITE;
 /*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
-INSERT INTO `proveedores` VALUES (1,'yumies','mayorista','alfredo',88934512,'yumies@conctac.com',1,153546888);
+INSERT INTO `proveedores` VALUES (1,'yumies','mayorista','alfredo',88934512,'yumies@conctac.com',1,153546888),(2,'lacoste','mayotista','tupu',22555446,'lacoste@contac.com',1,454568877);
 /*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -733,6 +736,28 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insertarBanco` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarBanco`(
+nombre varchar (20)
+)
+BEGIN
+insert into banco(nombre) 
+values (nombre);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `insertarCategoria` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -934,6 +959,25 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listarHistorial` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarHistorial`()
+BEGIN
+select * from historial_transacciones;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `listarModoPago` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1120,4 +1164,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-14 13:06:45
+-- Dump completed on 2025-03-16 10:34:59

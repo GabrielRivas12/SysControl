@@ -14,22 +14,25 @@ public class Transacciones {
 
     private int id_transacion;
     private int id_proveedor;
+    private int id_producto;
     private int cantidad;
     private double monto;
     private Date fecha;
     private String estado;
-    
-    public Transacciones(int id_transacion, int id_proveedor, int cantidad, double monto, Date fecha, String estado) {
+
+    public Transacciones(int id_transacion, int id_proveedor, int id_producto, int cantidad, double monto, Date fecha, String estado) {
         this.id_transacion = id_transacion;
         this.id_proveedor = id_proveedor;
+        this.id_producto = id_producto;
         this.cantidad = cantidad;
         this.monto = monto;
         this.fecha = fecha;
         this.estado = estado;
     }
 
-    public Transacciones(int id_proveedor, int cantidad, double monto, Date fecha, String estado) {
+    public Transacciones(int id_proveedor, int id_producto, int cantidad, double monto, Date fecha, String estado) {
         this.id_proveedor = id_proveedor;
+        this.id_producto = id_producto;
         this.cantidad = cantidad;
         this.monto = monto;
         this.fecha = fecha;
@@ -50,6 +53,14 @@ public class Transacciones {
 
     public void setId_proveedor(int id_proveedor) {
         this.id_proveedor = id_proveedor;
+    }
+
+    public int getId_producto() {
+        return id_producto;
+    }
+
+    public void setId_producto(int id_producto) {
+        this.id_producto = id_producto;
     }
 
     public int getCantidad() {
