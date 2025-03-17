@@ -91,7 +91,7 @@ public class JframeHome extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         Imagen1a = new javax.swing.JLabel();
         Imagen3a = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelProveedor = new javax.swing.JLabel();
         Imagen3 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Imagen4a = new javax.swing.JLabel();
@@ -109,6 +109,8 @@ public class JframeHome extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         ImagenH = new javax.swing.JLabel();
         ImagenH1 = new javax.swing.JLabel();
+        Imagen6 = new javax.swing.JLabel();
+        cerrarsesion = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabelTotalinventario = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
@@ -164,10 +166,15 @@ public class JframeHome extends javax.swing.JFrame {
         });
         jPanel5.add(Imagen3a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 150, 40));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Cerrar sesión");
-        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 460, 140, -1));
+        jLabelProveedor.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabelProveedor.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelProveedor.setText("Proveedores");
+        jLabelProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelProveedorMouseClicked(evt);
+            }
+        });
+        jPanel5.add(jLabelProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 460, 140, -1));
 
         Imagen3.setText("Imagen 3");
         Imagen3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -294,6 +301,19 @@ public class JframeHome extends javax.swing.JFrame {
             }
         });
         jPanel5.add(ImagenH1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 40));
+
+        Imagen6.setText("Imagen5");
+        Imagen6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Imagen6MouseClicked(evt);
+            }
+        });
+        jPanel5.add(Imagen6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 40, 40));
+
+        cerrarsesion.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        cerrarsesion.setForeground(new java.awt.Color(255, 255, 255));
+        cerrarsesion.setText("Cerrar sesión");
+        jPanel5.add(cerrarsesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 520, 140, -1));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 1080));
 
@@ -664,6 +684,21 @@ public class JframeHome extends javax.swing.JFrame {
 // TODO add your handling code here:
     }//GEN-LAST:event_ImagenH1MouseClicked
 
+    private void Imagen6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen6MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Imagen6MouseClicked
+
+    private void jLabelProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProveedorMouseClicked
+        try {
+            JFrameProveedor proveedor = new JFrameProveedor();
+            proveedor.setVisible(true);
+            this.dispose();
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabelProveedorMouseClicked
+
     static private void notificacionProductosPorExpirar() throws AWTException {
         DAOFechaExpiracion dao = new DAOFechaExpiracion();
 
@@ -848,8 +883,10 @@ public class JframeHome extends javax.swing.JFrame {
     private javax.swing.JLabel Imagen4a;
     private javax.swing.JLabel Imagen5;
     private javax.swing.JLabel Imagen5a;
+    private javax.swing.JLabel Imagen6;
     private javax.swing.JLabel ImagenH;
     private javax.swing.JLabel ImagenH1;
+    private javax.swing.JLabel cerrarsesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -861,7 +898,6 @@ public class JframeHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -878,6 +914,7 @@ public class JframeHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelBienvenida;
+    private javax.swing.JLabel jLabelProveedor;
     private javax.swing.JLabel jLabelTotalProductos;
     private javax.swing.JLabel jLabelTotalV;
     private javax.swing.JLabel jLabelTotalinventario;
