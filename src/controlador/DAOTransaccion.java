@@ -4,6 +4,7 @@
  */
 package controlador;
 
+import com.sun.jdi.connect.spi.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,9 +12,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import modelo.Conexion;
 import modelo.Database;
 import modelo.Transacciones;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -68,4 +76,36 @@ public class DAOTransaccion {
         }
         return filas;
     }
+
+public void FacturaProvicional(int id_proveedor) throws JRException {
+
+    
+    
+    // Ruta del archivo .jrxml
+    String path = "src/Reportes/FacturaProvicional.jrxml";
+
+    JasperReport jr;
+
+    try {
+        // Compilar el archivo .jrxml
+        jr = JasperCompileManager.compileReport(path);
+
+        // Crear un mapa de parámetros y pasar el ProveedorID
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("id_proveedor", id_proveedor);  // Pasa el ProveedorID como parámetro
+
+        // Llenar el reporte con los parámetros
+        JasperPrint mostrarReporte4 = JasperFillManager.fillReport(jr, parametros, conectar.Conectar());
+
+        // Mostrar el reporte
+        JasperViewer.viewReport(mostrarReporte4, false);
+    } catch (JRException e) {
+        JOptionPane.showMessageDialog(null, e);
+        System.out.println("Error" + e);
+    }
+}
+
+
+
+
 }

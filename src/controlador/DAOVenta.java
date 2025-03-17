@@ -6,16 +6,8 @@ package controlador;
 
 import modelo.Conexion; // Importar la clase para la conexión
 import java.sql.CallableStatement; // Usar java.sql en lugar de com.mysql.cj.jdbc
-import java.sql.Connection; // Importar Connection
 import java.sql.ResultSet; // Importar ResultSet
 import java.sql.SQLException; // Importar SQLException
-import java.util.ArrayList; // Importar ArrayList
-import java.util.HashMap; // Importar HashMap
-import java.util.List; // Importar java.util.List
-import java.util.Map; // Importar Map\
-import java.sql.Date;
-import java.util.Locale;
-import javax.lang.model.util.Types;
 import javax.swing.JOptionPane;
 import modelo.Producto;
 import modelo.Venta;

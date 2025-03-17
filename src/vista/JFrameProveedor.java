@@ -17,9 +17,9 @@ import modelo.Banco;
 import controlador.DAOBanco;
 import controlador.DAOTransaccion;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -27,6 +27,12 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import modelo.Transacciones;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 /**
@@ -35,96 +41,120 @@ import modelo.Transacciones;
  */
 public class JFrameProveedor extends javax.swing.JFrame {
 
+      private DAOTransaccion daoTrans;  // Declaración
+    
     /**
      * Creates new form JFrameProveedor
      */
     public JFrameProveedor() throws SQLException {
+ this.daoTrans = new DAOTransaccion(); // Inicialización correcta
         initComponents();
-        
+
         ObtenerProveedor();
         ObtenerHistoriales();
         ComboBancos();
-        botonImprimir();
-       
-     
+        botonImprimir(daoTrans);
 
-      
-     
     }
-    
-    private void ComboBancos() throws SQLException{
-     DAOBanco daobancos = new DAOBanco();
-      List<Banco> listarBanco = daobancos.ObtenerBancos();
-       
-      JComboBox<Banco> comboBoxbanco = new JComboBox<>();
-      for (Banco bancos : listarBanco)
-          comboBoxbanco.addItem(bancos);
 
-      jTableProveedores.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(comboBoxbanco));
-      
-     Banco AgregarNuevo = new Banco (0,"Agregar Nuevo");comboBoxbanco.addItem(AgregarNuevo);
-     
-        // Manejar la acción del JComboBox
-comboBoxbanco.addActionListener(e -> {
-    Banco seleccionado = (Banco) comboBoxbanco.getSelectedItem();
+    private void ComboBancos() throws SQLException {
+        DAOBanco daobancos = new DAOBanco();
+        List<Banco> listarBanco = daobancos.ObtenerBancos();
 
-   if (seleccionado != null && "Agregar Nuevo".equals(seleccionado.getNombre())) {
-
-        // Si se selecciona "Agregar Nuevo", pedir el nombre
-        String nuevoNombre = JOptionPane.showInputDialog(jTableProveedores, "Ingrese el nombre del nuevo banco:");
-
-        if (nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
-            try {
-                Banco nuevoBanco = new Banco(daobancos.ObtenerBancos().size() + 1, nuevoNombre);
-                daobancos.InsertarNuevo(nuevoBanco); // Guardar en la BD
-
-                // Agregar al JComboBox
-                comboBoxbanco.insertItemAt(nuevoBanco, comboBoxbanco.getItemCount() - 1);
-                comboBoxbanco.setSelectedItem(nuevoBanco); // Seleccionar el nuevo banco
-
-                // 🔄 Forzar actualización de la tabla para reflejar el cambio
-                jTableProveedores.repaint();
-                jTableProveedores.revalidate();
-            } catch (SQLException ex) {
-                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            // Si no se ingresa nada, volver a la opción original
-            comboBoxbanco.setSelectedIndex(0);
+        JComboBox<Banco> comboBoxbanco = new JComboBox<>();
+        for (Banco bancos : listarBanco) {
+            comboBoxbanco.addItem(bancos);
         }
+
+        jTableProveedores.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(comboBoxbanco));
+
+        Banco AgregarNuevo = new Banco(0, "Agregar Nuevo");
+        comboBoxbanco.addItem(AgregarNuevo);
+
+        // Manejar la acción del JComboBox
+        comboBoxbanco.addActionListener(e -> {
+            Banco seleccionado = (Banco) comboBoxbanco.getSelectedItem();
+
+            if (seleccionado != null && "Agregar Nuevo".equals(seleccionado.getNombre())) {
+
+                // Si se selecciona "Agregar Nuevo", pedir el nombre
+                String nuevoNombre = JOptionPane.showInputDialog(jTableProveedores, "Ingrese el nombre del nuevo banco:");
+
+                if (nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
+                    try {
+                        Banco nuevoBanco = new Banco(daobancos.ObtenerBancos().size() + 1, nuevoNombre);
+                        daobancos.InsertarNuevo(nuevoBanco); // Guardar en la BD
+
+                        // Agregar al JComboBox
+                        comboBoxbanco.insertItemAt(nuevoBanco, comboBoxbanco.getItemCount() - 1);
+                        comboBoxbanco.setSelectedItem(nuevoBanco); // Seleccionar el nuevo banco
+
+                        // 🔄 Forzar actualización de la tabla para reflejar el cambio
+                        jTableProveedores.repaint();
+                        jTableProveedores.revalidate();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    // Si no se ingresa nada, volver a la opción original
+                    comboBoxbanco.setSelectedIndex(0);
+                }
+            }
+        });
+
     }
-});
-    
-    }
-    
-    private void botonImprimir(){
-       // Definir el renderizador para mostrar el botón en la celda
-    TableCellRenderer renderizador = new TableCellRenderer() {
+
+    private void botonImprimir(DAOTransaccion daoTrans) {
+   
+        jTableHistorial.getColumnModel().getColumn(7).setCellRenderer(new TableCellRenderer() {
         private final JButton boton = new JButton("Imprimir");
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            return boton;
+            return boton;  // Solo devuelve el botón sin lógica de eventos
         }
-    };
+    });
 
-    // Definir el editor de celda para permitir la interacción con el botón
-    TableCellEditor editor = new DefaultCellEditor(new JCheckBox()) {
+    jTableHistorial.getColumnModel().getColumn(7).setCellEditor(new DefaultCellEditor(new JCheckBox()) {
         private final JButton boton = new JButton("Imprimir");
+
+        {
+            boton.addActionListener(e -> {
+                int selectedRow = jTableHistorial.getSelectedRow(); // Obtener la fila seleccionada
+                if (selectedRow != -1) {
+                    Object id_pproveedor = jTableHistorial.getValueAt(selectedRow, 1); // Asegúrate de que esta columna tiene el id_proveedor
+
+                    if (id_pproveedor != null) {
+                        try {
+                            int id_proveedor = Integer.parseInt(id_pproveedor.toString()); // Convertir el valor a Integer
+
+                            System.out.println("Imprimiendo factura para ProveedorID: " + id_proveedor);
+                            daoTrans.FacturaProvicional(id_proveedor); // Llamar al método con el parámetro
+
+                        } catch (NumberFormatException | JRException ex) {
+                            Logger.getLogger(JFrameVenta.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(null, "Error al obtener el ID del proveedor.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El ID del proveedor no es válido.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor selecciona una fila.");
+                }
+            });
+        }
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             return boton;
         }
-    };
+    });
+}
 
-    // Asignar el renderizador y el editor a la columna 8
-    jTableHistorial.getColumnModel().getColumn(7).setCellRenderer(renderizador);
-    jTableHistorial.getColumnModel().getColumn(7).setCellEditor(editor);    }
-        
     
     
-      private void ObtenerProveedor() throws SQLException {
+    
+    private void ObtenerProveedor() throws SQLException {
 
         List<Proveedor> proveedores = new DAOProveedor().ObtenerProveedores();
 
@@ -140,32 +170,30 @@ comboBoxbanco.addActionListener(e -> {
                 pr.getNombre_contacto(),
                 Integer.toString(pr.getTelefono()),
                 pr.getCorreo(),
-                Integer.toString(pr.getId_banco()),  
-                Integer.toString(pr.getNumero_cuenta()),
-
-
-
-            };
+                Integer.toString(pr.getId_banco()),
+                Integer.toString(pr.getNumero_cuenta()),};
             modelo.addRow(renglon);
         }
         jTableProveedores.setModel(modelo);
 
     }
-      
-      private void ObtenerHistoriales() throws SQLException {
+
+
+
+    private void ObtenerHistoriales() throws SQLException {
 
         List<Transacciones> Transs = new DAOTransaccion().ObtenerHistorial();
 
         DefaultTableModel modelo = new DefaultTableModel();
-        String[] columnas = {"ID", "ID Proveedor","ID Producto", "Cantidad", "Monto", "Fecha", "Estado", "Imprimir"};
+        String[] columnas = {"ID", "ID Proveedor", "ID Producto", "Cantidad", "Monto", "Fecha", "Estado", "Imprimir"};
 
-         // Formateador de fecha para mostrar de manera legible
+        // Formateador de fecha para mostrar de manera legible
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
-        
+
         modelo.setColumnIdentifiers(columnas);
         for (Transacciones pr : Transs) {
-            
-            String fechaFormateada = (pr.getFecha()!= null)
+
+            String fechaFormateada = (pr.getFecha() != null)
                     ? formatoFecha.format(pr.getFecha())
                     : "Fecha no disponible";
 
@@ -174,20 +202,14 @@ comboBoxbanco.addActionListener(e -> {
                 Integer.toString(pr.getId_proveedor()),
                 Integer.toString(pr.getId_producto()),
                 Integer.toString(pr.getCantidad()),
-                Double.toString(pr.getMonto()),  
+                Double.toString(pr.getMonto()),
                 fechaFormateada,
-                pr.getEstado(),
-
-
-
-            };
+                pr.getEstado(),};
             modelo.addRow(renglon);
         }
         jTableHistorial.setModel(modelo);
 
     }
-      
-      
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -203,6 +225,7 @@ comboBoxbanco.addActionListener(e -> {
         jTableProveedores = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableHistorial = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -232,21 +255,35 @@ comboBoxbanco.addActionListener(e -> {
         ));
         jScrollPane2.setViewportView(jTableHistorial);
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(569, 569, 569)
+                        .addComponent(jButton1)))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(17, 17, 17)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
                     .addComponent(jScrollPane2))
@@ -270,6 +307,12 @@ comboBoxbanco.addActionListener(e -> {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            //imprimirFacturaProvicional();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,6 +354,7 @@ comboBoxbanco.addActionListener(e -> {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
