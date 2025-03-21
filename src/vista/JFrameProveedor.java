@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista;
 
 import controlador.DAOProveedor;
@@ -18,13 +14,17 @@ import controlador.DAOBanco;
 import controlador.DAOTransaccion;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.text.SimpleDateFormat;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -36,15 +36,14 @@ import net.sf.jasperreports.engine.JRException;
  * @author Gabriel Rivas
  */
 public class JFrameProveedor extends javax.swing.JFrame {
-
+ private ImageIcon imagen;
+    private Icon icono;
     private DAOTransaccion daoTrans;  // Declaración
 
-    /**
-     * Creates new form JFrameProveedor
-     */
     public JFrameProveedor() throws SQLException {
         this.daoTrans = new DAOTransaccion(); // Inicialización correcta
         initComponents();
+        icons();
         fullscreen();
 
         ObtenerProveedor();
@@ -229,27 +228,6 @@ public class JFrameProveedor extends javax.swing.JFrame {
         jTableProveedores = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableHistorial = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
-        Imagen1a = new javax.swing.JLabel();
-        Imagen3a = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        Imagen3 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        Imagen4a = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        Imagen1 = new javax.swing.JLabel();
-        Imagen2 = new javax.swing.JLabel();
-        Imagen2a = new javax.swing.JLabel();
-        Imagen4 = new javax.swing.JLabel();
-        Imagen5a = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        Imagen5 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        ImagenH = new javax.swing.JLabel();
-        ImagenH1 = new javax.swing.JLabel();
         jTextNombre = new javax.swing.JTextField();
         jComboBoxBanco = new javax.swing.JComboBox();
         jTextNombreContacto = new javax.swing.JTextField();
@@ -257,6 +235,29 @@ public class JFrameProveedor extends javax.swing.JFrame {
         jTextCorreo = new javax.swing.JTextField();
         jTextNumeroCuenta = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jPanel8 = new javax.swing.JPanel();
+        Sistemaventas = new javax.swing.JLabel();
+        registrosSalida = new javax.swing.JLabel();
+        Proveedores = new javax.swing.JLabel();
+        ImagenH4 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        reportes = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        ImagenH2 = new javax.swing.JLabel();
+        ImagenH3 = new javax.swing.JLabel();
+        Inventario = new javax.swing.JLabel();
+        ImagenH5 = new javax.swing.JLabel();
+        Imagen5a = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        ImagenH6 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        ImagenH = new javax.swing.JLabel();
+        Home = new javax.swing.JLabel();
+        ImagenH7 = new javax.swing.JLabel();
+        cerrarsesion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -286,154 +287,6 @@ public class JFrameProveedor extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTableHistorial);
 
-        jPanel5.setBackground(new java.awt.Color(70, 132, 244));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        Imagen1a.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen1aMouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen1a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 170, 40));
-
-        Imagen3a.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen3aMouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen3a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 150, 40));
-
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Cerrar sesión");
-        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 460, 140, -1));
-
-        Imagen3.setText("Imagen 3");
-        Imagen3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen3MouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 40, 40));
-
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Registro de salidas");
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, -1, -1));
-
-        Imagen4a.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen4aMouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen4a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 150, 40));
-
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Reportes");
-        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 110, -1));
-
-        Imagen1.setText("Imagen 1");
-        Imagen1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen1MouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 40, 40));
-
-        Imagen2.setText("Imagen 2");
-        Imagen2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen2MouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 40, 40));
-
-        Imagen2a.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen2aMouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen2a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 160, 40));
-
-        Imagen4.setText("Imagen 4");
-        Imagen4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen4MouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 40, 40));
-
-        Imagen5a.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen5aMouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen5a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 170, 40));
-
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Inventario");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 140, -1));
-
-        Imagen5.setText("Imagen5");
-        Imagen5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen5MouseClicked(evt);
-            }
-        });
-        jPanel5.add(Imagen5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 40, 40));
-
-        jPanel2.setBackground(new java.awt.Color(35, 97, 191));
-
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("SysControl");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-
-        jPanel5.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 80));
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Sistema de ventas");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 140, -1));
-
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Home");
-        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 140, -1));
-
-        ImagenH.setText("Home");
-        ImagenH.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ImagenHMouseClicked(evt);
-            }
-        });
-        jPanel5.add(ImagenH, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 40, 40));
-
-        ImagenH1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ImagenH1MouseClicked(evt);
-            }
-        });
-        jPanel5.add(ImagenH1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 40));
-
         jTextNombre.setText("Nombre");
 
         jTextNombreContacto.setText("Nombre contac");
@@ -446,12 +299,179 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minorista", "Mayorista", "Directo", "Exclusivo", "Local" }));
 
+        jPanel8.setBackground(new java.awt.Color(70, 132, 244));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Sistemaventas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SistemaventasMouseClicked(evt);
+            }
+        });
+        jPanel8.add(Sistemaventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 170, 40));
+
+        registrosSalida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registrosSalidaMouseClicked(evt);
+            }
+        });
+        jPanel8.add(registrosSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 150, 40));
+
+        Proveedores.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        Proveedores.setForeground(new java.awt.Color(255, 255, 255));
+        Proveedores.setText("Proveedores");
+        Proveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProveedoresMouseClicked(evt);
+            }
+        });
+        jPanel8.add(Proveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 460, 140, -1));
+
+        ImagenH4.setText("Imagen 3");
+        ImagenH4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImagenH4MouseClicked(evt);
+            }
+        });
+        jPanel8.add(ImagenH4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 40, 40));
+
+        jLabel25.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setText("Registro de salidas");
+        jPanel8.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, -1, -1));
+
+        reportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reportesMouseClicked(evt);
+            }
+        });
+        jPanel8.add(reportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 150, 40));
+
+        jLabel26.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Reportes");
+        jPanel8.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 110, -1));
+
+        ImagenH2.setText("Imagen 1");
+        ImagenH2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImagenH2MouseClicked(evt);
+            }
+        });
+        jPanel8.add(ImagenH2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 40, 40));
+
+        ImagenH3.setText("Imagen 2");
+        ImagenH3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImagenH3MouseClicked(evt);
+            }
+        });
+        jPanel8.add(ImagenH3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 40, 40));
+
+        Inventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InventarioMouseClicked(evt);
+            }
+        });
+        jPanel8.add(Inventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 160, 40));
+
+        ImagenH5.setText("Imagen 4");
+        ImagenH5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImagenH5MouseClicked(evt);
+            }
+        });
+        jPanel8.add(ImagenH5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 40, 40));
+
+        Imagen5a.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Imagen5aMouseClicked(evt);
+            }
+        });
+        jPanel8.add(Imagen5a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 170, 40));
+
+        jLabel27.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("Inventario");
+        jPanel8.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 140, -1));
+
+        ImagenH6.setText("Imagen5");
+        ImagenH6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImagenH6MouseClicked(evt);
+            }
+        });
+        jPanel8.add(ImagenH6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 40, 40));
+
+        jPanel10.setBackground(new java.awt.Color(35, 97, 191));
+
+        jLabel28.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("SysControl");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel28)
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        jPanel8.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 80));
+
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Sistema de ventas");
+        jPanel8.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 140, -1));
+
+        jLabel29.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setText("Home");
+        jPanel8.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 140, -1));
+
+        ImagenH.setText("Home");
+        ImagenH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImagenHMouseClicked(evt);
+            }
+        });
+        jPanel8.add(ImagenH, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 40, 40));
+
+        Home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomeMouseClicked(evt);
+            }
+        });
+        jPanel8.add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 40));
+
+        ImagenH7.setText("Imagen5");
+        ImagenH7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImagenH7MouseClicked(evt);
+            }
+        });
+        jPanel8.add(ImagenH7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 40, 40));
+
+        cerrarsesion.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        cerrarsesion.setForeground(new java.awt.Color(255, 255, 255));
+        cerrarsesion.setText("Cerrar sesión");
+        jPanel8.add(cerrarsesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 520, 140, -1));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -476,13 +496,10 @@ public class JFrameProveedor extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTextNumeroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jComboBoxBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addContainerGap(1520, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 89, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -503,7 +520,10 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(389, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -524,7 +544,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Imagen1aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen1aMouseClicked
+    private void SistemaventasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SistemaventasMouseClicked
 
         try {
             JFrameVenta ven = new JFrameVenta(); // TODO add your handling code here:
@@ -533,9 +553,9 @@ public class JFrameProveedor extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_Imagen1aMouseClicked
+    }//GEN-LAST:event_SistemaventasMouseClicked
 
-    private void Imagen3aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen3aMouseClicked
+    private void registrosSalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrosSalidaMouseClicked
 
         try {
             JFrameSalida _salida = new JFrameSalida(); // TODO add your handling code here:
@@ -546,9 +566,20 @@ public class JFrameProveedor extends javax.swing.JFrame {
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_Imagen3aMouseClicked
+    }//GEN-LAST:event_registrosSalidaMouseClicked
 
-    private void Imagen3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen3MouseClicked
+    private void ProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedoresMouseClicked
+        try {
+            JFrameProveedor proveedor = new JFrameProveedor();
+            proveedor.setVisible(true);
+            this.dispose();
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ProveedoresMouseClicked
+
+    private void ImagenH4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH4MouseClicked
 
         try {
             JFrameSalida _salida = new JFrameSalida(); // TODO add your handling code here:
@@ -559,16 +590,15 @@ public class JFrameProveedor extends javax.swing.JFrame {
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_Imagen3MouseClicked
+    }//GEN-LAST:event_ImagenH4MouseClicked
 
-    private void Imagen4aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen4aMouseClicked
+    private void reportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportesMouseClicked
 
         JFrameReporte _reporte = new JFrameReporte(); // TODO add your handling code here:
         _reporte.setVisible(true);
+    }//GEN-LAST:event_reportesMouseClicked
 
-    }//GEN-LAST:event_Imagen4aMouseClicked
-
-    private void Imagen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen1MouseClicked
+    private void ImagenH2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH2MouseClicked
         try {
             JFrameVenta ven = new JFrameVenta(); // TODO add your handling code here:
             ven.setVisible(true);
@@ -577,9 +607,9 @@ public class JFrameProveedor extends javax.swing.JFrame {
             Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_Imagen1MouseClicked
+    }//GEN-LAST:event_ImagenH2MouseClicked
 
-    private void Imagen2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen2MouseClicked
+    private void ImagenH3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH3MouseClicked
         try {
             JFrameInventario _inventario = new JFrameInventario(); // TODO add your handling code here:
             _inventario.setVisible(true);
@@ -587,9 +617,9 @@ public class JFrameProveedor extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_Imagen2MouseClicked
+    }//GEN-LAST:event_ImagenH3MouseClicked
 
-    private void Imagen2aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen2aMouseClicked
+    private void InventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InventarioMouseClicked
         try {
             JFrameInventario _inventario = new JFrameInventario(); // TODO add your handling code here:
             _inventario.setVisible(true);
@@ -597,13 +627,12 @@ public class JFrameProveedor extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_Imagen2aMouseClicked
+    }//GEN-LAST:event_InventarioMouseClicked
 
-    private void Imagen4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen4MouseClicked
+    private void ImagenH5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH5MouseClicked
         JFrameReporte _reporte = new JFrameReporte(); // TODO add your handling code here:
         _reporte.setVisible(true);
-
-    }//GEN-LAST:event_Imagen4MouseClicked
+    }//GEN-LAST:event_ImagenH5MouseClicked
 
     private void Imagen5aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen5aMouseClicked
         System.exit(0);
@@ -611,9 +640,9 @@ public class JFrameProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_Imagen5aMouseClicked
 
-    private void Imagen5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen5MouseClicked
+    private void ImagenH6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH6MouseClicked
         System.exit(0);
-    }//GEN-LAST:event_Imagen5MouseClicked
+    }//GEN-LAST:event_ImagenH6MouseClicked
 
     private void ImagenHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenHMouseClicked
         JframeHome _home = new JframeHome(); // TODO add your handling code here:
@@ -623,13 +652,17 @@ public class JFrameProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ImagenHMouseClicked
 
-    private void ImagenH1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH1MouseClicked
+    private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
         JframeHome _home = new JframeHome(); // TODO add your handling code here:
         _home.setVisible(true);
         this.dispose();
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_ImagenH1MouseClicked
+    }//GEN-LAST:event_HomeMouseClicked
+
+    private void ImagenH7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH7MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ImagenH7MouseClicked
 
     private void fullscreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -691,32 +724,65 @@ public class JFrameProveedor extends javax.swing.JFrame {
             }
         });
     }
+    
+        private void mostrarImagen(JLabel lbl, String ruta) {
+        this.imagen = new ImageIcon(ruta);
+        this.icono = new ImageIcon(
+                this.imagen.getImage().getScaledInstance(
+                        lbl.getWidth(),
+                        lbl.getHeight(),
+                        Image.SCALE_DEFAULT));
+        lbl.setIcon(this.icono);
+        this.repaint();
+
+    }
+    
+       private void icons(){
+        
+     setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Icono.png")).getImage());
+     this.mostrarImagen(ImagenH,
+                "src\\Imagenes\\home.png");     
+     this.mostrarImagen(ImagenH2,
+                "src\\Imagenes\\Carrito.png");
+        this.mostrarImagen(ImagenH3,
+                "src\\Imagenes\\Inventario.png");
+        this.mostrarImagen(ImagenH4,
+                "src\\Imagenes\\Salida.png");
+        this.mostrarImagen(ImagenH5,
+                "src\\Imagenes\\Reporte.png");
+        this.mostrarImagen(ImagenH6,
+                "src\\Imagenes\\Proveedores.png");
+            this.mostrarImagen(ImagenH7,
+                "src\\Imagenes\\login.png");
+            
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Imagen1;
-    private javax.swing.JLabel Imagen1a;
-    private javax.swing.JLabel Imagen2;
-    private javax.swing.JLabel Imagen2a;
-    private javax.swing.JLabel Imagen3;
-    private javax.swing.JLabel Imagen3a;
-    private javax.swing.JLabel Imagen4;
-    private javax.swing.JLabel Imagen4a;
-    private javax.swing.JLabel Imagen5;
+    private javax.swing.JLabel Home;
     private javax.swing.JLabel Imagen5a;
     private javax.swing.JLabel ImagenH;
-    private javax.swing.JLabel ImagenH1;
+    private javax.swing.JLabel ImagenH2;
+    private javax.swing.JLabel ImagenH3;
+    private javax.swing.JLabel ImagenH4;
+    private javax.swing.JLabel ImagenH5;
+    private javax.swing.JLabel ImagenH6;
+    private javax.swing.JLabel ImagenH7;
+    private javax.swing.JLabel Inventario;
+    private javax.swing.JLabel Proveedores;
+    private javax.swing.JLabel Sistemaventas;
+    private javax.swing.JLabel cerrarsesion;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox jComboBoxBanco;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableHistorial;
@@ -726,5 +792,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
     private javax.swing.JTextField jTextNombreContacto;
     private javax.swing.JTextField jTextNumeroCuenta;
     private javax.swing.JTextField jTextTelefono;
+    private javax.swing.JLabel registrosSalida;
+    private javax.swing.JLabel reportes;
     // End of variables declaration//GEN-END:variables
 }

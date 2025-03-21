@@ -29,6 +29,8 @@ public class JFrameSalida extends javax.swing.JFrame {
     public JFrameSalida() throws SQLException {
         initComponents();
         
+        icons();
+        
           //======================FULLSCREEN===============================//
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             int screenWidth = screenSize.width;
@@ -48,20 +50,7 @@ public class JFrameSalida extends javax.swing.JFrame {
         getContentPane().revalidate();
     }
 });
-            //==============================================================//
-        
-        this.mostrarImagen(Imagen1,
-                "src\\Imagenes\\Carrito.png");
-        this.mostrarImagen(Imagen2,
-                "src\\Imagenes\\Inventario.png");
-        this.mostrarImagen(Imagen3,
-                "src\\Imagenes\\Salida.png");
-        this.mostrarImagen(Imagen4,
-                "src\\Imagenes\\Reporte.png");
-        this.mostrarImagen(Imagen5,
-                "src\\Imagenes\\login.png");
-        this.mostrarImagen(ImagenH,
-                "src\\Imagenes\\home.png");
+    
 
         setTitle("SysControl");
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Icono.png")).getImage());
@@ -102,29 +91,31 @@ public class JFrameSalida extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableSalida = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        Imagen1a = new javax.swing.JLabel();
-        Imagen3a = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        Imagen3 = new javax.swing.JLabel();
+        Sistemaventas = new javax.swing.JLabel();
+        registrosSalida = new javax.swing.JLabel();
+        Proveedores = new javax.swing.JLabel();
+        ImagenH4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        Imagen4a = new javax.swing.JLabel();
+        reportes = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        Imagen1 = new javax.swing.JLabel();
-        Imagen2 = new javax.swing.JLabel();
-        Imagen2a = new javax.swing.JLabel();
-        Imagen4 = new javax.swing.JLabel();
+        ImagenH2 = new javax.swing.JLabel();
+        ImagenH3 = new javax.swing.JLabel();
+        Inventario = new javax.swing.JLabel();
+        ImagenH5 = new javax.swing.JLabel();
         Imagen5a = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        Imagen5 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        ImagenH6 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         ImagenH = new javax.swing.JLabel();
-        ImagenH1 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        Home = new javax.swing.JLabel();
+        ImagenH7 = new javax.swing.JLabel();
+        cerrarsesion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(211, 217, 254));
@@ -188,83 +179,96 @@ public class JFrameSalida extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 1030, 530));
 
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        jLabel13.setText("Registro de salidas");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setText("Tabla de facturas registradas");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, -1, -1));
+
         jPanel5.setBackground(new java.awt.Color(70, 132, 244));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Imagen1a.addMouseListener(new java.awt.event.MouseAdapter() {
+        Sistemaventas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen1aMouseClicked(evt);
+                SistemaventasMouseClicked(evt);
             }
         });
-        jPanel5.add(Imagen1a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 170, 40));
+        jPanel5.add(Sistemaventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 170, 40));
 
-        Imagen3a.addMouseListener(new java.awt.event.MouseAdapter() {
+        registrosSalida.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen3aMouseClicked(evt);
+                registrosSalidaMouseClicked(evt);
             }
         });
-        jPanel5.add(Imagen3a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 150, 40));
+        jPanel5.add(registrosSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 150, 40));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Cerrar sesión");
-        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 460, 140, -1));
-
-        Imagen3.setText("Imagen 3");
-        Imagen3.addMouseListener(new java.awt.event.MouseAdapter() {
+        Proveedores.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        Proveedores.setForeground(new java.awt.Color(255, 255, 255));
+        Proveedores.setText("Proveedores");
+        Proveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen3MouseClicked(evt);
+                ProveedoresMouseClicked(evt);
             }
         });
-        jPanel5.add(Imagen3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 40, 40));
+        jPanel5.add(Proveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 460, 140, -1));
+
+        ImagenH4.setText("Imagen 3");
+        ImagenH4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImagenH4MouseClicked(evt);
+            }
+        });
+        jPanel5.add(ImagenH4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 40, 40));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Registro de salidas");
         jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, -1, -1));
 
-        Imagen4a.addMouseListener(new java.awt.event.MouseAdapter() {
+        reportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen4aMouseClicked(evt);
+                reportesMouseClicked(evt);
             }
         });
-        jPanel5.add(Imagen4a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 150, 40));
+        jPanel5.add(reportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 150, 40));
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Reportes");
         jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 110, -1));
 
-        Imagen1.setText("Imagen 1");
-        Imagen1.addMouseListener(new java.awt.event.MouseAdapter() {
+        ImagenH2.setText("Imagen 1");
+        ImagenH2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen1MouseClicked(evt);
+                ImagenH2MouseClicked(evt);
             }
         });
-        jPanel5.add(Imagen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 40, 40));
+        jPanel5.add(ImagenH2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 40, 40));
 
-        Imagen2.setText("Imagen 2");
-        Imagen2.addMouseListener(new java.awt.event.MouseAdapter() {
+        ImagenH3.setText("Imagen 2");
+        ImagenH3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen2MouseClicked(evt);
+                ImagenH3MouseClicked(evt);
             }
         });
-        jPanel5.add(Imagen2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 40, 40));
+        jPanel5.add(ImagenH3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 40, 40));
 
-        Imagen2a.addMouseListener(new java.awt.event.MouseAdapter() {
+        Inventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen2aMouseClicked(evt);
+                InventarioMouseClicked(evt);
             }
         });
-        jPanel5.add(Imagen2a, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 160, 40));
+        jPanel5.add(Inventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 160, 40));
 
-        Imagen4.setText("Imagen 4");
-        Imagen4.addMouseListener(new java.awt.event.MouseAdapter() {
+        ImagenH5.setText("Imagen 4");
+        ImagenH5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen4MouseClicked(evt);
+                ImagenH5MouseClicked(evt);
             }
         });
-        jPanel5.add(Imagen4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 40, 40));
+        jPanel5.add(ImagenH5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 40, 40));
 
         Imagen5a.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -278,38 +282,38 @@ public class JFrameSalida extends javax.swing.JFrame {
         jLabel6.setText("Inventario");
         jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 140, -1));
 
-        Imagen5.setText("Imagen5");
-        Imagen5.addMouseListener(new java.awt.event.MouseAdapter() {
+        ImagenH6.setText("Imagen5");
+        ImagenH6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Imagen5MouseClicked(evt);
+                ImagenH6MouseClicked(evt);
             }
         });
-        jPanel5.add(Imagen5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 40, 40));
+        jPanel5.add(ImagenH6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 40, 40));
 
-        jPanel4.setBackground(new java.awt.Color(35, 97, 191));
+        jPanel3.setBackground(new java.awt.Color(35, 97, 191));
 
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("SysControl");
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("SysControl");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(76, 76, 76)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(84, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jLabel10)
+                .addComponent(jLabel9)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jPanel5.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 80));
+        jPanel5.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 80));
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -329,22 +333,27 @@ public class JFrameSalida extends javax.swing.JFrame {
         });
         jPanel5.add(ImagenH, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 40, 40));
 
-        ImagenH1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Home.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ImagenH1MouseClicked(evt);
+                HomeMouseClicked(evt);
             }
         });
-        jPanel5.add(ImagenH1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 40));
+        jPanel5.add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 40));
+
+        ImagenH7.setText("Imagen5");
+        ImagenH7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImagenH7MouseClicked(evt);
+            }
+        });
+        jPanel5.add(ImagenH7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 40, 40));
+
+        cerrarsesion.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        cerrarsesion.setForeground(new java.awt.Color(255, 255, 255));
+        cerrarsesion.setText("Cerrar sesión");
+        jPanel5.add(cerrarsesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 520, 140, -1));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 1080));
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jLabel13.setText("Registro de salidas");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setText("Tabla de facturas registradas");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -378,7 +387,7 @@ public class JFrameSalida extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1KeyReleased
 
-    private void Imagen1aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen1aMouseClicked
+    private void SistemaventasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SistemaventasMouseClicked
 
         try {
             JFrameVenta ven = new JFrameVenta(); // TODO add your handling code here:
@@ -387,9 +396,9 @@ public class JFrameSalida extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_Imagen1aMouseClicked
+    }//GEN-LAST:event_SistemaventasMouseClicked
 
-    private void Imagen3aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen3aMouseClicked
+    private void registrosSalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrosSalidaMouseClicked
 
         try {
             JFrameSalida _salida = new JFrameSalida(); // TODO add your handling code here:
@@ -400,9 +409,20 @@ public class JFrameSalida extends javax.swing.JFrame {
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_Imagen3aMouseClicked
+    }//GEN-LAST:event_registrosSalidaMouseClicked
 
-    private void Imagen3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen3MouseClicked
+    private void ProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedoresMouseClicked
+        try {
+            JFrameProveedor proveedor = new JFrameProveedor();
+            proveedor.setVisible(true);
+            this.dispose();
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ProveedoresMouseClicked
+
+    private void ImagenH4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH4MouseClicked
 
         try {
             JFrameSalida _salida = new JFrameSalida(); // TODO add your handling code here:
@@ -413,15 +433,16 @@ public class JFrameSalida extends javax.swing.JFrame {
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_Imagen3MouseClicked
+    }//GEN-LAST:event_ImagenH4MouseClicked
 
-    private void Imagen4aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen4aMouseClicked
+    private void reportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportesMouseClicked
 
         JFrameReporte _reporte = new JFrameReporte(); // TODO add your handling code here:
         _reporte.setVisible(true);
-    }//GEN-LAST:event_Imagen4aMouseClicked
 
-    private void Imagen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen1MouseClicked
+    }//GEN-LAST:event_reportesMouseClicked
+
+    private void ImagenH2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH2MouseClicked
         try {
             JFrameVenta ven = new JFrameVenta(); // TODO add your handling code here:
             ven.setVisible(true);
@@ -430,9 +451,9 @@ public class JFrameSalida extends javax.swing.JFrame {
             Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_Imagen1MouseClicked
+    }//GEN-LAST:event_ImagenH2MouseClicked
 
-    private void Imagen2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen2MouseClicked
+    private void ImagenH3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH3MouseClicked
         try {
             JFrameInventario _inventario = new JFrameInventario(); // TODO add your handling code here:
             _inventario.setVisible(true);
@@ -440,9 +461,9 @@ public class JFrameSalida extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_Imagen2MouseClicked
+    }//GEN-LAST:event_ImagenH3MouseClicked
 
-    private void Imagen2aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen2aMouseClicked
+    private void InventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InventarioMouseClicked
         try {
             JFrameInventario _inventario = new JFrameInventario(); // TODO add your handling code here:
             _inventario.setVisible(true);
@@ -450,12 +471,13 @@ public class JFrameSalida extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_Imagen2aMouseClicked
+    }//GEN-LAST:event_InventarioMouseClicked
 
-    private void Imagen4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen4MouseClicked
+    private void ImagenH5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH5MouseClicked
         JFrameReporte _reporte = new JFrameReporte(); // TODO add your handling code here:
         _reporte.setVisible(true);
-    }//GEN-LAST:event_Imagen4MouseClicked
+
+    }//GEN-LAST:event_ImagenH5MouseClicked
 
     private void Imagen5aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen5aMouseClicked
         System.exit(0);
@@ -463,10 +485,9 @@ public class JFrameSalida extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_Imagen5aMouseClicked
 
-    private void Imagen5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen5MouseClicked
+    private void ImagenH6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH6MouseClicked
         System.exit(0);
-
-    }//GEN-LAST:event_Imagen5MouseClicked
+    }//GEN-LAST:event_ImagenH6MouseClicked
 
     private void ImagenHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenHMouseClicked
         JframeHome _home = new JframeHome(); // TODO add your handling code here:
@@ -476,13 +497,17 @@ public class JFrameSalida extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ImagenHMouseClicked
 
-    private void ImagenH1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH1MouseClicked
+    private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
         JframeHome _home = new JframeHome(); // TODO add your handling code here:
         _home.setVisible(true);
         this.dispose();
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_ImagenH1MouseClicked
+    }//GEN-LAST:event_HomeMouseClicked
+
+    private void ImagenH7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH7MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ImagenH7MouseClicked
 
     private void buscarDetalles(String dato) throws SQLException {
         List<Detalle> deta = new DAODetalle().busquedaPorFecha(dato);
@@ -511,37 +536,59 @@ public class JFrameSalida extends javax.swing.JFrame {
         this.repaint();
 
     }
+    
+       private void icons(){
+        
+     setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Icono.png")).getImage());
+     this.mostrarImagen(ImagenH,
+                "src\\Imagenes\\home.png");     
+     this.mostrarImagen(ImagenH2,
+                "src\\Imagenes\\Carrito.png");
+        this.mostrarImagen(ImagenH3,
+                "src\\Imagenes\\Inventario.png");
+        this.mostrarImagen(ImagenH4,
+                "src\\Imagenes\\Salida.png");
+        this.mostrarImagen(ImagenH5,
+                "src\\Imagenes\\Reporte.png");
+        this.mostrarImagen(ImagenH6,
+                "src\\Imagenes\\Proveedores.png");
+            this.mostrarImagen(ImagenH7,
+                "src\\Imagenes\\login.png");
+            
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Imagen1;
-    private javax.swing.JLabel Imagen1a;
-    private javax.swing.JLabel Imagen2;
-    private javax.swing.JLabel Imagen2a;
-    private javax.swing.JLabel Imagen3;
-    private javax.swing.JLabel Imagen3a;
-    private javax.swing.JLabel Imagen4;
-    private javax.swing.JLabel Imagen4a;
-    private javax.swing.JLabel Imagen5;
+    private javax.swing.JLabel Home;
     private javax.swing.JLabel Imagen5a;
     private javax.swing.JLabel ImagenH;
-    private javax.swing.JLabel ImagenH1;
+    private javax.swing.JLabel ImagenH2;
+    private javax.swing.JLabel ImagenH3;
+    private javax.swing.JLabel ImagenH4;
+    private javax.swing.JLabel ImagenH5;
+    private javax.swing.JLabel ImagenH6;
+    private javax.swing.JLabel ImagenH7;
+    private javax.swing.JLabel Inventario;
+    private javax.swing.JLabel Proveedores;
+    private javax.swing.JLabel Sistemaventas;
+    private javax.swing.JLabel cerrarsesion;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableSalida;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel registrosSalida;
+    private javax.swing.JLabel reportes;
     // End of variables declaration//GEN-END:variables
 }
