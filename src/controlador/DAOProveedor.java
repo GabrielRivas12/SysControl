@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import modelo.Database;
+import modelo.Producto;
 import modelo.Proveedor;
 
 /**
@@ -107,4 +108,29 @@ public class DAOProveedor {
         }
         return filas;
     }
+    
+      public int Insertar(Proveedor provee) throws SQLException {
+        try {
+
+            CallableStatement st = conectar.Conectar().
+                    prepareCall("{CALL insertarProveedor(?,?,?,?,?,?,?) }");
+            st.setString(1, provee.getNombre());
+            st.setString(2, provee.getTipo_proveedor());
+            st.setString(3, provee.getNombre_contacto());
+            st.setInt(4, provee.getTelefono());
+            st.setString(5,provee.getCorreo());
+            st.setInt(6,provee.getId_banco());
+            st.setInt(7, provee.getNumero_cuenta());
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e + "Error");
+            conectar.cerrarConexion();
+            return -1;
+        }
+        conectar.cerrarConexion();
+        return 0;
+    }
+    
 }

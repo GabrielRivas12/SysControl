@@ -5,6 +5,8 @@
 package controlador;
 
 import com.sun.jdi.connect.spi.Connection;
+import static java.lang.Math.exp;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.Conexion;
 import modelo.Database;
+import modelo.Transacciones;
 import modelo.Transacciones;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -75,6 +78,31 @@ public class DAOTransaccion {
             System.out.println("Error" + e);
         }
         return filas;
+    }
+    
+          public int Insertar(Transacciones trans) throws SQLException {
+        try {
+
+            CallableStatement st = conectar.Conectar().
+                    prepareCall("{CALL insertarHistorial(?,?,?,?,?) }");
+            st.setInt(1, trans.getId_proveedor());
+            st.setInt(2, trans.getId_producto());
+            st.setInt(3, trans.getCantidad());
+             // Convertir java.util.Date a java.sql.Date si es necesario
+            java.sql.Date fechaSQL = new java.sql.Date(trans.getFecha().getTime());
+            st.setDate(4, fechaSQL);
+            
+            st.setString(5,trans.getEstado());
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e + "Error");
+            conectar.cerrarConexion();
+            return -1;
+        }
+        conectar.cerrarConexion();
+        return 0;
     }
 
 public void FacturaProvicional(int id_proveedor) throws JRException {

@@ -38,6 +38,14 @@ public class Transacciones {
         this.fecha = fecha;
         this.estado = estado;
     }
+    
+    public Transacciones(int id_proveedor, int id_producto, int cantidad, Date fecha, String estado) {
+        this.id_proveedor = id_proveedor;
+        this.id_producto = id_producto;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+        this.estado = estado;
+    }
 
     public int getId_transacion() {
         return id_transacion;

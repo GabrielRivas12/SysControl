@@ -18,7 +18,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -234,16 +236,15 @@ public class JFrameProveedor extends javax.swing.JFrame {
         jTextTelefono = new javax.swing.JTextField();
         jTextCorreo = new javax.swing.JTextField();
         jTextNumeroCuenta = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboTipo = new javax.swing.JComboBox<>();
         jTextIDproveedor = new javax.swing.JTextField();
         jTextIDproducto = new javax.swing.JTextField();
         jTextCantidad = new javax.swing.JTextField();
         jTextFecha = new javax.swing.JTextField();
-        jTextEstado = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButtonAñadirProveedor = new javax.swing.JButton();
+        jButtonAñadirHistorial = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -258,6 +259,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jComboEstado = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         Sistemaventas = new javax.swing.JLabel();
         registrosSalida = new javax.swing.JLabel();
@@ -310,15 +312,25 @@ public class JFrameProveedor extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTableHistorial);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minorista", "Mayorista", "Directo", "Exclusivo", "Local" }));
+        jComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minorista", "Mayorista", "Directo", "Exclusivo", "Local" }));
 
         jButton1.setText("Borrar");
 
         jButton2.setText("Actualizar");
 
-        jButton3.setText("Añadir");
+        jButtonAñadirProveedor.setText("Añadir");
+        jButtonAñadirProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAñadirProveedorActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Añadir");
+        jButtonAñadirHistorial.setText("Añadir");
+        jButtonAñadirHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAñadirHistorialActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Actualizar");
 
@@ -348,6 +360,8 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
         jLabel13.setText("Estado");
 
+        jComboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "No entregado", "Cancelado", "Entregado" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -362,7 +376,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextNombre))
                                 .addGap(12, 12, 12)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -384,7 +398,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButtonAñadirProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -412,15 +426,18 @@ public class JFrameProveedor extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel12))
-                                .addGap(26, 26, 26)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jTextEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(37, 37, 37)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(26, 26, 26)
+                                        .addComponent(jLabel13))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jButtonAñadirHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(2915, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -443,13 +460,13 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
+                            .addComponent(jButtonAñadirProveedor)
                             .addComponent(jTextCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextIDproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,9 +492,9 @@ public class JFrameProveedor extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton4)
+                        .addComponent(jButtonAñadirHistorial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -803,6 +820,100 @@ public class JFrameProveedor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_SistemaventasMouseClicked
 
+    private void jButtonAñadirProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAñadirProveedorActionPerformed
+       int banco = 0;
+    
+        
+      String Tipo = (String)jComboTipo.getSelectedItem();
+      String seleccionado = jComboBoxBanco.getSelectedItem().toString();
+      String[] partes = seleccionado.split("-"); // Divide el String en partes usando "-"
+      banco = Integer.parseInt(partes[0].trim()); // Convierte la primera parte en número
+
+      
+      String nom = jTextNombre.getText();
+      String nomContac = jTextNombreContacto.getText();
+      String telef =jTextTelefono.getText();
+      String correo = jTextCorreo.getText();
+      String Ncuenta = jTextNumeroCuenta.getText();
+      
+        if (banco == 0 || Tipo.equals("") || nom.equals("") || nomContac.equals("") || telef.equals("") || correo.equals("") || Ncuenta.equals("") ) {
+            JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorios");
+        }else{
+            try{
+                   int teleff = Integer.parseInt(telef);
+                   int Ncuentaa = Integer.parseInt(Ncuenta);
+                   
+                   Proveedor proveedor = new Proveedor(nom, Tipo, nomContac, teleff, correo, banco, Ncuentaa);
+                   DAOProveedor dao = new DAOProveedor();
+                   
+                   if(dao.Insertar(proveedor) == 0){
+                       JOptionPane.showMessageDialog(rootPane, "Registro agregado");
+                   }else{
+                       JOptionPane.showMessageDialog(rootPane, "Error a; agregar el registro");
+                   }
+                   
+            } catch (SQLException ex) {
+               Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+           } try {
+               ObtenerProveedor();
+               limpiar_campoPro();
+               ComboBancos();
+           } catch (SQLException ex) {
+                Logger.getLogger(JFrameInventario.class.getName()).log(Level.SEVERE, null, ex);
+         
+            
+           }
+        }
+
+    }//GEN-LAST:event_jButtonAñadirProveedorActionPerformed
+
+    private void jButtonAñadirHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAñadirHistorialActionPerformed
+
+        String idprove = jTextIDproveedor.getText();
+        String idpro = jTextIDproducto.getText();
+        String cant = jTextCantidad.getText();
+        String fech = jTextFecha.getText();
+        String estad = (String)jComboEstado.getSelectedItem();
+
+        
+        if (idprove.equals("") || idpro.equals("") || cant.equals("") || fech.equals("") || estad.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorios");
+        }else{
+            try{
+                //Definir e; formato de la fecha
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
+                
+                int idproveedor = Integer.parseInt(idprove);
+                int idproducto = Integer.parseInt(idpro);
+                int cantidad = Integer.parseInt(cant);
+                Date Fecha = formato.parse(fech);
+                
+                Transacciones trans = new Transacciones(idproveedor, idproducto, cantidad, Fecha, estad);
+                DAOTransaccion dao = new DAOTransaccion();
+                if(dao.Insertar(trans) == 0){
+                    JOptionPane.showMessageDialog(rootPane, "Registro agregado");
+                }
+                
+                
+            } catch (ParseException ex) {
+                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }try{
+                ObtenerHistoriales();
+                botonImprimir(daoTrans);
+                limpiar_campoHistorial();
+            }catch (SQLException ex) {
+                Logger.getLogger(JFrameInventario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAñadirHistorialActionPerformed
+
     private void fullscreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = screenSize.width;
@@ -896,7 +1007,22 @@ public class JFrameProveedor extends javax.swing.JFrame {
             
     }
 
-
+    private void limpiar_campoPro(){
+    jTextNombre.setText("");
+    jTextNombreContacto.setText("");
+    jTextTelefono.setText("");
+    jTextCorreo.setText("");
+    jTextNumeroCuenta.setText("");
+}
+    
+    private void limpiar_campoHistorial(){
+     jTextIDproveedor.setText("");
+     jTextIDproducto.setText("");
+     jTextCantidad.setText("");
+     jTextFecha.setText("");
+    }
+       
+       
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Home;
     private javax.swing.JLabel Imagen5a;
@@ -913,12 +1039,13 @@ public class JFrameProveedor extends javax.swing.JFrame {
     private javax.swing.JLabel cerrarsesion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButtonAñadirHistorial;
+    private javax.swing.JButton jButtonAñadirProveedor;
     private javax.swing.JComboBox jComboBoxBanco;
+    private javax.swing.JComboBox<String> jComboEstado;
+    private javax.swing.JComboBox<String> jComboTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -946,7 +1073,6 @@ public class JFrameProveedor extends javax.swing.JFrame {
     private javax.swing.JTable jTableProveedores;
     private javax.swing.JTextField jTextCantidad;
     private javax.swing.JTextField jTextCorreo;
-    private javax.swing.JTextField jTextEstado;
     private javax.swing.JTextField jTextFecha;
     private javax.swing.JTextField jTextIDproducto;
     private javax.swing.JTextField jTextIDproveedor;

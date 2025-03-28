@@ -15,7 +15,7 @@ public class Banco {
     
      @Override
     public String toString(){
-    return nombre;
+    return id_banco + " - "+ nombre;
     }
     
     
