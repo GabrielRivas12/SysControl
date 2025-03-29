@@ -241,12 +241,12 @@ public class JFrameProveedor extends javax.swing.JFrame {
         jTextIDproducto = new javax.swing.JTextField();
         jTextCantidad = new javax.swing.JTextField();
         jTextFecha = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jButtonBorrarProveedor = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButtonAñadirProveedor = new javax.swing.JButton();
         jButtonAñadirHistorial = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jButtonBorrarHistorial = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -314,7 +314,12 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
         jComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minorista", "Mayorista", "Directo", "Exclusivo", "Local" }));
 
-        jButton1.setText("Borrar");
+        jButtonBorrarProveedor.setText("Borrar");
+        jButtonBorrarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarProveedorActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Actualizar");
 
@@ -334,7 +339,12 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
         jButton5.setText("Actualizar");
 
-        jButton6.setText("Borrar");
+        jButtonBorrarHistorial.setText("Borrar");
+        jButtonBorrarHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarHistorialActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Nombre del proveedor");
 
@@ -397,7 +407,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonBorrarProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonAñadirProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -436,7 +446,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonBorrarHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonAñadirHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(2915, Short.MAX_VALUE))
         );
@@ -478,7 +488,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                                         .addComponent(jLabel11))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton1)
+                                        .addComponent(jButtonBorrarProveedor)
                                         .addComponent(jTextNumeroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jComboBoxBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jTextIDproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -498,7 +508,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6)))
+                        .addComponent(jButtonBorrarHistorial)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -914,6 +924,62 @@ public class JFrameProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAñadirHistorialActionPerformed
 
+    private void jButtonBorrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarProveedorActionPerformed
+        try{
+            int fila = jTableProveedores.getSelectedRow();
+            int id = 0;
+            
+            if (fila == -1) {
+                 JOptionPane.showMessageDialog(rootPane, "Seleccione un Proveedor para borrar");
+                 return;
+            }else{
+                id = Integer.parseInt(jTableProveedores.getValueAt(fila, 0).toString());
+            }
+            
+            DAOProveedor dao = new DAOProveedor();
+            
+           
+                if (dao.Borrar(id) == 0) {
+                    ObtenerProveedor();
+                }else{
+                JOptionPane.showMessageDialog(rootPane, "Error al borrar Producto");
+                ObtenerProveedor();
+                }
+            }catch (SQLException ex) {
+                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+
+    }//GEN-LAST:event_jButtonBorrarProveedorActionPerformed
+
+    private void jButtonBorrarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarHistorialActionPerformed
+           try{
+            int fila = jTableHistorial.getSelectedRow();
+            int id = 0;
+            
+            if (fila == -1) {
+                 JOptionPane.showMessageDialog(rootPane, "Seleccione una fila para borrar");
+                 return;
+            }else{
+                id = Integer.parseInt(jTableHistorial.getValueAt(fila, 0).toString());
+            }
+            
+            DAOTransaccion dao = new DAOTransaccion();
+            
+           
+                if (dao.Borrar(id) == 0) {
+                    ObtenerHistoriales();
+                    botonImprimir(daoTrans);
+                }else{
+                JOptionPane.showMessageDialog(rootPane, "Error al borrar la fila");
+                ObtenerHistoriales();
+                    botonImprimir(daoTrans);
+                }
+            }catch (SQLException ex) {
+                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButtonBorrarHistorialActionPerformed
+
     private void fullscreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = screenSize.width;
@@ -1037,12 +1103,12 @@ public class JFrameProveedor extends javax.swing.JFrame {
     private javax.swing.JLabel Proveedores;
     private javax.swing.JLabel Sistemaventas;
     private javax.swing.JLabel cerrarsesion;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonAñadirHistorial;
     private javax.swing.JButton jButtonAñadirProveedor;
+    private javax.swing.JButton jButtonBorrarHistorial;
+    private javax.swing.JButton jButtonBorrarProveedor;
     private javax.swing.JComboBox jComboBoxBanco;
     private javax.swing.JComboBox<String> jComboEstado;
     private javax.swing.JComboBox<String> jComboTipo;

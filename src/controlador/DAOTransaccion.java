@@ -1,11 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
-import com.sun.jdi.connect.spi.Connection;
-import static java.lang.Math.exp;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +11,6 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.Conexion;
 import modelo.Database;
-import modelo.Transacciones;
 import modelo.Transacciones;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -79,8 +72,8 @@ public class DAOTransaccion {
         }
         return filas;
     }
-    
-          public int Insertar(Transacciones trans) throws SQLException {
+
+    public int Insertar(Transacciones trans) throws SQLException {
         try {
 
             CallableStatement st = conectar.Conectar().
@@ -88,11 +81,11 @@ public class DAOTransaccion {
             st.setInt(1, trans.getId_proveedor());
             st.setInt(2, trans.getId_producto());
             st.setInt(3, trans.getCantidad());
-             // Convertir java.util.Date a java.sql.Date si es necesario
+            // Convertir java.util.Date a java.sql.Date si es necesario
             java.sql.Date fechaSQL = new java.sql.Date(trans.getFecha().getTime());
             st.setDate(4, fechaSQL);
-            
-            st.setString(5,trans.getEstado());
+
+            st.setString(5, trans.getEstado());
 
             st.executeUpdate();
 
@@ -105,35 +98,72 @@ public class DAOTransaccion {
         return 0;
     }
 
-public void FacturaProvicional(int id_proveedor) throws JRException {
+    public int Borrar(int idtransacion) throws SQLException {
+        try {
+            CallableStatement st = conectar.Conectar().
+                    prepareCall("{CALL borrarHistorial(?)}");
+            st.setInt(1, idtransacion);
 
-    
-    
-    // Ruta del archivo .jrxml
-    String path = "src/Reportes/FacturaProvicional.jrxml";
-
-    JasperReport jr;
-
-    try {
-        // Compilar el archivo .jrxml
-        jr = JasperCompileManager.compileReport(path);
-
-        // Crear un mapa de parámetros y pasar el ProveedorID
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("id_proveedor", id_proveedor);  // Pasa el ProveedorID como parámetro
-
-        // Llenar el reporte con los parámetros
-        JasperPrint mostrarReporte4 = JasperFillManager.fillReport(jr, parametros, conectar.Conectar());
-
-        // Mostrar el reporte
-        JasperViewer.viewReport(mostrarReporte4, false);
-    } catch (JRException e) {
-        JOptionPane.showMessageDialog(null, e);
-        System.out.println("Error" + e);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e + "ERROR");
+            conectar.cerrarConexion();
+            return -1;
+        }
+        conectar.cerrarConexion();
+        return 0;
     }
-}
 
+    public int Actualizar(Transacciones transs) throws SQLException {
+        try {
+            CallableStatement st = conectar.Conectar().
+                    prepareCall("{CALL actualizarHistorial(?,?,?,?,?,?)}");
 
+            st.setInt(1, transs.getId_transacion());
+            st.setInt(2, transs.getId_proveedor());
+            st.setInt(3, transs.getId_producto());
+            st.setInt(4, transs.getCantidad());
+            // Convertir java.util.Date a java.sql.Date si es necesario
+            java.sql.Date fechaSQL = new java.sql.Date(transs.getFecha().getTime());
+            st.setDate(5, fechaSQL);
 
+            st.setString(6, transs.getEstado());
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e + " Error al actualizar autor");
+            conectar.cerrarConexion();
+            return -1;
+        }
+        conectar.cerrarConexion();
+        return 0;
+    }
+
+    public void FacturaProvicional(int id_proveedor) throws JRException {
+
+        // Ruta del archivo .jrxml
+        String path = "src/Reportes/FacturaProvicional.jrxml";
+
+        JasperReport jr;
+
+        try {
+            // Compilar el archivo .jrxml
+            jr = JasperCompileManager.compileReport(path);
+
+            // Crear un mapa de parámetros y pasar el ProveedorID
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("id_proveedor", id_proveedor);  // Pasa el ProveedorID como parámetro
+
+            // Llenar el reporte con los parámetros
+            JasperPrint mostrarReporte4 = JasperFillManager.fillReport(jr, parametros, conectar.Conectar());
+
+            // Mostrar el reporte
+            JasperViewer.viewReport(mostrarReporte4, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+            System.out.println("Error" + e);
+        }
+    }
 
 }

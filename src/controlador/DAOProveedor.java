@@ -4,7 +4,6 @@
  */
 package controlador;
 
-
 import java.sql.CallableStatement;
 import java.util.List;
 import modelo.Conexion;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import modelo.Database;
-import modelo.Producto;
 import modelo.Proveedor;
 
 /**
@@ -22,32 +20,30 @@ import modelo.Proveedor;
  * @author Gabriel Rivas
  */
 public class DAOProveedor {
-    
-       Conexion conectar = Conexion.getInstance();
-       
-           //========Peticion que obtiene los datos de la tabla producto============//
+
+    Conexion conectar = Conexion.getInstance();
+
+    //========Peticion que obtiene los datos de la tabla producto============//
     public List ObtenerProveedores() throws SQLException {
 
         String proced = "listarProveedores()"; //lista de productos
         List<Map> registros = new Database().Listar(proced);
         List<Proveedor> proveedores = new ArrayList();
-       for (Map registro : registros) {
-                Proveedor provee = new Proveedor((int) registro.get("id_proveedor"),
-                        (String) registro.get("nombre"),
-                           (String) registro.get("tipo_proveedor"),
-                           (String) registro.get("nombre_contacto"),
-                           (int) registro.get("telefono"),
-                           (String) registro.get("correo"),
-                           (int) registro.get("id_banco"),
-                           (int) registro.get("numero_cuenta")
-                );
-                proveedores.add(provee);
+        for (Map registro : registros) {
+            Proveedor provee = new Proveedor((int) registro.get("id_proveedor"),
+                    (String) registro.get("nombre"),
+                    (String) registro.get("tipo_proveedor"),
+                    (String) registro.get("nombre_contacto"),
+                    (int) registro.get("telefono"),
+                    (String) registro.get("correo"),
+                    (int) registro.get("id_banco"),
+                    (int) registro.get("numero_cuenta")
+            );
+            proveedores.add(provee);
 
-            }
+        }
         return proveedores;
     }
-
-    
 
     //========Peticion de busqueda de producto a la base de datos============//
     public List busquedaProveedores(String parametroBusqueda) throws SQLException {
@@ -69,12 +65,12 @@ public class DAOProveedor {
             for (Map registro : registros) {
                 Proveedor provee = new Proveedor((int) registro.get("id_proveedor"),
                         (String) registro.get("nombre"),
-                           (String) registro.get("tipo_proveedor"),
-                           (String) registro.get("nombre_contacto"),
-                           (int) registro.get("telefono"),
-                               (String) registro.get("correo"),
-                           (int) registro.get("id_banco"),
-                           (int) registro.get("cuenta")
+                        (String) registro.get("tipo_proveedor"),
+                        (String) registro.get("nombre_contacto"),
+                        (int) registro.get("telefono"),
+                        (String) registro.get("correo"),
+                        (int) registro.get("id_banco"),
+                        (int) registro.get("cuenta")
                 );
                 proveedores.add(provee);
 
@@ -84,7 +80,7 @@ public class DAOProveedor {
         }
         return proveedores;
     }
-    
+
     //==============Metodo que organiza los datos obtenidos==================//
     private List OrganizarDatos(ResultSet rs) {
         List filas = new ArrayList();
@@ -108,8 +104,8 @@ public class DAOProveedor {
         }
         return filas;
     }
-    
-      public int Insertar(Proveedor provee) throws SQLException {
+
+    public int Insertar(Proveedor provee) throws SQLException {
         try {
 
             CallableStatement st = conectar.Conectar().
@@ -118,8 +114,8 @@ public class DAOProveedor {
             st.setString(2, provee.getTipo_proveedor());
             st.setString(3, provee.getNombre_contacto());
             st.setInt(4, provee.getTelefono());
-            st.setString(5,provee.getCorreo());
-            st.setInt(6,provee.getId_banco());
+            st.setString(5, provee.getCorreo());
+            st.setInt(6, provee.getId_banco());
             st.setInt(7, provee.getNumero_cuenta());
 
             st.executeUpdate();
@@ -132,5 +128,45 @@ public class DAOProveedor {
         conectar.cerrarConexion();
         return 0;
     }
-    
+
+    public int Borrar(int idProveedor) throws SQLException {
+        try {
+            CallableStatement st = conectar.Conectar().
+                    prepareCall("{CALL borrarProveedor(?)}");
+            st.setInt(1, idProveedor);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e + "ERROR");
+            conectar.cerrarConexion();
+            return -1;
+        }
+        conectar.cerrarConexion();
+        return 0;
+    }
+
+    public int Actualizar(Proveedor provee) throws SQLException {
+        try {
+            CallableStatement st = conectar.Conectar().
+                    prepareCall("{CALL actualizarProducto(?,?,?,?,?,?,?,?)}");
+
+            st.setInt(1,provee.getId_proveedor());
+            st.setString(2, provee.getNombre());
+            st.setString(3, provee.getTipo_proveedor());
+            st.setString(4, provee.getNombre_contacto());
+            st.setInt(5, provee.getTelefono());
+            st.setString(6, provee.getCorreo());
+            st.setInt(7, provee.getId_banco());
+            st.setInt(8, provee.getNumero_cuenta());
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e + " Error al actualizar autor");
+            conectar.cerrarConexion();
+            return -1;
+        }
+        conectar.cerrarConexion();
+        return 0;
+    }
 }
