@@ -148,7 +148,7 @@ public class DAOProveedor {
     public int Actualizar(Proveedor provee) throws SQLException {
         try {
             CallableStatement st = conectar.Conectar().
-                    prepareCall("{CALL actualizarProducto(?,?,?,?,?,?,?,?)}");
+                    prepareCall("{CALL actualizarProveedor(?,?,?,?,?,?,?,?)}");
 
             st.setInt(1,provee.getId_proveedor());
             st.setString(2, provee.getNombre());

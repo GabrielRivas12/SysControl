@@ -88,7 +88,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jButton2" max="32767" attributes="0"/>
+                              <Component id="jButtonActualizarProveedor" max="32767" attributes="0"/>
                               <Component id="jButtonBorrarProveedor" max="32767" attributes="0"/>
                               <Component id="jButtonAñadirProveedor" alignment="0" max="32767" attributes="0"/>
                           </Group>
@@ -140,7 +140,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButtonActualizarHistorial" alignment="0" max="32767" attributes="0"/>
                               <Component id="jButtonBorrarHistorial" alignment="0" max="32767" attributes="0"/>
                               <Component id="jButtonAñadirHistorial" alignment="0" max="32767" attributes="0"/>
                           </Group>
@@ -188,7 +188,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jButtonActualizarProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -221,7 +221,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jButtonAñadirHistorial" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonActualizarHistorial" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButtonBorrarHistorial" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -255,6 +255,9 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTableProveedoresKeyReleased"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -276,6 +279,9 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTableHistorialKeyReleased"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -331,10 +337,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBorrarProveedorActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="jButtonActualizarProveedor">
           <Properties>
             <Property name="text" type="java.lang.String" value="Actualizar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonActualizarProveedorActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonA&#xf1;adirProveedor">
           <Properties>
@@ -352,10 +361,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonA&#xf1;adirHistorialActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton5">
+        <Component class="javax.swing.JButton" name="jButtonActualizarHistorial">
           <Properties>
             <Property name="text" type="java.lang.String" value="Actualizar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonActualizarHistorialActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonBorrarHistorial">
           <Properties>

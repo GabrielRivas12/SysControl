@@ -25,8 +25,6 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.*;
-import vista.JframeHome;
-
 /**
  *
  * @author gabriel rivas
@@ -1409,6 +1407,7 @@ public class JFrameInventario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBorrarExpiracionActionPerformed
 
+    //====>Aqui se llena la lista de objetos de productosmodificados<=========//
     private void jTableInventarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableInventarioKeyReleased
         int filaSeleccionada = jTableInventario.getSelectedRow();
         int columnaSeleccionada = jTableInventario.getSelectedColumn();

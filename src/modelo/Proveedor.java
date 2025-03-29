@@ -10,6 +10,17 @@ package modelo;
  */
 public class Proveedor {
 
+    public Proveedor(int id_proveedor, String nombre, String tipo_proveedor, String nombre_contacto, int telefono, String correo, int id_banco, int numero_cuenta) {
+        this.id_proveedor = id_proveedor;
+        this.nombre = nombre;
+        this.tipo_proveedor = tipo_proveedor;
+        this.nombre_contacto = nombre_contacto;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.id_banco = id_banco;
+        this.numero_cuenta = numero_cuenta;
+    }
+
     
     int id_proveedor;
     String nombre;
@@ -20,16 +31,7 @@ public class Proveedor {
     int id_banco;
     int numero_cuenta;
     
-        public Proveedor(int id_proveedor, String nombre, String tipo_proveedor, String nombre_contacto, int telefono, String correo, int id_banco, int numero_cuenta) {
-        this.id_proveedor = id_proveedor;
-        this.nombre = nombre;
-        this.tipo_proveedor = tipo_proveedor;
-        this.nombre_contacto = nombre_contacto;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.id_banco = id_banco;
-        this.numero_cuenta = numero_cuenta;
-    }
+       
         
         public Proveedor( String nombre, String tipo_proveedor, String nombre_contacto, int telefono, String correo, int id_banco, int numero_cuenta) {
         this.nombre = nombre;

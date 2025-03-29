@@ -20,6 +20,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -30,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
+import modelo.Producto;
 import modelo.Transacciones;
 import net.sf.jasperreports.engine.JRException;
 
@@ -38,7 +40,8 @@ import net.sf.jasperreports.engine.JRException;
  * @author Gabriel Rivas
  */
 public class JFrameProveedor extends javax.swing.JFrame {
- private ImageIcon imagen;
+
+    private ImageIcon imagen;
     private Icon icono;
     private DAOTransaccion daoTrans;  // Declaración
 
@@ -102,9 +105,9 @@ public class JFrameProveedor extends javax.swing.JFrame {
         });
 
     }
-    
-    private void llenarBanco() throws SQLException{
-         DAOBanco daobancos = new DAOBanco();
+
+    private void llenarBanco() throws SQLException {
+        DAOBanco daobancos = new DAOBanco();
         List<Banco> listarBanco = daobancos.ObtenerBancos();
 
         JComboBox<Banco> comboBoxbanco = new JComboBox<>();
@@ -112,7 +115,6 @@ public class JFrameProveedor extends javax.swing.JFrame {
             jComboBoxBanco.addItem(bancos);
         }
     }
-    
 
     private void botonImprimir(DAOTransaccion daoTrans) {
 
@@ -193,7 +195,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
         String[] columnas = {"ID", "ID Proveedor", "ID Producto", "Cantidad", "Monto", "Fecha", "Estado", "Imprimir"};
 
         // Formateador de fecha para mostrar de manera legible
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
         modelo.setColumnIdentifiers(columnas);
         for (Transacciones pr : Transs) {
@@ -242,10 +244,10 @@ public class JFrameProveedor extends javax.swing.JFrame {
         jTextCantidad = new javax.swing.JTextField();
         jTextFecha = new javax.swing.JTextField();
         jButtonBorrarProveedor = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonActualizarProveedor = new javax.swing.JButton();
         jButtonAñadirProveedor = new javax.swing.JButton();
         jButtonAñadirHistorial = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jButtonActualizarHistorial = new javax.swing.JButton();
         jButtonBorrarHistorial = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -297,6 +299,11 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableProveedores.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableProveedoresKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableProveedores);
 
         jTableHistorial.setModel(new javax.swing.table.DefaultTableModel(
@@ -310,6 +317,11 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableHistorial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableHistorialKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableHistorial);
 
         jComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minorista", "Mayorista", "Directo", "Exclusivo", "Local" }));
@@ -321,7 +333,12 @@ public class JFrameProveedor extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Actualizar");
+        jButtonActualizarProveedor.setText("Actualizar");
+        jButtonActualizarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarProveedorActionPerformed(evt);
+            }
+        });
 
         jButtonAñadirProveedor.setText("Añadir");
         jButtonAñadirProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -337,7 +354,12 @@ public class JFrameProveedor extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Actualizar");
+        jButtonActualizarHistorial.setText("Actualizar");
+        jButtonActualizarHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarHistorialActionPerformed(evt);
+            }
+        });
 
         jButtonBorrarHistorial.setText("Borrar");
         jButtonBorrarHistorial.addActionListener(new java.awt.event.ActionListener() {
@@ -406,7 +428,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonActualizarProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonBorrarProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonAñadirProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -445,7 +467,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                                         .addComponent(jComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonActualizarHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonBorrarHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonAñadirHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(2915, Short.MAX_VALUE))
@@ -482,7 +504,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton2)
+                                        .addComponent(jButtonActualizarProveedor)
                                         .addComponent(jLabel9)
                                         .addComponent(jLabel8)
                                         .addComponent(jLabel11))
@@ -506,7 +528,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonAñadirHistorial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addComponent(jButtonActualizarHistorial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonBorrarHistorial)))
                 .addGap(18, 18, 18)
@@ -725,13 +747,13 @@ public class JFrameProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_ImagenHMouseClicked
 
     private void ImagenH6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ImagenH6MouseClicked
-     try {
-         JFrameProveedor _prov = new JFrameProveedor();
-         _prov.setVisible(true);
-         this.dispose();
-     } catch (SQLException ex) {
-         Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
-     }
+        try {
+            JFrameProveedor _prov = new JFrameProveedor();
+            _prov.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ImagenH6MouseClicked
 
     private void Imagen5aMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imagen5aMouseClicked
@@ -831,48 +853,46 @@ public class JFrameProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_SistemaventasMouseClicked
 
     private void jButtonAñadirProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAñadirProveedorActionPerformed
-       int banco = 0;
-    
-        
-      String Tipo = (String)jComboTipo.getSelectedItem();
-      String seleccionado = jComboBoxBanco.getSelectedItem().toString();
-      String[] partes = seleccionado.split("-"); // Divide el String en partes usando "-"
-      banco = Integer.parseInt(partes[0].trim()); // Convierte la primera parte en número
+        int banco = 0;
 
-      
-      String nom = jTextNombre.getText();
-      String nomContac = jTextNombreContacto.getText();
-      String telef =jTextTelefono.getText();
-      String correo = jTextCorreo.getText();
-      String Ncuenta = jTextNumeroCuenta.getText();
-      
-        if (banco == 0 || Tipo.equals("") || nom.equals("") || nomContac.equals("") || telef.equals("") || correo.equals("") || Ncuenta.equals("") ) {
+        String Tipo = (String) jComboTipo.getSelectedItem();
+        String seleccionado = jComboBoxBanco.getSelectedItem().toString();
+        String[] partes = seleccionado.split("-"); // Divide el String en partes usando "-"
+        banco = Integer.parseInt(partes[0].trim()); // Convierte la primera parte en número
+
+        String nom = jTextNombre.getText();
+        String nomContac = jTextNombreContacto.getText();
+        String telef = jTextTelefono.getText();
+        String correo = jTextCorreo.getText();
+        String Ncuenta = jTextNumeroCuenta.getText();
+
+        if (banco == 0 || Tipo.equals("") || nom.equals("") || nomContac.equals("") || telef.equals("") || correo.equals("") || Ncuenta.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorios");
-        }else{
-            try{
-                   int teleff = Integer.parseInt(telef);
-                   int Ncuentaa = Integer.parseInt(Ncuenta);
-                   
-                   Proveedor proveedor = new Proveedor(nom, Tipo, nomContac, teleff, correo, banco, Ncuentaa);
-                   DAOProveedor dao = new DAOProveedor();
-                   
-                   if(dao.Insertar(proveedor) == 0){
-                       JOptionPane.showMessageDialog(rootPane, "Registro agregado");
-                   }else{
-                       JOptionPane.showMessageDialog(rootPane, "Error a; agregar el registro");
-                   }
-                   
+        } else {
+            try {
+                int teleff = Integer.parseInt(telef);
+                int Ncuentaa = Integer.parseInt(Ncuenta);
+
+                Proveedor proveedor = new Proveedor(nom, Tipo, nomContac, teleff, correo, banco, Ncuentaa);
+                DAOProveedor dao = new DAOProveedor();
+
+                if (dao.Insertar(proveedor) == 0) {
+                    JOptionPane.showMessageDialog(rootPane, "Registro agregado");
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Error a; agregar el registro");
+                }
+
             } catch (SQLException ex) {
-               Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
-           } try {
-               ObtenerProveedor();
-               limpiar_campoPro();
-               ComboBancos();
-           } catch (SQLException ex) {
+                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                ObtenerProveedor();
+                limpiar_campoPro();
+                ComboBancos();
+            } catch (SQLException ex) {
                 Logger.getLogger(JFrameInventario.class.getName()).log(Level.SEVERE, null, ex);
-         
-            
-           }
+
+            }
         }
 
     }//GEN-LAST:event_jButtonAñadirProveedorActionPerformed
@@ -883,102 +903,292 @@ public class JFrameProveedor extends javax.swing.JFrame {
         String idpro = jTextIDproducto.getText();
         String cant = jTextCantidad.getText();
         String fech = jTextFecha.getText();
-        String estad = (String)jComboEstado.getSelectedItem();
+        String estad = (String) jComboEstado.getSelectedItem();
 
-        
         if (idprove.equals("") || idpro.equals("") || cant.equals("") || fech.equals("") || estad.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorios");
-        }else{
-            try{
+        } else {
+            try {
                 //Definir e; formato de la fecha
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
-                
+
                 int idproveedor = Integer.parseInt(idprove);
                 int idproducto = Integer.parseInt(idpro);
                 int cantidad = Integer.parseInt(cant);
                 Date Fecha = formato.parse(fech);
-                
+
                 Transacciones trans = new Transacciones(idproveedor, idproducto, cantidad, Fecha, estad);
                 DAOTransaccion dao = new DAOTransaccion();
-                if(dao.Insertar(trans) == 0){
+                if (dao.Insertar(trans) == 0) {
                     JOptionPane.showMessageDialog(rootPane, "Registro agregado");
                 }
-                
-                
+
             } catch (ParseException ex) {
                 Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
-            }try{
+            }
+            try {
                 ObtenerHistoriales();
                 botonImprimir(daoTrans);
                 limpiar_campoHistorial();
-            }catch (SQLException ex) {
+            } catch (SQLException ex) {
                 Logger.getLogger(JFrameInventario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-
-
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAñadirHistorialActionPerformed
 
     private void jButtonBorrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarProveedorActionPerformed
-        try{
+        try {
             int fila = jTableProveedores.getSelectedRow();
             int id = 0;
-            
+
             if (fila == -1) {
-                 JOptionPane.showMessageDialog(rootPane, "Seleccione un Proveedor para borrar");
-                 return;
-            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione un Proveedor para borrar");
+                return;
+            } else {
                 id = Integer.parseInt(jTableProveedores.getValueAt(fila, 0).toString());
             }
-            
+
             DAOProveedor dao = new DAOProveedor();
-            
-           
-                if (dao.Borrar(id) == 0) {
-                    ObtenerProveedor();
-                }else{
+
+            if (dao.Borrar(id) == 0) {
+                ObtenerProveedor();
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Error al borrar Producto");
                 ObtenerProveedor();
-                }
-            }catch (SQLException ex) {
-                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
     }//GEN-LAST:event_jButtonBorrarProveedorActionPerformed
 
+
     private void jButtonBorrarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarHistorialActionPerformed
-           try{
+        try {
             int fila = jTableHistorial.getSelectedRow();
             int id = 0;
-            
+
             if (fila == -1) {
-                 JOptionPane.showMessageDialog(rootPane, "Seleccione una fila para borrar");
-                 return;
-            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una fila para borrar");
+                return;
+            } else {
                 id = Integer.parseInt(jTableHistorial.getValueAt(fila, 0).toString());
             }
-            
+
             DAOTransaccion dao = new DAOTransaccion();
-            
-           
-                if (dao.Borrar(id) == 0) {
-                    ObtenerHistoriales();
-                    botonImprimir(daoTrans);
-                }else{
+
+            if (dao.Borrar(id) == 0) {
+                ObtenerHistoriales();
+                botonImprimir(daoTrans);
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Error al borrar la fila");
                 ObtenerHistoriales();
-                    botonImprimir(daoTrans);
-                }
-            }catch (SQLException ex) {
-                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+                botonImprimir(daoTrans);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonBorrarHistorialActionPerformed
+
+    private List<Proveedor> ProvedoresModificados = new ArrayList<>();
+
+    private void jButtonActualizarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarProveedorActionPerformed
+        if (!ProvedoresModificados.isEmpty()) {
+            try {
+                DAOProveedor dao = new DAOProveedor();
+                int resultadoExitoso = 0;
+                int resultadoFallido = 0;
+
+                for (Proveedor proveedores : ProvedoresModificados) {
+                    int resultado = dao.Actualizar(proveedores);
+                    if (resultado == 0) {
+                        resultadoExitoso++;
+                    } else {
+                        resultadoFallido++;
+                    }
+                }
+                if (resultadoExitoso > 0) {
+                    JOptionPane.showMessageDialog(rootPane, resultadoExitoso + "Proveedor Actualizado");
+                }
+                if (resultadoFallido > 0) {
+                    JOptionPane.showMessageDialog(rootPane, resultadoFallido + "No se puedo actualizar el proveedor");
+                }
+
+                ProvedoresModificados.clear();
+                ObtenerProveedor();
+                ComboBancos();
+            } catch (SQLException ex) {
+                Logger.getLogger(JFrameInventario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No se han realizado cambios en los proveedores");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonActualizarProveedorActionPerformed
+
+    private void jTableProveedoresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableProveedoresKeyReleased
+        int filaSeleccionada = jTableProveedores.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            return;
+        }
+
+        System.out.println("Evento KeyReleased detectado en fila: " + filaSeleccionada);
+
+        int columnaSeleccionada = jTableProveedores.getSelectedColumn();
+        if (columnaSeleccionada == -1) {
+            return;
+        }
+
+        // Obtener valores de la tabla
+        String idprov = jTableProveedores.getValueAt(filaSeleccionada, 0).toString();
+        String nom = jTableProveedores.getValueAt(filaSeleccionada, 1).toString();
+        String tipo = jTableProveedores.getValueAt(filaSeleccionada, 2).toString();
+        String nomcont = jTableProveedores.getValueAt(filaSeleccionada, 3).toString();
+        String telef = jTableProveedores.getValueAt(filaSeleccionada, 4).toString();
+        String corr = jTableProveedores.getValueAt(filaSeleccionada, 5).toString();
+        String idban = jTableProveedores.getValueAt(filaSeleccionada, 6).toString();
+        String ncuenta = jTableProveedores.getValueAt(filaSeleccionada, 7).toString();
+
+        try {
+            int idProveedor = Integer.parseInt(idprov);
+            int telefono = Integer.parseInt(telef);
+            int numeroCuenta = Integer.parseInt(ncuenta);
+            String[] partes = idban.split("-");
+            int banco = Integer.parseInt(partes[0].trim());
+
+            Proveedor proveedorModificado = new Proveedor(idProveedor, nom, tipo, nomcont, telefono, corr, banco, numeroCuenta);
+
+            // Verificar si ya existe en la lista y actualizar
+            boolean encontrado = false;
+            for (Proveedor prove : ProvedoresModificados) {
+                if (prove.getId_proveedor() == idProveedor) {
+                    prove.setNombre(nom);
+                    prove.setTipo_proveedor(tipo);
+                    prove.setNombre_contacto(nomcont);
+                    prove.setTelefono(telefono);
+                    prove.setCorreo(corr);
+                    prove.setId_banco(banco);
+                    prove.setNumero_cuenta(numeroCuenta);
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado) {
+                ProvedoresModificados.add(proveedorModificado);
+                System.out.println("Proveedor agregado: " + proveedorModificado.getNombre());
+
+            } else {
+                System.out.println("Proveedor actualizado en la lista.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.err.println("Error en conversión de valores numéricos: " + e.getMessage());
+        }
+    }//GEN-LAST:event_jTableProveedoresKeyReleased
+
+    private List<Transacciones> TransacionesModificados = new ArrayList<>();
+    private void jButtonActualizarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarHistorialActionPerformed
+
+        if (!TransacionesModificados.isEmpty()) {
+            try {
+                DAOTransaccion dao = new DAOTransaccion();
+                int resultadoExitoso = 0;
+                int resultadoFallido = 0;
+
+                for (Transacciones trans : TransacionesModificados) {
+                    int resultado = dao.Actualizar(trans);
+                    if (resultado == 0) {
+                        resultadoExitoso++;
+                    } else {
+                        resultadoFallido++;
+                    }
+                }
+                if (resultadoExitoso > 0) {
+                    JOptionPane.showMessageDialog(rootPane, resultadoExitoso + "Historial Actualizado");
+                }
+                if (resultadoFallido > 0) {
+                    JOptionPane.showMessageDialog(rootPane, resultadoFallido + "No se puedo actualizar el Historial");
+                }
+
+                TransacionesModificados.clear();
+                ObtenerHistoriales();
+            } catch (SQLException ex) {
+                Logger.getLogger(JFrameInventario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No se han realizado cambios en el historial");
+        }
+    }//GEN-LAST:event_jButtonActualizarHistorialActionPerformed
+
+    private void jTableHistorialKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableHistorialKeyReleased
+        int filaSeleccionada = jTableHistorial.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            return;
+        }
+
+        System.out.println("Evento KeyReleased detectado en fila: " + filaSeleccionada);
+
+        int columnaSeleccionada = jTableHistorial.getSelectedColumn();
+        if (columnaSeleccionada == -1) {
+            return;
+        }
+
+        // Obtener valores de la tabla
+        String idtransa = jTableHistorial.getValueAt(filaSeleccionada, 0).toString();
+        String idprovee = jTableHistorial.getValueAt(filaSeleccionada, 1).toString();
+        String idproduct = jTableHistorial.getValueAt(filaSeleccionada, 2).toString();
+        String cantid = jTableHistorial.getValueAt(filaSeleccionada, 3).toString();
+        String fech = jTableHistorial.getValueAt(filaSeleccionada, 5).toString();
+        String estado = jTableHistorial.getValueAt(filaSeleccionada, 6).toString();
+
+        try {
+            int idTransaccion = Integer.parseInt(idtransa);
+            int idProveedor = Integer.parseInt(idprovee);
+            int idProducto = Integer.parseInt(idproduct);
+            int Cantidad = Integer.parseInt(cantid);
+             // Formateador de fecha para mostrar de manera legible
+             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+              Date Fecha = formato.parse(fech);
+            
+
+              Transacciones transaccion = new Transacciones(idProveedor, idProducto, Cantidad, Fecha, estado);
+            // Verificar si ya existe en la lista y actualizar
+            boolean encontrado = false;
+            for (Transacciones transs : TransacionesModificados) {
+                if (transs.getId_transacion()== idTransaccion) {
+                    transs.setId_producto(idProducto);
+                    transs.setCantidad(Cantidad);
+                    transs.setFecha(Fecha);
+                    transs.setEstado(estado);
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado) {
+                TransacionesModificados.add(transaccion);
+                ObtenerHistoriales();
+                botonImprimir(daoTrans);
+
+            } else {
+                System.out.println("Transacion actualizado en la lista.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.err.println("Error en conversión de valores numéricos: " + e.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableHistorialKeyReleased
 
     private void fullscreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -1040,8 +1250,8 @@ public class JFrameProveedor extends javax.swing.JFrame {
             }
         });
     }
-    
-        private void mostrarImagen(JLabel lbl, String ruta) {
+
+    private void mostrarImagen(JLabel lbl, String ruta) {
         this.imagen = new ImageIcon(ruta);
         this.icono = new ImageIcon(
                 this.imagen.getImage().getScaledInstance(
@@ -1052,13 +1262,13 @@ public class JFrameProveedor extends javax.swing.JFrame {
         this.repaint();
 
     }
-    
-       private void icons(){
-        
-     setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Icono.png")).getImage());
-     this.mostrarImagen(ImagenH,
-                "src\\Imagenes\\home.png");     
-     this.mostrarImagen(ImagenH2,
+
+    private void icons() {
+
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Icono.png")).getImage());
+        this.mostrarImagen(ImagenH,
+                "src\\Imagenes\\home.png");
+        this.mostrarImagen(ImagenH2,
                 "src\\Imagenes\\Carrito.png");
         this.mostrarImagen(ImagenH3,
                 "src\\Imagenes\\Inventario.png");
@@ -1068,27 +1278,27 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 "src\\Imagenes\\Reporte.png");
         this.mostrarImagen(ImagenH6,
                 "src\\Imagenes\\Proveedores.png");
-            this.mostrarImagen(ImagenH7,
+        this.mostrarImagen(ImagenH7,
                 "src\\Imagenes\\login.png");
-            
+
     }
 
-    private void limpiar_campoPro(){
-    jTextNombre.setText("");
-    jTextNombreContacto.setText("");
-    jTextTelefono.setText("");
-    jTextCorreo.setText("");
-    jTextNumeroCuenta.setText("");
-}
-    
-    private void limpiar_campoHistorial(){
-     jTextIDproveedor.setText("");
-     jTextIDproducto.setText("");
-     jTextCantidad.setText("");
-     jTextFecha.setText("");
+    private void limpiar_campoPro() {
+        jTextNombre.setText("");
+        jTextNombreContacto.setText("");
+        jTextTelefono.setText("");
+        jTextCorreo.setText("");
+        jTextNumeroCuenta.setText("");
     }
-       
-       
+
+    private void limpiar_campoHistorial() {
+        jTextIDproveedor.setText("");
+        jTextIDproducto.setText("");
+        jTextCantidad.setText("");
+        jTextFecha.setText("");
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Home;
     private javax.swing.JLabel Imagen5a;
@@ -1103,8 +1313,8 @@ public class JFrameProveedor extends javax.swing.JFrame {
     private javax.swing.JLabel Proveedores;
     private javax.swing.JLabel Sistemaventas;
     private javax.swing.JLabel cerrarsesion;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButtonActualizarHistorial;
+    private javax.swing.JButton jButtonActualizarProveedor;
     private javax.swing.JButton jButtonAñadirHistorial;
     private javax.swing.JButton jButtonAñadirProveedor;
     private javax.swing.JButton jButtonBorrarHistorial;
