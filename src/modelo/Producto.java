@@ -17,16 +17,9 @@ public class Producto {
     int existencia;
     double iva;
     double preciocompra;
+    double preciodescuento;
+    double descuento;
 
-    public Producto(int id_producto, int id_categoria, String nombreProducto, Double precio, int existencia,  double iva, double preciocompra) {
-        this.id_producto = id_producto;
-        this.id_categoria = id_categoria;
-        this.nombreProducto = nombreProducto;
-        this.precio = precio;
-        this.existencia = existencia;
-        this.iva = iva;
-        this.preciocompra = preciocompra;
-    }
     
       public Producto(int id_producto, int id_categoria, String nombreProducto, Double precio, int existencia,double preciocompra ) {
         this.id_producto = id_producto;
@@ -36,6 +29,19 @@ public class Producto {
         this.existencia = existencia;
         this.preciocompra = preciocompra;
     }
+      
+        public Producto(int id_producto, int id_categoria, String nombreProducto, Double precio, int existencia,  double iva, double preciocompra, double preciodescuento, double descuento) {
+        this.id_producto = id_producto;
+        this.id_categoria = id_categoria;
+        this.nombreProducto = nombreProducto;
+        this.precio = precio;
+        this.existencia = existencia;
+        this.iva = iva;
+        this.preciocompra = preciocompra;
+        this.preciodescuento = preciodescuento;
+        this.descuento = descuento;
+        
+    }
 
 
     public Producto(int id_categoria, String nombreProducto, Double precio, int existencia, double preciocompra) {
@@ -44,6 +50,7 @@ public class Producto {
         this.precio = precio;
         this.existencia = existencia;
         this.preciocompra = preciocompra;
+        
         
     }
 
@@ -107,4 +114,23 @@ public class Producto {
     public void setPreciocompra(double preciocompra) {
         this.preciocompra = preciocompra;
     }
+    
+        public double getPreciodescuento() {
+        return preciodescuento;
+    }
+
+    public void setPreciodescuento(double preciodescuento) {
+        this.preciodescuento = preciodescuento;
+    }
+
+    public double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
+    }
+    
 }
+
+

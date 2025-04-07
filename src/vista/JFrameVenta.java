@@ -104,7 +104,7 @@ public class JFrameVenta extends javax.swing.JFrame {
             String[] renglon = {Integer.toString(pr.getId_producto()), pr.getNombreProducto(), Double.toString(pr.getPrecio()), Integer.toString(pr.getExistencia())};
             modelo.addRow(renglon);
         }
-        jTableBuscarProducto.setModel(modelo);
+        jTableProducto.setModel(modelo);
 
     }
     //================================================================================//
@@ -140,7 +140,7 @@ public class JFrameVenta extends javax.swing.JFrame {
             };
             modelo.addRow(renglon);
         }
-        jTableBuscarProducto.setModel(modelo);
+        jTableProducto.setModel(modelo);
     }
 
     /**
@@ -165,7 +165,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTableBuscarProducto = new javax.swing.JTable();
+        jTableProducto = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
         jTextDbuscarProducto = new javax.swing.JTextField();
         jLabelFecha = new javax.swing.JLabel();
@@ -189,8 +189,6 @@ public class JFrameVenta extends javax.swing.JFrame {
         registrosSalida = new javax.swing.JLabel();
         Proveedores = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        reportes = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
         Inventario = new javax.swing.JLabel();
         Imagen5a = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
@@ -202,10 +200,9 @@ public class JFrameVenta extends javax.swing.JFrame {
         cerrarsesion = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
 
         jPanel7.setBackground(new java.awt.Color(211, 217, 254));
@@ -320,7 +317,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(159, 175, 254));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(37, 108, 240), 5));
 
-        jTableBuscarProducto.setModel(new javax.swing.table.DefaultTableModel(
+        jTableProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -331,12 +328,12 @@ public class JFrameVenta extends javax.swing.JFrame {
                 "ID", "Nombre", "Precio", "Existencia"
             }
         ));
-        jTableBuscarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableBuscarProductoMouseClicked(evt);
+                jTableProductoMouseClicked(evt);
             }
         });
-        jScrollPane5.setViewportView(jTableBuscarProducto);
+        jScrollPane5.setViewportView(jTableProducto);
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setText("Buscar");
@@ -393,7 +390,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         jTableProductosVenta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTableProductosVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object[][] {}, // Arreglo de datos vacío, sin filas
-            new String[] { "Items", "Código", "Producto", "Cantidad", "Precio", "Subtotal" } // Nombre de las columnas
+            new String[] { "Items", "Código", "Producto", "Cantidad", "Precio", "Subtotal", "Descuento" } // Nombre de las columnas
 
         ));
         jTableProductosVenta.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -504,24 +501,12 @@ public class JFrameVenta extends javax.swing.JFrame {
                 ProveedoresMouseClicked(evt);
             }
         });
-        jPanel10.add(Proveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 460, 140, -1));
+        jPanel10.add(Proveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 140, -1));
 
         jLabel28.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setText("Registro de salidas");
         jPanel10.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, -1, -1));
-
-        reportes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                reportesMouseClicked(evt);
-            }
-        });
-        jPanel10.add(reportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 150, 40));
-
-        jLabel29.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel29.setText("Reportes");
-        jPanel10.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 110, -1));
 
         Inventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -587,7 +572,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         cerrarsesion.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cerrarsesion.setForeground(new java.awt.Color(255, 255, 255));
         cerrarsesion.setText("Cerrar sesión");
-        jPanel10.add(cerrarsesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 520, 140, -1));
+        jPanel10.add(cerrarsesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, 140, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Proveedores.png"))); // NOI18N
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -595,7 +580,7 @@ public class JFrameVenta extends javax.swing.JFrame {
                 jLabel2MouseClicked(evt);
             }
         });
-        jPanel10.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 50, 50));
+        jPanel10.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 50, 50));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/home.png"))); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -605,13 +590,13 @@ public class JFrameVenta extends javax.swing.JFrame {
         });
         jPanel10.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Carrito.png"))); // NOI18N
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Carrito.png"))); // NOI18N
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
+                jLabel9MouseClicked(evt);
             }
         });
-        jPanel10.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+        jPanel10.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Inventario.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -621,21 +606,13 @@ public class JFrameVenta extends javax.swing.JFrame {
         });
         jPanel10.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
 
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Salida.png"))); // NOI18N
-        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Salida.png"))); // NOI18N
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel14MouseClicked(evt);
+                jLabel12MouseClicked(evt);
             }
         });
-        jPanel10.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Reporte.png"))); // NOI18N
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel7MouseClicked(evt);
-            }
-        });
-        jPanel10.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, -1));
+        jPanel10.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/login.png"))); // NOI18N
         jLabel33.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -643,7 +620,7 @@ public class JFrameVenta extends javax.swing.JFrame {
                 jLabel33MouseClicked(evt);
             }
         });
-        jPanel10.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, -1, -1));
+        jPanel10.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, -1, -1));
 
         jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1080));
 
@@ -830,17 +807,17 @@ public class JFrameVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextDbuscarProductoKeyTyped
 
-    private void jTableBuscarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBuscarProductoMouseClicked
-        int fila = this.jTableBuscarProducto.getSelectedRow();
+    private void jTableProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductoMouseClicked
+        int fila = this.jTableProducto.getSelectedRow();
         if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro de la tabla");
         } else {
             try {
                 // Obtener datos de la fila seleccionada
-                int id = Integer.parseInt(this.jTableBuscarProducto.getValueAt(fila, 0).toString());
-                String nombre = this.jTableBuscarProducto.getValueAt(fila, 1).toString();
-                double precio = Double.parseDouble(this.jTableBuscarProducto.getValueAt(fila, 2).toString());
-                int existencia = Integer.parseInt(this.jTableBuscarProducto.getValueAt(fila, 3).toString());
+                int id = Integer.parseInt(this.jTableProducto.getValueAt(fila, 0).toString());
+                String nombre = this.jTableProducto.getValueAt(fila, 1).toString();
+                double precio = Double.parseDouble(this.jTableProducto.getValueAt(fila, 2).toString());
+                int existencia = Integer.parseInt(this.jTableProducto.getValueAt(fila, 3).toString());
 
                 // Pedir cantidad al usuario
                 String cantidadStr = JOptionPane.showInputDialog(rootPane,
@@ -875,13 +852,13 @@ public class JFrameVenta extends javax.swing.JFrame {
                         //JOptionPane.showMessageDialog(rootPane, "Producto agregado correctamente.");
 
                         // Descontar la cantidad del stock en la tabla de productos
-                        for (int i = 0; i < jTableBuscarProducto.getRowCount(); i++) {
-                            int idProducto = Integer.parseInt(this.jTableBuscarProducto.getValueAt(i, 0).toString());
+                        for (int i = 0; i < jTableProducto.getRowCount(); i++) {
+                            int idProducto = Integer.parseInt(this.jTableProducto.getValueAt(i, 0).toString());
                             if (idProducto == id) {
                                 // Obtener la nueva cantidad
                                 int nuevaExistencia = existencia - cantidad;
                                 // Actualizar la existencia en la tabla de productos
-                                this.jTableBuscarProducto.setValueAt(nuevaExistencia, i, 3);
+                                this.jTableProducto.setValueAt(nuevaExistencia, i, 3);
                                 break;
                             }
                         }
@@ -894,10 +871,15 @@ public class JFrameVenta extends javax.swing.JFrame {
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTableBuscarProductoMouseClicked
+    }//GEN-LAST:event_jTableProductoMouseClicked
 
     private void jTableProductosVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductosVentaMouseClicked
+        int columna = jTableProductosVenta.columnAtPoint(evt.getPoint());
         int fila = jTableProductosVenta.getSelectedRow();
+        
+    if (columna == 6) {
+        return;
+    }
         if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Seleccione una fila para editar.");
         } else {
@@ -954,14 +936,14 @@ public class JFrameVenta extends javax.swing.JFrame {
                             actualizarTotal();
 
                             // Descontar la diferencia de la cantidad en la tabla de productos
-                            for (int i = 0; i < jTableBuscarProducto.getRowCount(); i++) {
-                                int idProducto = Integer.parseInt(this.jTableBuscarProducto.getValueAt(i, 0).toString());
+                            for (int i = 0; i < jTableProducto.getRowCount(); i++) {
+                                int idProducto = Integer.parseInt(this.jTableProducto.getValueAt(i, 0).toString());
                                 if (idProducto == idProductoVenta) {
                                     // Obtener la existencia actual del producto en la tabla de productos
-                                    int existenciaProducto = Integer.parseInt(this.jTableBuscarProducto.getValueAt(i, 3).toString());
+                                    int existenciaProducto = Integer.parseInt(this.jTableProducto.getValueAt(i, 3).toString());
 
                                     // Actualizar la existencia en la tabla de productos según la diferencia
-                                    this.jTableBuscarProducto.setValueAt(existenciaProducto - diferenciaCantidad, i, 3);
+                                    this.jTableProducto.setValueAt(existenciaProducto - diferenciaCantidad, i, 3);
                                     break;
                                 }
                             }
@@ -980,14 +962,14 @@ public class JFrameVenta extends javax.swing.JFrame {
                     actualizarTotal();
 
                     // Sumar la cantidad eliminada a la tabla de productos
-                    for (int i = 0; i < jTableBuscarProducto.getRowCount(); i++) {
-                        int idProducto = Integer.parseInt(this.jTableBuscarProducto.getValueAt(i, 0).toString());
+                    for (int i = 0; i < jTableProducto.getRowCount(); i++) {
+                        int idProducto = Integer.parseInt(this.jTableProducto.getValueAt(i, 0).toString());
                         if (idProducto == idProductoEliminado) {
                             // Obtener la existencia actual del producto en la tabla de productos
-                            int existenciaProducto = Integer.parseInt(this.jTableBuscarProducto.getValueAt(i, 3).toString());
+                            int existenciaProducto = Integer.parseInt(this.jTableProducto.getValueAt(i, 3).toString());
 
                             // Actualizar la existencia en la tabla de productos sumando la cantidad eliminada
-                            this.jTableBuscarProducto.setValueAt(existenciaProducto + cantidadEliminada, i, 3);
+                            this.jTableProducto.setValueAt(existenciaProducto + cantidadEliminada, i, 3);
                             break;
                         }
                     }
@@ -1002,6 +984,8 @@ public class JFrameVenta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableProductosVentaMouseClicked
 
+
+    
     private void actualizarTotal() {
         total = 0.0;
         for (int i = 0; i < jTableProductosVenta.getRowCount(); i++) {
@@ -1052,12 +1036,6 @@ public class JFrameVenta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ProveedoresMouseClicked
 
-    private void reportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportesMouseClicked
-
-        JFrameReporte _reporte = new JFrameReporte(); // TODO add your handling code here:
-        _reporte.setVisible(true);
-    }//GEN-LAST:event_reportesMouseClicked
-
     private void InventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InventarioMouseClicked
         try {
             JFrameInventario _inventario = new JFrameInventario(); // TODO add your handling code here:
@@ -1100,7 +1078,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         try {
             JFrameVenta _venta = new JFrameVenta();
             _venta.setVisible(true);
@@ -1110,7 +1088,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel13MouseClicked
+    }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         try {
@@ -1123,7 +1101,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         try {
             JFrameSalida _salida = new JFrameSalida();
             _salida.setVisible(true);
@@ -1132,13 +1110,7 @@ public class JFrameVenta extends javax.swing.JFrame {
             Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel14MouseClicked
-
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        JFrameReporte _report = new JFrameReporte(); // TODO add your handling code here:
-        _report.setVisible(true);
-        
-    }//GEN-LAST:event_jLabel7MouseClicked
+    }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jLabel33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel33MouseClicked
         dispose();
@@ -1324,8 +1296,7 @@ public class JFrameVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1333,7 +1304,6 @@ public class JFrameVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -1342,8 +1312,8 @@ public class JFrameVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel1;
@@ -1357,13 +1327,12 @@ public class JFrameVenta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTableBuscarProducto;
     private javax.swing.JTable jTableBuscarProducto44;
+    private javax.swing.JTable jTableProducto;
     private javax.swing.JTable jTableProductosVenta;
     private javax.swing.JTextField jTextDbuscarProducto;
     private javax.swing.JTextField jTextDbuscarProducto12;
     private javax.swing.JLabel registrosSalida;
-    private javax.swing.JLabel reportes;
     // End of variables declaration//GEN-END:variables
 
 }

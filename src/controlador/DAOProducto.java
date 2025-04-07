@@ -40,10 +40,12 @@ public class DAOProducto {
                 Producto pro = new Producto((int) registro.get("id_producto"),
                         (int) registro.get("id_categoria"),
                         (String) registro.get("nombreProducto"),
-                        (Double) registro.get("precio"),
+                        (double) registro.get("precio"),
                         (int) registro.get("Existencia"),
-                        (Double) registro.get("iva"),
-                        (Double) registro.get("preciocompra")
+                        (double) registro.get("iva"),
+                        (double) registro.get("preciocompra"),
+                        (double) registro.get("preciodescuento"),
+                        (double) registro.get("descuento")
                 );
                 productos.add(pro);
 
@@ -92,7 +94,10 @@ public class DAOProducto {
                     (double) registro.get("precio"),
                     (int) registro.get("Existencia"),
                     (double) registro.get("iva"),
-                    (Double) registro.get("preciocompra")
+                    (double) registro.get("preciocompra"),
+                    (double) registro.get("preciodescuento"),
+                    (double) registro.get("descuento")
+                    
             );
 
             products.add(proo);
