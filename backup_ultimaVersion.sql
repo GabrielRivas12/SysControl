@@ -81,7 +81,7 @@ CREATE TABLE `detalle` (
   KEY `id_producto` (`id_producto`),
   CONSTRAINT `detalle_ibfk_1` FOREIGN KEY (`num_factura`) REFERENCES `factura` (`num_factura`),
   CONSTRAINT `detalle_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `detalle` (
 
 LOCK TABLES `detalle` WRITE;
 /*!40000 ALTER TABLE `detalle` DISABLE KEYS */;
-INSERT INTO `detalle` VALUES (3,100002,1001,6,16),(4,100003,1002,1,2);
+INSERT INTO `detalle` VALUES (3,100002,1001,6,16),(4,100003,1002,1,2),(5,100004,1002,1,2),(6,100005,1002,1,2),(7,100006,1001,1,16),(8,100007,1001,3,16);
 /*!40000 ALTER TABLE `detalle` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -150,7 +150,7 @@ CREATE TABLE `factura` (
   PRIMARY KEY (`num_factura`),
   KEY `num_pago` (`num_pago`),
   CONSTRAINT `factura_ibfk_2` FOREIGN KEY (`num_pago`) REFERENCES `modo_pago` (`num_pago`)
-) ENGINE=InnoDB AUTO_INCREMENT=100004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100008 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +159,7 @@ CREATE TABLE `factura` (
 
 LOCK TABLES `factura` WRITE;
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-INSERT INTO `factura` VALUES (100000,1,'2024-12-05',150,39),(100001,1,'2024-12-05',150,39),(100002,1,'2024-12-05',200,104),(100003,1,'2024-12-05',5,3);
+INSERT INTO `factura` VALUES (100000,1,'2024-12-05',150,39),(100001,1,'2024-12-05',150,39),(100002,1,'2024-12-05',200,104),(100003,1,'2024-12-05',5,3),(100004,1,'2025-03-28',5,3),(100005,1,'2025-03-28',5,3),(100006,1,'2025-03-28',20,4),(100007,1,'2025-03-28',50,2);
 /*!40000 ALTER TABLE `factura` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,12 +330,14 @@ CREATE TABLE `producto` (
   `Existencia` int NOT NULL,
   `iva` double DEFAULT NULL,
   `preciocompra` double DEFAULT NULL,
+  `preciodescuento` double DEFAULT NULL,
+  `descuento` double DEFAULT NULL,
   PRIMARY KEY (`id_producto`),
   KEY `id_categoria` (`id_categoria`),
   KEY `id_proveedor` (`id_proveedor`),
   CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`),
   CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1005 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -344,7 +346,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (1001,4,NULL,'Coca cola',16,20,2.4,14),(1002,3,NULL,'Alboroto',2,5,0.3,2);
+INSERT INTO `producto` VALUES (1001,4,1,'Coca cola',16,16,2.4,14,0,0),(1002,3,1,'Alboroto',2,3,0.3,2,0,0),(1003,4,1,'FantaUva',60,7,9,40,54,10),(1004,4,1,'Fanta',49.5,10,7.425,90,39.6,20);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -374,9 +376,55 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `PrecioConDescuento` BEFORE INSERT ON `producto` FOR EACH ROW BEGIN
+    -- Si el descuento es 0, se establece preciodescuento a 0
+    IF NEW.descuento = 0 THEN
+        SET NEW.preciodescuento = 0;
+    ELSE
+        -- Si hay descuento, se aplica el descuento y se almacena en preciodescuento
+        SET NEW.preciodescuento = ROUND(NEW.precio * (1 - NEW.descuento / 100), 2);
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `calcular_iva_update` BEFORE UPDATE ON `producto` FOR EACH ROW BEGIN
     -- Suponiendo un 15% de IVA
       SET NEW.iva = ROUND(NEW.precio * 0.15, 3);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ActualizarPrecioConDescuento` BEFORE UPDATE ON `producto` FOR EACH ROW BEGIN
+    -- Si el descuento es 0, se establece preciodescuento a 0
+    IF NEW.descuento = 0 THEN
+        SET NEW.preciodescuento = 0;
+    ELSE
+        -- Si hay descuento, se aplica el descuento y se almacena en preciodescuento
+        SET NEW.preciodescuento = ROUND(NEW.precio * (1 - NEW.descuento / 100), 2);
+    END IF;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -412,7 +460,7 @@ CREATE TABLE `proveedores` (
 
 LOCK TABLES `proveedores` WRITE;
 /*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
-INSERT INTO `proveedores` VALUES (1,'yumies','mayorista','alfredo',88934512,'yumies@conctac.com',4,153546888),(2,'lacoste','mayotista','tupu',22555446,'lacoste@contac.com',1,454568877),(5,'coño','Exclusivo','Esta',646445,'@@@',2,45164141);
+INSERT INTO `proveedores` VALUES (1,'yumies','mayorista','alfredo',88934512,'yumies@conctac.com',1,153546888),(2,'lacoste','mayotista','tupu',22555446,'lacoste@contac.com',1,454568877),(5,'coño','Exclusivo','Esta',646445,'@@@',1,45164141);
 /*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -825,13 +873,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `buscarProducto`(
 BEGIN
     -- Intenta buscar primero por ID, si p_busqueda es numérico
     IF p_busqueda REGEXP '^[0-9]+$' THEN
-        SELECT id_producto, id_categoria, nombreProducto,precio,Existencia,iva,preciocompra
+        SELECT id_producto, id_categoria, nombreProducto,precio,Existencia,iva,preciocompra,preciodescuento,descuento
         FROM producto
         WHERE id_producto = CAST(p_busqueda AS UNSIGNED);
     
     -- Si no es numérico, busca por nombre
     ELSE
-        SELECT id_producto,id_categoria, nombreProducto,precio,Existencia,iva,preciocompra
+        SELECT id_producto,id_categoria, nombreProducto,precio,Existencia,iva,preciocompra,preciodescuento,descuento
         FROM producto
         WHERE nombreProducto LIKE CONCAT('%', p_busqueda, '%');
     END IF;
@@ -1265,7 +1313,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listarProveedores`()
 BEGIN
-select * from proveedores; 
+SElect * from proveedores; 
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1400,4 +1448,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-28 21:07:04
+-- Dump completed on 2025-04-07 17:28:12

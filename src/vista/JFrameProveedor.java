@@ -22,6 +22,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -165,12 +167,19 @@ public class JFrameProveedor extends javax.swing.JFrame {
     private void ObtenerProveedor() throws SQLException {
 
         List<Proveedor> proveedores = new DAOProveedor().ObtenerProveedores();
+        List<Banco> bancoslista = new DAOBanco().ObtenerBancos();
+            Map<Integer,Banco> mapaBancos = new HashMap<>();
+            for (Banco banco : bancoslista) {
+            mapaBancos.put(banco.getId_banco(), banco);
+        }
 
         DefaultTableModel modelo = new DefaultTableModel();
         String[] columnas = {"ID Proveedor", "Nombre", "Tipo", "Nombre contacto", "Telefono", "correo", "ID Banco", "Numero cuenta"};
 
         modelo.setColumnIdentifiers(columnas);
         for (Proveedor pr : proveedores) {
+            Banco banco = mapaBancos.get(pr.getId_banco());
+            String formatoBanco = banco != null ? banco.toString() : "N/A";
 
             String[] renglon = {Integer.toString(pr.getId_proveedor()),
                 pr.getNombre(),
@@ -178,7 +187,8 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 pr.getNombre_contacto(),
                 Integer.toString(pr.getTelefono()),
                 pr.getCorreo(),
-                Integer.toString(pr.getId_banco()),
+            //    Integer.toString(pr.getId_banco()),
+                formatoBanco,
                 Integer.toString(pr.getNumero_cuenta()),};
             modelo.addRow(renglon);
         }
@@ -855,6 +865,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 }
                 if (resultadoFallido > 0) {
                     JOptionPane.showMessageDialog(rootPane, resultadoFallido + "No se puedo actualizar el proveedor");
+                    
                 }
 
                 ProvedoresModificados.clear();
