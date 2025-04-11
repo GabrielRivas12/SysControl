@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -34,8 +30,8 @@ public class DAODetalle {
     public List ObtenerSalida()throws SQLException{
         String Proced ="listaVenta";
         
-         List<Map> registros = new Database().Listar(Proced);
-           List<Detalle> detall = new ArrayList();
+         List<Map<String, Object>> registros = new Database().Listar(Proced);
+           List<Detalle> detall = new ArrayList<>();
            
            for(Map registro: registros ){
                Detalle deta = new Detalle ((int) registro.get("num_factura"),
@@ -52,7 +48,7 @@ public class DAODetalle {
      public List busquedaPorFecha(String parametroBusqueda) throws SQLException{
         ResultSet rs = null;
         List<Map> registros = null;
-        List<Detalle> detalles = new ArrayList();
+        List<Detalle> detalles = new ArrayList<>();
         
         List resultado = new ArrayList();
         

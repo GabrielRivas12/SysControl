@@ -27,8 +27,8 @@ public class DAOProveedor {
     public List ObtenerProveedores() throws SQLException {
 
         String proced = "listarProveedores()"; //lista de productos
-        List<Map> registros = new Database().Listar(proced);
-        List<Proveedor> proveedores = new ArrayList();
+        List<Map<String, Object>> registros = new Database().Listar(proced);
+        List<Proveedor> proveedores = new ArrayList<>();
         for (Map registro : registros) {
             Proveedor provee = new Proveedor((int) registro.get("id_proveedor"),
                     (String) registro.get("nombre"),
@@ -49,7 +49,7 @@ public class DAOProveedor {
     public List busquedaProveedores(String parametroBusqueda) throws SQLException {
         ResultSet rs = null;
         List<Map> registros = null;
-        List<Proveedor> proveedores = new ArrayList();
+        List<Proveedor> proveedores = new ArrayList<>();
 
         List resultado = new ArrayList();
 
@@ -89,7 +89,7 @@ public class DAOProveedor {
 
             int numColumnas = rs.getMetaData().getColumnCount();
             while (rs.next()) {
-                Map<String, Object> renglon = new HashMap();
+                Map<String, Object> renglon = new HashMap<>();
 
                 for (int i = 1; i <= numColumnas; i++) {
 

@@ -1179,7 +1179,7 @@ public class JFrameVenta extends javax.swing.JFrame {
 
             DAOProducto daopro = new DAOProducto();
             try {
-                List<Producto> p = daopro.busquedaProducto(String.valueOf(idproducto).toString());
+                List<Producto> p = daopro.busquedaProducto(String.valueOf(idproducto));
 
                 if (p.isEmpty()) {
                     // Manejar el caso donde no se encuentra el producto

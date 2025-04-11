@@ -20,10 +20,10 @@ public class DAOProducto {
     Conexion conectar = Conexion.getInstance();
 
     //========Peticion de busqueda de producto a la base de datos============//
-    public List busquedaProducto(String parametroBusqueda) throws SQLException {
+    public List <Producto> busquedaProducto(String parametroBusqueda) throws SQLException {
         ResultSet rs = null;
         List<Map> registros = null;
-        List<Producto> productos = new ArrayList();
+        List <Producto> productos = new ArrayList<>();
 
         List resultado = new ArrayList();
 
@@ -64,7 +64,7 @@ public class DAOProducto {
 
             int numColumnas = rs.getMetaData().getColumnCount();
             while (rs.next()) {
-                Map<String, Object> renglon = new HashMap();
+                Map<String, Object> renglon = new HashMap<>();
 
                 for (int i = 1; i <= numColumnas; i++) {
 
@@ -81,11 +81,11 @@ public class DAOProducto {
     }
 
     //========Peticion que obtiene los datos de la tabla producto============//
-    public List ObtenerProducto() throws SQLException {
+    public List <Producto> ObtenerProducto() throws SQLException {
 
         String proced = "listarProductos()"; //lista de productos
-        List<Map> registros = new Database().Listar(proced);
-        List<Producto> products = new ArrayList();
+        List <Map<String, Object>> registros = new Database().Listar(proced);
+        List<Producto> products = new ArrayList<>();
 
         for (Map registro : registros) {
             Producto proo = new Producto((int) registro.get("id_producto"),
@@ -97,7 +97,6 @@ public class DAOProducto {
                     (double) registro.get("preciocompra"),
                     (double) registro.get("preciodescuento"),
                     (double) registro.get("descuento")
-                    
             );
 
             products.add(proo);

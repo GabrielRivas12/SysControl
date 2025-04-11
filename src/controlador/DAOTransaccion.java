@@ -31,8 +31,8 @@ public class DAOTransaccion {
     public List ObtenerHistorial() throws SQLException {
 
         String proced = "listarHistorial()"; //lista de productos
-        List<Map> registros = new Database().Listar(proced);
-        List<Transacciones> trans = new ArrayList();
+        List<Map<String, Object>> registros = new Database().Listar(proced);
+        List<Transacciones> trans = new ArrayList<>();
         for (Map registro : registros) {
             Transacciones trancc = new Transacciones(
                     (int) registro.get("id_transaccion"),

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
 import java.sql.CallableStatement;
@@ -24,8 +20,8 @@ public class DAOCategoria {
     public List ObtenerDatos() throws SQLException {
 
         String proced = "listarCategoria()";
-        List<Map> registros = new Database().Listar(proced);
-        List<Categorias> cat = new ArrayList();
+        List<Map<String, Object>> registros = new Database().Listar(proced);
+        List<Categorias> cat = new ArrayList<>();
 
         for (Map registro : registros) { // aqui recupera los datos de la base de datos CUIDADO
             Categorias ca = new Categorias((int) registro.get("id_categoria"),

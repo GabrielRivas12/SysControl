@@ -24,8 +24,8 @@ public class DAOFechaExpiracion {
     public List ObtenerExpiracion() throws SQLException {
 
         String proced = "listarExpiracion()"; //lista de productos
-        List<Map> registros = new Database().Listar(proced);
-        List<FechaExpiracion> produ = new ArrayList();
+        List<Map<String, Object>> registros = new Database().Listar(proced);
+        List<FechaExpiracion> produ = new ArrayList<>();
 
         for (Map registro : registros) {
             FechaExpiracion fecha = new FechaExpiracion((int) registro.get("id_expiracion"),
@@ -48,7 +48,7 @@ public class DAOFechaExpiracion {
 
             int numColumnas = rs.getMetaData().getColumnCount();
             while (rs.next()) {
-                Map<String, Object> renglon = new HashMap();
+                Map<String, Object> renglon = new HashMap<>();
 
                 for (int i = 1; i <= numColumnas; i++) {
 
@@ -163,7 +163,7 @@ public class DAOFechaExpiracion {
     public List busquedaProductoVencido(String parametroBusqueda) throws SQLException {
         ResultSet rs = null;
         List<Map> registros = null;
-        List<FechaExpiracion> fech = new ArrayList();
+        List<FechaExpiracion> fech = new ArrayList<>();
 
         List resultado = new ArrayList();
 

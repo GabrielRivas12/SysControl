@@ -32,6 +32,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellRenderer;
 import modelo.Transacciones;
 import net.sf.jasperreports.engine.JRException;
@@ -56,7 +58,6 @@ public class JFrameProveedor extends javax.swing.JFrame {
         ComboBancos();
         llenarBanco();
         botonImprimir(daoTrans);
-        
 
     }
 
@@ -106,7 +107,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
         });
 
     }
-
+    
     private void llenarBanco() throws SQLException {
         DAOBanco daobancos = new DAOBanco();
         List<Banco> listarBanco = daobancos.ObtenerBancos();
@@ -168,8 +169,8 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
         List<Proveedor> proveedores = new DAOProveedor().ObtenerProveedores();
         List<Banco> bancoslista = new DAOBanco().ObtenerBancos();
-            Map<Integer,Banco> mapaBancos = new HashMap<>();
-            for (Banco banco : bancoslista) {
+        Map<Integer, Banco> mapaBancos = new HashMap<>();
+        for (Banco banco : bancoslista) {
             mapaBancos.put(banco.getId_banco(), banco);
         }
 
@@ -187,7 +188,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 pr.getNombre_contacto(),
                 Integer.toString(pr.getTelefono()),
                 pr.getCorreo(),
-            //    Integer.toString(pr.getId_banco()),
+                //    Integer.toString(pr.getId_banco()),
                 formatoBanco,
                 Integer.toString(pr.getNumero_cuenta()),};
             modelo.addRow(renglon);
@@ -306,6 +307,11 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableProveedoresMouseClicked(evt);
+            }
+        });
         jTableProveedores.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTableProveedoresKeyReleased(evt);
@@ -865,7 +871,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 }
                 if (resultadoFallido > 0) {
                     JOptionPane.showMessageDialog(rootPane, resultadoFallido + "No se puedo actualizar el proveedor");
-                    
+
                 }
 
                 ProvedoresModificados.clear();
@@ -967,6 +973,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
                 TransacionesModificados.clear();
                 ObtenerHistoriales();
+                botonImprimir(daoTrans);
             } catch (SQLException ex) {
                 Logger.getLogger(JFrameInventario.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1001,16 +1008,15 @@ public class JFrameProveedor extends javax.swing.JFrame {
             int idProveedor = Integer.parseInt(idprovee);
             int idProducto = Integer.parseInt(idproduct);
             int Cantidad = Integer.parseInt(cantid);
-             // Formateador de fecha para mostrar de manera legible
-             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-              Date Fecha = formato.parse(fech);
-            
+            // Formateador de fecha para mostrar de manera legible
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date Fecha = formato.parse(fech);
 
-              Transacciones transaccion = new Transacciones(idProveedor, idProducto, Cantidad, Fecha, estado);
+            Transacciones transaccion = new Transacciones(idProveedor, idProducto, Cantidad, Fecha, estado);
             // Verificar si ya existe en la lista y actualizar
             boolean encontrado = false;
             for (Transacciones transs : TransacionesModificados) {
-                if (transs.getId_transacion()== idTransaccion) {
+                if (transs.getId_transacion() == idTransaccion) {
                     transs.setId_producto(idProducto);
                     transs.setCantidad(Cantidad);
                     transs.setFecha(Fecha);
@@ -1155,6 +1161,10 @@ public class JFrameProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel33MouseClicked
 
+    private void jTableProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProveedoresMouseClicked
+
+    }//GEN-LAST:event_jTableProveedoresMouseClicked
+
     private void fullscreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = screenSize.width;
@@ -1227,8 +1237,6 @@ public class JFrameProveedor extends javax.swing.JFrame {
         this.repaint();
 
     }
-
- 
 
     private void limpiar_campoPro() {
         jTextNombre.setText("");

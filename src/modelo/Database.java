@@ -22,7 +22,7 @@ public class Database {
      // hace llamada al matodo getinstance de la clase conexion
     Conexion conectar =Conexion.getInstance();
     
-    public List Listar(String procedimiento) throws SQLException{
+    public List<Map<String, Object>> Listar(String procedimiento) throws SQLException{
     ResultSet rs =null;
     //Arreglo de elementos en el que se almacenara los datos obtenidos de bd
     List resultado = new ArrayList();
