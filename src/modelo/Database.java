@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
 import java.sql.CallableStatement;
@@ -23,9 +19,9 @@ public class Database {
     Conexion conectar =Conexion.getInstance();
     
     public List<Map<String, Object>> Listar(String procedimiento) throws SQLException{
-    ResultSet rs =null;
+    ResultSet rs;
     //Arreglo de elementos en el que se almacenara los datos obtenidos de bd
-    List resultado = new ArrayList();
+    List <Map<String, Object>> resultado = new ArrayList<>();
     try{
         // llamada a procedimientos almacenado sin parametros
          CallableStatement st =conectar.Conectar().
@@ -41,12 +37,12 @@ public class Database {
     return resultado;
     }
     
-    private List OrganizarDatos(ResultSet rs){
-        List filas=new ArrayList(); //Arreglo de elementos
+    private List <Map<String,Object>> OrganizarDatos(ResultSet rs){
+        List <Map<String, Object>>filas=new ArrayList<>(); //Arreglo de elementos
         try{
         int numColumnas=rs.getMetaData().getColumnCount();
         while(rs.next()){ //recorre cada registro de la tabla
-            Map<String, Object> renglon=new HashMap();
+            Map<String, Object> renglon=new HashMap<>();
             for (int i = 1; i <=numColumnas; i++) {
                 //se obtiene nombre de campo en la bd
                 String nombreCampo=rs.getMetaData().getColumnName(i);

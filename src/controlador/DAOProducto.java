@@ -21,17 +21,16 @@ public class DAOProducto {
 
     //========Peticion de busqueda de producto a la base de datos============//
     public List <Producto> busquedaProducto(String parametroBusqueda) throws SQLException {
-        ResultSet rs = null;
-        List<Map> registros = null;
+        ResultSet rs;
+        List<Map<String, Object>> registros;
         List <Producto> productos = new ArrayList<>();
-
-        List resultado = new ArrayList();
+        List <Map<String, Object>> resultado;
 
         try {
             CallableStatement st = conectar.Conectar().
                     prepareCall("{CALL buscarProducto(?)}");
-
             st.setString(1, parametroBusqueda);
+            
             rs = st.executeQuery();
             resultado = OrganizarDatos(rs);
             registros = resultado;
@@ -57,8 +56,8 @@ public class DAOProducto {
     }
 
     //==============Metodo que organiza los datos obtenidos==================//
-    private List OrganizarDatos(ResultSet rs) {
-        List filas = new ArrayList();
+    private List<Map<String, Object>> OrganizarDatos(ResultSet rs) {
+        List<Map<String, Object>> filas = new ArrayList <>();
 
         try {
 
