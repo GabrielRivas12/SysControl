@@ -8,7 +8,6 @@ import modelo.ModoPago;
 import modelo.Producto;
 import modelo.Venta;
 import java.awt.HeadlessException;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -37,10 +36,8 @@ public class JFrameVenta extends javax.swing.JFrame {
     private ImageIcon imagen;
     private Icon icono;
 
-    private DefaultTableModel modeloTablaVenta;
-    private Object[] objetoVentaTabla = new Object[6];
+    private final DefaultTableModel modeloTablaVenta;
     private Double total = 0.0;
-    private int item = 0;
     private java.sql.Date fech;
     private int numfac = 0;
     private int cantidad = 0;
@@ -110,7 +107,7 @@ public class JFrameVenta extends javax.swing.JFrame {
     //================================================================================//
 
     //================================================================================//
-    public void llenarCombModoPago() throws SQLException {
+    private void llenarCombModoPago() throws SQLException {
 
         List<ModoPago> modoPago = new DAOModoPago().ObtenerDatos();
         for (int i = 0; i < modoPago.size(); i++) {
@@ -390,7 +387,7 @@ public class JFrameVenta extends javax.swing.JFrame {
         jTableProductosVenta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTableProductosVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object[][] {}, // Arreglo de datos vacío, sin filas
-            new String[] { "Items", "Código", "Producto", "Cantidad", "Precio", "Subtotal", "Descuento" } // Nombre de las columnas
+            new String[] { "Items", "Código", "Producto", "Cantidad", "Precio", "Subtotal" } // Nombre de las columnas
 
         ));
         jTableProductosVenta.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -646,22 +643,6 @@ public class JFrameVenta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro de la tabla");
         } else {
             try {
-                int id = Integer.parseInt((String) this.jTableBuscarProducto44.
-                        getValueAt(fila, 0).toString());
-
-                String nom = (String) this.jTableBuscarProducto44.getValueAt(fila, 1);
-
-                double pre = Double.parseDouble((String) this.jTableBuscarProducto44.
-                        getValueAt(fila, 2).toString());
-
-                int Exis = Integer.parseInt((String) this.jTableBuscarProducto44.
-                        getValueAt(fila, 3).toString());
-
-                // --------------- se ubican las cajas de texto lo datos capturados ----------//
-//                jTextIdProducto.setText("" + id);
-                //  jTextproducto.setText(nom);
-                //   jTextPrecio.setText("" + pre);
-                // jTextExistenciaProducto.setText("" + Exis);
                 jDialogProducto.dispose();
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(rootPane, "Ocurrio un ERROR" + e.getMessage());
@@ -711,9 +692,7 @@ public class JFrameVenta extends javax.swing.JFrame {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El efectivo ingresado no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (SQLException ex) {
-            Logger.getLogger(JFrameVenta.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JRException ex) {
+        } catch (SQLException | JRException ex) {
             Logger.getLogger(JFrameVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
         // TODO add your handling code here:
@@ -1208,12 +1187,12 @@ public class JFrameVenta extends javax.swing.JFrame {
     //=======================================================================================//
 
     public void guardarVenta() throws SQLException {
-        int numpago = 0, idcliente;
+        int numpago;
 
         numpago = jComboModoPago.getItemAt(jComboModoPago.getSelectedIndex())
                 .getNum_pago();
 
-        double pago = 0;
+        double pago;
         String efectivoTexto = JTextcantidadEfectivo.getText().trim();
         if (efectivoTexto.isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "El campo de efectivo no puede estar vacío.");
@@ -1263,23 +1242,6 @@ public class JFrameVenta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Error al guardar los detalles de la venta o actualizar existencias: " + e.getMessage());
         }
     }
-    //=======================================================================================//
-
-    private void mostrarImagen(JLabel lbl, String ruta) {
-        this.imagen = new ImageIcon(ruta);
-        this.icono = new ImageIcon(
-                this.imagen.getImage().getScaledInstance(
-                        lbl.getWidth(),
-                        lbl.getHeight(),
-                        Image.SCALE_DEFAULT));
-        lbl.setIcon(this.icono);
-        this.repaint();
-
-    }
-//=======================================================================================//
-
-     
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Home;
     private javax.swing.JLabel Imagen5a;

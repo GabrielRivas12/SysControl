@@ -16,7 +16,7 @@ import modelo.Database;
 public class DAOBanco {
      Conexion conectar = Conexion.getInstance();
       
-      public List ObtenerBancos() throws SQLException {
+      public List <Banco> ObtenerBancos() throws SQLException {
           //Nomnbre del procedimiento almacenado
           String proced = "listarBancos()";
           

@@ -1,13 +1,11 @@
 package vista;
 
-import java.awt.Image;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 import controlador.DAODetalle;
 import java.awt.Dimension;
@@ -497,17 +495,6 @@ public class JFrameSalida extends javax.swing.JFrame {
         }
     }
 
-    private void mostrarImagen(JLabel lbl, String ruta) {
-        this.imagen = new ImageIcon(ruta);
-        this.icono = new ImageIcon(
-                this.imagen.getImage().getScaledInstance(
-                        lbl.getWidth(),
-                        lbl.getHeight(),
-                        Image.SCALE_DEFAULT));
-        lbl.setIcon(this.icono);
-        this.repaint();
-
-    }
     
  
 

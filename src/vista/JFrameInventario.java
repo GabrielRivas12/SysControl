@@ -9,8 +9,6 @@ import modelo.Producto;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import controlador.DAOCategoria;
 import modelo.Categorias;
@@ -23,6 +21,7 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.*;
+
 /**
  *
  * @author gabriel rivas
@@ -31,35 +30,32 @@ public class JFrameInventario extends javax.swing.JFrame {
 
     public JFrameInventario() throws SQLException {
         initComponents();
-        
-         // Habilitar tooltips globalmente
-            ToolTipManager.sharedInstance().setEnabled(true);
-
-
-        
-            //======================FULLSCREEN===============================//
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            int screenWidth = screenSize.width;
-            int screenHeight = screenSize.height;
-               
-            // Configurar la ventana para que inicie en pantalla completa con bordes
-            setSize(screenWidth, screenHeight);
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
-            
-            // 3️⃣ Agregar un listener para ajustar los componentes cuando se redimensione
-            addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-        int newWidth = getWidth();
-        int newHeight = getHeight();
-        getContentPane().setPreferredSize(new Dimension(newWidth, newHeight));
-        getContentPane().revalidate();
-    }
-});
-            //==============================================================//
         ObtenerProductos();
         ObtenerCategoria();
         ObtenerExpiracion();
+        // Habilitar tooltips globalmente
+        ToolTipManager.sharedInstance().setEnabled(true);
+
+        //======================FULLSCREEN===============================//
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+
+        // Configurar la ventana para que inicie en pantalla completa con bordes
+        setSize(screenWidth, screenHeight);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        // 3️⃣ Agregar un listener para ajustar los componentes cuando se redimensione
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int newWidth = getWidth();
+                int newHeight = getHeight();
+                getContentPane().setPreferredSize(new Dimension(newWidth, newHeight));
+                getContentPane().revalidate();
+            }
+        });
+
         setTitle("SysControl");
         try {
             llenarCombCategoria();
@@ -70,7 +66,7 @@ public class JFrameInventario extends javax.swing.JFrame {
 
     }
 
-    public void llenarCombCategoria() throws SQLException {
+    private void llenarCombCategoria() throws SQLException {
 
         List<Categorias> categorias = new DAOCategoria().ObtenerDatos();
         for (int i = 0; i < categorias.size(); i++) {
@@ -82,12 +78,11 @@ public class JFrameInventario extends javax.swing.JFrame {
     }
 
     private void ObtenerProductos() throws SQLException {
-        
-        
+
         List<Producto> proodd = new DAOProducto().ObtenerProducto();
 
         DefaultTableModel modelo = new DefaultTableModel();
-        String[] columnas = {"ID Producto", "ID Categoria", "Producto", "Precio", "Existencia", "Iva", "Precio compra","Precio Descuento", "Descuento"};
+        String[] columnas = {"ID Producto", "ID Categoria", "Producto", "Precio", "Existencia", "Iva", "Precio compra", "Precio Descuento", "Descuento"};
 
         modelo.setColumnIdentifiers(columnas);
         for (Producto pr : proodd) {
@@ -164,7 +159,7 @@ public class JFrameInventario extends javax.swing.JFrame {
 
         DefaultTableModel modelo = new DefaultTableModel();
 
-        String[] columnas = {"ID Producto", "ID Categoria", "Producto", "Precio", "Existencia", "Iva", "Precio compra","Precio Descuento","Descuento"};
+        String[] columnas = {"ID Producto", "ID Categoria", "Producto", "Precio", "Existencia", "Iva", "Precio compra", "Precio Descuento", "Descuento"};
 
         modelo.setColumnIdentifiers(columnas);
         for (Producto pro : productos) {
@@ -184,7 +179,7 @@ public class JFrameInventario extends javax.swing.JFrame {
         }
         jTableInventario.setModel(modelo);
     }
-    
+
     private void buscarDatosProductosVencidos(String dato) throws SQLException {
         List<FechaExpiracion> vencido = new DAOFechaExpiracion().busquedaProductoVencido(dato);
 
@@ -192,17 +187,16 @@ public class JFrameInventario extends javax.swing.JFrame {
 
         String[] columnas = {"ID Expiracion", "ID Producto", "Producto", "Año / Mes / Dia", "Lote"};
 
-         // Formateador de fecha para mostrar de manera legible
+        // Formateador de fecha para mostrar de manera legible
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
 
-        
         modelo.setColumnIdentifiers(columnas);
         for (FechaExpiracion pro : vencido) {
 
             String fechaFormateada = (pro.getFechaExpiracion() != null)
                     ? formatoFecha.format(pro.getFechaExpiracion())
                     : "Fecha no disponible";
-            
+
             String[] renglon = {
                 Integer.toString(pro.getId_expiracion()),
                 Integer.toString(pro.getId_producto()),
@@ -214,7 +208,7 @@ public class JFrameInventario extends javax.swing.JFrame {
         }
         jTableExpiracion.setModel(modelo);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -877,7 +871,7 @@ public class JFrameInventario extends javax.swing.JFrame {
 
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
 
-        int categoria = 0;
+        int categoria;
 
         categoria = jComboCategoria.getItemAt(jComboCategoria.getSelectedIndex())
                 .getId_categoria();
@@ -885,7 +879,6 @@ public class JFrameInventario extends javax.swing.JFrame {
         String nom = jTextNombreProducto.getText();
         String precio = jTextPrecio.getText();
         String existen = jTextExistencia.getText();
-        
 
         if (categoria == 0 || nom.equals("") || precio.equals("") || existen.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Todos los campos son obligatorios");
@@ -969,7 +962,7 @@ public class JFrameInventario extends javax.swing.JFrame {
         try {
             //OBTIENE EL INDICE DEW LA FILA SELECCIONADA
             int fila = jTableInventario.getSelectedRow();
-            int id = 0;
+            int id;
             // Verifica si se seleccionó una fila
             if (fila == -1) {
                 JOptionPane.showMessageDialog(rootPane, "Seleccione un Producto para borrar");
@@ -1047,7 +1040,7 @@ public class JFrameInventario extends javax.swing.JFrame {
             DAOCategoria dao = new DAOCategoria();
 
             if (dao.Insertar(cat) == 0) {
-             //   JOptionPane.showMessageDialog(rootPane, "Registro agregado");
+                //   JOptionPane.showMessageDialog(rootPane, "Registro agregado");
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Error al agregar el registro");
             }
@@ -1115,7 +1108,7 @@ public class JFrameInventario extends javax.swing.JFrame {
         try {
             //OBTIENE EL INDICE DEW LA FILA SELECCIONADA
             int fila = jTableCategoria.getSelectedRow();
-            int id = 0;
+            int id;
             // Verifica si se seleccionó una fila
             if (fila == -1) {
                 JOptionPane.showMessageDialog(rootPane, "Seleccione una categoria para borrar");
@@ -1337,7 +1330,7 @@ public class JFrameInventario extends javax.swing.JFrame {
         try {
             //OBTIENE EL INDICE DEW LA FILA SELECCIONADA
             int fila = jTableExpiracion.getSelectedRow();
-            int id = 0;
+            int id;
             // Verifica si se seleccionó una fila
             if (fila == -1) {
                 JOptionPane.showMessageDialog(rootPane, "Seleccione un Producto para borrar");
@@ -1570,10 +1563,6 @@ public class JFrameInventario extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
-    
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Home;

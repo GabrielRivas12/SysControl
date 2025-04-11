@@ -14,7 +14,6 @@ import controlador.DAOBanco;
 import controlador.DAOTransaccion;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -24,16 +23,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellRenderer;
 import modelo.Transacciones;
 import net.sf.jasperreports.engine.JRException;
@@ -44,9 +38,7 @@ import net.sf.jasperreports.engine.JRException;
  */
 public class JFrameProveedor extends javax.swing.JFrame {
 
-    private ImageIcon imagen;
-    private Icon icono;
-    private DAOTransaccion daoTrans;  // Declaración
+    private final DAOTransaccion daoTrans;  // Declaración
 
     public JFrameProveedor() throws SQLException {
         this.daoTrans = new DAOTransaccion(); // Inicialización correcta
@@ -108,11 +100,11 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
     }
     
+
     private void llenarBanco() throws SQLException {
         DAOBanco daobancos = new DAOBanco();
         List<Banco> listarBanco = daobancos.ObtenerBancos();
 
-        JComboBox<Banco> comboBoxbanco = new JComboBox<>();
         for (Banco bancos : listarBanco) {
             jComboBoxBanco.addItem(bancos);
         }
@@ -243,7 +235,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableHistorial = new javax.swing.JTable();
         jTextNombre = new javax.swing.JTextField();
-        jComboBoxBanco = new javax.swing.JComboBox();
+        jComboBoxBanco = new javax.swing.JComboBox<>();
         jTextNombreContacto = new javax.swing.JTextField();
         jTextTelefono = new javax.swing.JTextField();
         jTextCorreo = new javax.swing.JTextField();
@@ -707,7 +699,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAñadirProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAñadirProveedorActionPerformed
-        int banco = 0;
+        int banco;
 
         String Tipo = (String) jComboTipo.getSelectedItem();
         String seleccionado = jComboBoxBanco.getSelectedItem().toString();
@@ -777,9 +769,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(rootPane, "Registro agregado");
                 }
 
-            } catch (ParseException ex) {
-                Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
+            } catch (SQLException | ParseException ex) {
                 Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
@@ -797,7 +787,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
     private void jButtonBorrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarProveedorActionPerformed
         try {
             int fila = jTableProveedores.getSelectedRow();
-            int id = 0;
+            int id;
 
             if (fila == -1) {
                 JOptionPane.showMessageDialog(rootPane, "Seleccione un Proveedor para borrar");
@@ -825,7 +815,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
     private void jButtonBorrarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarHistorialActionPerformed
         try {
             int fila = jTableHistorial.getSelectedRow();
-            int id = 0;
+            int id;
 
             if (fila == -1) {
                 JOptionPane.showMessageDialog(rootPane, "Seleccione una fila para borrar");
@@ -849,7 +839,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonBorrarHistorialActionPerformed
 
-    private List<Proveedor> ProvedoresModificados = new ArrayList<>();
+    private final List<Proveedor> ProvedoresModificados = new ArrayList<>();
 
     private void jButtonActualizarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarProveedorActionPerformed
         if (!ProvedoresModificados.isEmpty()) {
@@ -947,7 +937,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableProveedoresKeyReleased
 
-    private List<Transacciones> TransacionesModificados = new ArrayList<>();
+    private final List<Transacciones> TransacionesModificados = new ArrayList<>();
     private void jButtonActualizarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarHistorialActionPerformed
 
         if (!TransacionesModificados.isEmpty()) {
@@ -1037,12 +1027,9 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
         } catch (NumberFormatException e) {
             System.err.println("Error en conversión de valores numéricos: " + e.getMessage());
-        } catch (ParseException ex) {
+        } catch (ParseException | SQLException ex) {
             Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // TODO add your handling code here:
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTableHistorialKeyReleased
 
     private void SistemaventasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SistemaventasMouseClicked
@@ -1190,54 +1177,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrameProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrameProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrameProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrameProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new JFrameProveedor().setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
-
-    private void mostrarImagen(JLabel lbl, String ruta) {
-        this.imagen = new ImageIcon(ruta);
-        this.icono = new ImageIcon(
-                this.imagen.getImage().getScaledInstance(
-                        lbl.getWidth(),
-                        lbl.getHeight(),
-                        Image.SCALE_DEFAULT));
-        lbl.setIcon(this.icono);
-        this.repaint();
-
-    }
-
+    
     private void limpiar_campoPro() {
         jTextNombre.setText("");
         jTextNombreContacto.setText("");
@@ -1267,7 +1207,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAñadirProveedor;
     private javax.swing.JButton jButtonBorrarHistorial;
     private javax.swing.JButton jButtonBorrarProveedor;
-    private javax.swing.JComboBox jComboBoxBanco;
+    private javax.swing.JComboBox<Banco> jComboBoxBanco;
     private javax.swing.JComboBox<String> jComboEstado;
     private javax.swing.JComboBox<String> jComboTipo;
     private javax.swing.JLabel jLabel1;

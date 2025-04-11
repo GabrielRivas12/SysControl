@@ -27,7 +27,7 @@ public class DAODetalle {
     
     Conexion conectar = Conexion.getInstance();
     
-    public List ObtenerSalida()throws SQLException{
+    public List <Detalle> ObtenerSalida()throws SQLException{
         String Proced ="listaVenta";
         
          List<Map<String, Object>> registros = new Database().Listar(Proced);
@@ -45,12 +45,12 @@ public class DAODetalle {
     
     }
     
-     public List busquedaPorFecha(String parametroBusqueda) throws SQLException{
-        ResultSet rs = null;
-        List<Map> registros = null;
+     public List <Detalle> busquedaPorFecha(String parametroBusqueda) throws SQLException{
+        ResultSet rs;
+        List<Map<String, Object>> registros;
         List<Detalle> detalles = new ArrayList<>();
         
-        List resultado = new ArrayList();
+        List <Map<String, Object>> resultado;
         
         try{
             CallableStatement st = conectar.Conectar(). 
@@ -77,14 +77,14 @@ public class DAODetalle {
         return detalles;
     }
      
-     private List OrganizarDatos(ResultSet rs) {
-        List filas = new ArrayList(); 
+     private List <Map<String, Object>> OrganizarDatos(ResultSet rs) {
+        List <Map<String,Object>> filas = new ArrayList<>(); 
         
         try{
             
             int numColumnas = rs.getMetaData().getColumnCount();
             while(rs.next()){
-                Map<String, Object> renglon = new HashMap();
+                Map<String, Object> renglon = new HashMap<>();
                 
                 for (int i = 1; i <= numColumnas; i++) {
                     

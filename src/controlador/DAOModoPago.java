@@ -1,6 +1,5 @@
 package controlador;
 
-import modelo.Conexion; // Importar la clase para la conexión
 import java.sql.SQLException; // Importar SQLException
 import java.util.ArrayList; // Importar ArrayList
 import java.util.List; // Importar java.util.List
@@ -14,9 +13,7 @@ import modelo.ModoPago;
  */
 public class DAOModoPago {
     
-      Conexion conectar = Conexion.getInstance();
-      
-      public List ObtenerDatos() throws SQLException {
+      public List <ModoPago> ObtenerDatos() throws SQLException {
           //Nomnbre del procedimiento almacenado
           String proced = "listarModoPago()";
           

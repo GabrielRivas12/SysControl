@@ -1,7 +1,6 @@
 package controlador;
 
 import java.sql.CallableStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +27,7 @@ public class DAOTransaccion {
     Conexion conectar = Conexion.getInstance();
 
     //========Peticion que obtiene los datos de la tabla producto============//
-    public List ObtenerHistorial() throws SQLException {
+    public List <Transacciones> ObtenerHistorial() throws SQLException {
 
         String proced = "listarHistorial()"; //lista de productos
         List<Map<String, Object>> registros = new Database().Listar(proced);
@@ -47,30 +46,6 @@ public class DAOTransaccion {
 
         }
         return trans;
-    }
-
-    //==============Metodo que organiza los datos obtenidos==================//
-    private List OrganizarDatos(ResultSet rs) {
-        List filas = new ArrayList();
-
-        try {
-
-            int numColumnas = rs.getMetaData().getColumnCount();
-            while (rs.next()) {
-                Map<String, Object> renglon = new HashMap();
-
-                for (int i = 1; i <= numColumnas; i++) {
-
-                    String nombreCampo = rs.getMetaData().getColumnName(i);
-                    Object valor = rs.getObject(nombreCampo);
-                    renglon.put(nombreCampo, valor);
-                }
-                filas.add(renglon);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error" + e);
-        }
-        return filas;
     }
 
     public int Insertar(Transacciones trans) throws SQLException {

@@ -81,7 +81,7 @@ CREATE TABLE `detalle` (
   KEY `id_producto` (`id_producto`),
   CONSTRAINT `detalle_ibfk_1` FOREIGN KEY (`num_factura`) REFERENCES `factura` (`num_factura`),
   CONSTRAINT `detalle_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `detalle` (
 
 LOCK TABLES `detalle` WRITE;
 /*!40000 ALTER TABLE `detalle` DISABLE KEYS */;
-INSERT INTO `detalle` VALUES (3,100002,1001,6,16),(4,100003,1002,1,2),(5,100004,1002,1,2),(6,100005,1002,1,2),(7,100006,1001,1,16),(8,100007,1001,3,16);
+INSERT INTO `detalle` VALUES (3,100002,1001,6,16),(4,100003,1002,1,2),(5,100004,1002,1,2),(6,100005,1002,1,2),(7,100006,1001,1,16),(8,100007,1001,3,16),(9,100008,1011,1,33);
 /*!40000 ALTER TABLE `detalle` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -150,7 +150,7 @@ CREATE TABLE `factura` (
   PRIMARY KEY (`num_factura`),
   KEY `num_pago` (`num_pago`),
   CONSTRAINT `factura_ibfk_2` FOREIGN KEY (`num_pago`) REFERENCES `modo_pago` (`num_pago`)
-) ENGINE=InnoDB AUTO_INCREMENT=100008 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100009 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +159,7 @@ CREATE TABLE `factura` (
 
 LOCK TABLES `factura` WRITE;
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-INSERT INTO `factura` VALUES (100000,1,'2024-12-05',150,39),(100001,1,'2024-12-05',150,39),(100002,1,'2024-12-05',200,104),(100003,1,'2024-12-05',5,3),(100004,1,'2025-03-28',5,3),(100005,1,'2025-03-28',5,3),(100006,1,'2025-03-28',20,4),(100007,1,'2025-03-28',50,2);
+INSERT INTO `factura` VALUES (100000,1,'2024-12-05',150,39),(100001,1,'2024-12-05',150,39),(100002,1,'2024-12-05',200,104),(100003,1,'2024-12-05',5,3),(100004,1,'2025-03-28',5,3),(100005,1,'2025-03-28',5,3),(100006,1,'2025-03-28',20,4),(100007,1,'2025-03-28',50,2),(100008,1,'2025-04-11',40,7);
 /*!40000 ALTER TABLE `factura` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +178,7 @@ CREATE TABLE `fechaexpiracion` (
   PRIMARY KEY (`id_expiracion`),
   KEY `id_producto` (`id_producto`),
   CONSTRAINT `fechaexpiracion_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ CREATE TABLE `fechaexpiracion` (
 
 LOCK TABLES `fechaexpiracion` WRITE;
 /*!40000 ALTER TABLE `fechaexpiracion` DISABLE KEYS */;
-INSERT INTO `fechaexpiracion` VALUES (2,1002,'2024-12-05','JKLS12');
+INSERT INTO `fechaexpiracion` VALUES (2,1002,'2024-12-05','JKLS12'),(3,1012,'2025-01-04','LLDA');
 /*!40000 ALTER TABLE `fechaexpiracion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +211,7 @@ CREATE TABLE `historial_transacciones` (
   KEY `id_producto` (`id_producto`),
   CONSTRAINT `historial_transacciones_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`),
   CONSTRAINT `historial_transacciones_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +220,7 @@ CREATE TABLE `historial_transacciones` (
 
 LOCK TABLES `historial_transacciones` WRITE;
 /*!40000 ALTER TABLE `historial_transacciones` DISABLE KEYS */;
-INSERT INTO `historial_transacciones` VALUES (1,1,1001,44,616,'2025-03-15','pendiente'),(2,2,1002,5,300,'2025-03-16','pendiente'),(3,1,1001,11,154,'2025-03-17','pendiente'),(7,2,1002,20,40,'2025-03-25','Pendiente'),(9,5,1001,5,70,'2025-01-29','Minorista'),(10,5,1001,10,140,'2025-01-01','Minorista');
+INSERT INTO `historial_transacciones` VALUES (1,1,1001,44,616,'2025-03-15','pendiente'),(2,2,1002,5,300,'2025-03-16','pendiente'),(3,1,1001,11,154,'2025-03-17','pendiente'),(13,6,1001,10,140,'2025-01-07','Pendiente');
 /*!40000 ALTER TABLE `historial_transacciones` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -337,7 +337,7 @@ CREATE TABLE `producto` (
   KEY `id_proveedor` (`id_proveedor`),
   CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`),
   CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=1005 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1013 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,7 +346,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (1001,4,1,'Coca cola',16,16,2.4,14,0,0),(1002,3,1,'Alboroto',2,3,0.3,2,0,0),(1003,4,1,'FantaUva',60,7,9,40,54,10),(1004,4,1,'Fanta',49.5,10,7.425,90,39.6,20);
+INSERT INTO `producto` VALUES (1001,4,1,'Coca cola',16,16,2.4,14,0,0),(1002,3,1,'Alboroto',2,3,0.3,2,0,0),(1003,4,1,'FantaUva',60,7,9,40,54,10),(1004,4,1,'Fanta',49.5,10,7.425,90,39.6,20),(1005,8,NULL,'prueba',11,1,1.65,12,0,0),(1006,8,NULL,'prueba',11,1,1.65,12,0,0),(1008,4,NULL,'prueba2',12,1,1.8,9,10.8,10),(1009,4,NULL,'prueba3',55,5,8.25,12,0,0),(1010,4,NULL,'prueba4',22,3,3.3,12,0,0),(1011,8,NULL,'definitivo',33,20,4.95,23,0,0),(1012,1,NULL,'definitiva2',112,1,16.8,23,0,0);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -384,6 +384,48 @@ DELIMITER ;;
         -- Si hay descuento, se aplica el descuento y se almacena en preciodescuento
         SET NEW.preciodescuento = ROUND(NEW.precio * (1 - NEW.descuento / 100), 2);
     END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `InsertarDefaultDescuento` BEFORE INSERT ON `producto` FOR EACH ROW BEGIN
+    -- Si el valor es NULL, se asigna 0
+    IF NEW.descuento IS NULL THEN
+		SET NEW.descuento = 0;
+        end if;
+        
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `PrecioConDescuentoDefault` BEFORE INSERT ON `producto` FOR EACH ROW BEGIN
+    -- Si preciodescuento es vacio = 0
+    IF NEW.preciodescuento IS NULL THEN
+		SET NEW.preciodescuento = 0;
+		end if;
+    
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -451,7 +493,7 @@ CREATE TABLE `proveedores` (
   PRIMARY KEY (`id_proveedor`),
   KEY `id_banco` (`id_banco`),
   CONSTRAINT `proveedores_ibfk_1` FOREIGN KEY (`id_banco`) REFERENCES `banco` (`id_banco`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -460,7 +502,7 @@ CREATE TABLE `proveedores` (
 
 LOCK TABLES `proveedores` WRITE;
 /*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
-INSERT INTO `proveedores` VALUES (1,'yumies','mayorista','alfredo',88934512,'yumies@conctac.com',1,153546888),(2,'lacoste','mayotista','tupu',22555446,'lacoste@contac.com',1,454568877),(5,'coño','Exclusivo','Esta',646445,'@@@',1,45164141);
+INSERT INTO `proveedores` VALUES (1,'yumies','mayorista','alfredo',88934512,'yumies@conctac.com',1,153546888),(2,'Ardidas','mayorista','tupu',22555446,'@contac.com',4,454568877),(6,'chocobanano','Local','sencillo',154555,'@@@@',3,55545454),(7,'parmalac','Mayorista','estaban rodriguez',55454,'adasda@@@',3,51545454),(8,'elmasca','Minorista','nose',5454545,'@@@@',1,4454545);
 /*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1448,4 +1490,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-07 17:28:12
+-- Dump completed on 2025-04-11 12:59:56

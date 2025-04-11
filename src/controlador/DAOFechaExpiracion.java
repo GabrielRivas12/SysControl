@@ -21,7 +21,7 @@ public class DAOFechaExpiracion {
 
     Conexion conectar = Conexion.getInstance();
 
-    public List ObtenerExpiracion() throws SQLException {
+    public List <FechaExpiracion> ObtenerExpiracion() throws SQLException {
 
         String proced = "listarExpiracion()"; //lista de productos
         List<Map<String, Object>> registros = new Database().Listar(proced);
@@ -41,8 +41,8 @@ public class DAOFechaExpiracion {
 
     }
 
-    private List OrganizarDatos(ResultSet rs) {
-        List filas = new ArrayList();
+    private List <Map<String, Object>> OrganizarDatos(ResultSet rs) {
+        List <Map<String, Object>> filas = new ArrayList<>();
 
         try {
 
@@ -134,7 +134,7 @@ public class DAOFechaExpiracion {
     
    public List<FechaExpiracion> ObtenerExpiracionHoy() throws SQLException {
     List<FechaExpiracion> productosHoy = new ArrayList<>();
-
+    
     try {
         // Consulta para productos que expiran hoy
         CallableStatement st = conectar.Conectar().prepareCall("{CALL productosExpiranHoy()}");
@@ -160,12 +160,12 @@ public class DAOFechaExpiracion {
 
     return productosHoy;
 }
-    public List busquedaProductoVencido(String parametroBusqueda) throws SQLException {
-        ResultSet rs = null;
-        List<Map> registros = null;
+    public List <FechaExpiracion> busquedaProductoVencido(String parametroBusqueda) throws SQLException {
+        ResultSet rs;
+        List<Map<String, Object>> registros;
         List<FechaExpiracion> fech = new ArrayList<>();
 
-        List resultado = new ArrayList();
+        List <Map<String, Object>> resultado;
 
         try {
             CallableStatement st = conectar.Conectar().

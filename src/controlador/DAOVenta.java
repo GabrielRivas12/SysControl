@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
 import modelo.Conexion; // Importar la clase para la conexión
@@ -70,7 +66,7 @@ public class DAOVenta {
     
     public int obtenerUltimoNumFactura() throws SQLException{
         int numfac = 0;
-        ResultSet rs = null;
+        ResultSet rs;
         
         try{
             CallableStatement st = conectar.Conectar().
@@ -187,7 +183,7 @@ public class DAOVenta {
       
       //========Método que obtiene el total calculado del año============//
 public double ObtenerTotalCalculadoAño() throws SQLException {
-    ResultSet rs = null;
+    ResultSet rs ;
     double totalVendido = 0.0;
 
     try {

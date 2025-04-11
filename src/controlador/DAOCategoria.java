@@ -17,7 +17,7 @@ public class DAOCategoria {
 
     Conexion conectar = Conexion.getInstance();
 
-    public List ObtenerDatos() throws SQLException {
+    public List <Categorias> ObtenerDatos() throws SQLException {
 
         String proced = "listarCategoria()";
         List<Map<String, Object>> registros = new Database().Listar(proced);

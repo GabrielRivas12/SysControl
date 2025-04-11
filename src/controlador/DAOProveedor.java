@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
 import java.sql.CallableStatement;
@@ -24,7 +20,7 @@ public class DAOProveedor {
     Conexion conectar = Conexion.getInstance();
 
     //========Peticion que obtiene los datos de la tabla producto============//
-    public List ObtenerProveedores() throws SQLException {
+    public List <Proveedor> ObtenerProveedores() throws SQLException {
 
         String proced = "listarProveedores()"; //lista de productos
         List<Map<String, Object>> registros = new Database().Listar(proced);
@@ -47,11 +43,11 @@ public class DAOProveedor {
 
     //========Peticion de busqueda de producto a la base de datos============//
     public List busquedaProveedores(String parametroBusqueda) throws SQLException {
-        ResultSet rs = null;
-        List<Map> registros = null;
+        ResultSet rs;
+        List<Map <String, Object>> registros;
         List<Proveedor> proveedores = new ArrayList<>();
 
-        List resultado = new ArrayList();
+        List <Map<String, Object>> resultado;
 
         try {
             CallableStatement st = conectar.Conectar().
@@ -82,8 +78,8 @@ public class DAOProveedor {
     }
 
     //==============Metodo que organiza los datos obtenidos==================//
-    private List OrganizarDatos(ResultSet rs) {
-        List filas = new ArrayList();
+    private List <Map<String, Object>> OrganizarDatos(ResultSet rs) {
+        List <Map<String, Object>> filas = new ArrayList<>();
 
         try {
 
