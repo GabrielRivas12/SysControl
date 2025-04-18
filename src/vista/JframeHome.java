@@ -4,6 +4,7 @@ import controlador.DAOFechaExpiracion;
 import controlador.DAOProducto;
 import controlador.DAOVenta;
 import java.awt.AWTException;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.SystemTray;
@@ -13,15 +14,26 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import modelo.FechaExpiracion;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import net.sf.jasperreports.engine.JRException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
+import java.util.Map.Entry;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -29,10 +41,6 @@ import net.sf.jasperreports.engine.JRException;
  */
 public class JframeHome extends javax.swing.JFrame {
 
-    private ImageIcon imagen;
-    private Icon icono;
-
-    //==============================================================================//
     public JframeHome() {
         initComponents();
         totalvendido();
@@ -116,6 +124,7 @@ public class JframeHome extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(211, 217, 254));
@@ -503,6 +512,15 @@ public class JframeHome extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, -1, 30));
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exportar.png"))); // NOI18N
+        jButton4.setText("Exportar tablas");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 320, 150, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -634,7 +652,7 @@ public class JframeHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel33MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                DAOVenta daoventa = new DAOVenta();
+        DAOVenta daoventa = new DAOVenta();
         try {
             daoventa.gananaciasMesAño();
         } catch (JRException ex) {
@@ -645,7 +663,7 @@ public class JframeHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-           DAOVenta daoventa = new DAOVenta();
+        DAOVenta daoventa = new DAOVenta();
         try {
             daoventa.productosExistenciabaja();
         } catch (JRException ex) {
@@ -657,7 +675,7 @@ public class JframeHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+
         DAOVenta daoventa = new DAOVenta();
         try {
             daoventa.gananaciasDias();
@@ -667,6 +685,40 @@ public class JframeHome extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            // Crear una lista para almacenar las tablas
+            List<Entry<String, JTable>> tablas = new ArrayList<>();
+
+            // Crear la instancia de JFrameInventario y obtener la tabla de inventario
+            JFrameInventario _invent = new JFrameInventario();
+            _invent.ObtenerProductos(); // Cargar los datos de inventario (si aún no los cargaste)
+            tablas.add(new SimpleEntry<>("Inventario", _invent.getTablaInventario())); // Añadir la tabla de inventario a la lista
+
+            _invent.ObtenerCategoria();
+            tablas.add(new SimpleEntry<>("Categorias",_invent.getTableCategoria()));
+
+            _invent.ObtenerExpiracion(); // Cargar los datos de expiración
+            tablas.add(new SimpleEntry<>("Expiracion",_invent.getTableExpiracion()));
+
+            JFrameSalida _salida = new JFrameSalida();
+            _salida.ObtenerSalida();
+            tablas.add(new SimpleEntry<>("Salida",_salida.getTableSalida()));
+
+            JFrameProveedor _proveedor = new JFrameProveedor();
+            _proveedor.ObtenerProveedor();
+            tablas.add(new SimpleEntry<>("Proveedores",_proveedor.getTablaProveedores()));
+
+            _proveedor.ObtenerHistoriales();
+            tablas.add(new SimpleEntry<>("Historial de Pedidos",_proveedor.getTablaHistorialPedidos()));
+            // Llamar al método exportar pasando la lista de tablas
+            exportar(tablas); // Exportar todas las tablas a un archivo Excel
+
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     static private void notificacionProductosPorExpirar() throws AWTException {
         DAOFechaExpiracion dao = new DAOFechaExpiracion();
@@ -781,16 +833,78 @@ public class JframeHome extends javax.swing.JFrame {
         jLabelBienvenida.setText(saludo);
     }
 
-    private void mostrarImagen(JLabel lbl, String ruta) {
-        this.imagen = new ImageIcon(ruta);
-        this.icono = new ImageIcon(
-                this.imagen.getImage().getScaledInstance(
-                        lbl.getWidth(),
-                        lbl.getHeight(),
-                        Image.SCALE_DEFAULT));
-        lbl.setIcon(this.icono);
-        this.repaint();
+    public void exportar(List<Entry<String, JTable>> tablas) throws IOException {
+        // Configuración del JFileChooser para guardar archivo .xlsx
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo de Excel", "xlsx");
+        chooser.setFileFilter(filter);
+        chooser.setDialogTitle("Guardar archivo");
+        chooser.setAcceptAllFileFilterUsed(false);
 
+        // Verificar si se ha elegido una ubicación para guardar el archivo
+        if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            // Obtener la ruta del archivo seleccionado y agregar la extensión .xlsx si no está presente
+            String ruta = chooser.getSelectedFile().toString().concat(".xlsx");
+
+            try {
+                // Crear el archivo si no existe
+                File archivoXLSX = new File(ruta);
+                if (archivoXLSX.exists()) {
+                    archivoXLSX.delete(); // Eliminar si ya existe
+                }
+                archivoXLSX.createNewFile();
+
+                // Usar XSSFWorkbook para trabajar con archivos .xlsx
+                Workbook libro = new XSSFWorkbook();
+                FileOutputStream archivo = new FileOutputStream(archivoXLSX);
+
+                // Iterar a través de cada tabla en la lista
+                for (int tablaIndex = 0; tablaIndex < tablas.size(); tablaIndex++) {
+                    Entry<String, JTable> entry = tablas.get(tablaIndex);
+                    String nombreHoja = entry.getKey(); // nombre de la hoja
+                    JTable t = entry.getValue();        // tabla asociada
+
+                    // Crear una nueva hoja para cada tabla
+                    Sheet hoja = libro.createSheet(nombreHoja); // ✔ Nombre personalizado
+                    hoja.setDisplayGridlines(true);
+
+                    // Crear una nueva hoja para cada tabla
+                    // Agregar encabezados de columna
+                    Row filaCabecera = hoja.createRow(0); // La primera fila será para los encabezados
+                    for (int c = 0; c < t.getColumnCount(); c++) {
+                        Cell celda = filaCabecera.createCell(c);
+                        celda.setCellValue(t.getColumnName(c)); // Setear el nombre de cada columna
+                    }
+
+                    // Llenar el archivo con los datos de la tabla
+                    for (int f = 0; f < t.getRowCount(); f++) {
+                        Row fila = hoja.createRow(f + 1); // Las filas de datos comienzan después de la cabecera
+                        for (int c = 0; c < t.getColumnCount(); c++) {
+                            Cell celda = fila.createCell(c);
+                            Object value = t.getValueAt(f, c);
+
+                            // Comprobar el tipo de dato y asignarlo apropiadamente
+                            if (value instanceof Double) {
+                                celda.setCellValue((Double) value);
+                            } else if (value instanceof Float) {
+                                celda.setCellValue((Float) value);
+                            } else {
+                                celda.setCellValue(String.valueOf(value)); // Convertir cualquier otro tipo a String
+                            }
+                        }
+                    }
+                }
+
+                // Escribir los datos al archivo
+                libro.write(archivo);
+                archivo.close();
+
+                // Abrir el archivo una vez que se haya creado
+                Desktop.getDesktop().open(archivoXLSX);
+            } catch (IOException | NumberFormatException e) {
+                throw e; // Propagar la excepción si ocurre un error
+            }
+        }
     }
 
     public static void main(String args[]) {
@@ -815,13 +929,12 @@ public class JframeHome extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
-        java.awt.EventQueue.invokeLater(()-> {
+        java.awt.EventQueue.invokeLater(() -> {
             new JframeHome().setVisible(true);
-    try {
-        notificacionProductosPorExpirar();
-    } catch (AWTException ex) {
-        Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                notificacionProductosPorExpirar();
+            } catch (AWTException ex) {
+                Logger.getLogger(JframeHome.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -835,6 +948,7 @@ public class JframeHome extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
