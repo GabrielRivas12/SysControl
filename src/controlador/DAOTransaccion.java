@@ -89,31 +89,33 @@ public class DAOTransaccion {
         return 0;
     }
 
-    public int Actualizar(Transacciones transs) throws SQLException {
-        try {
-            CallableStatement st = conectar.Conectar().
-                    prepareCall("{CALL actualizarHistorial(?,?,?,?,?,?)}");
+   public int Actualizar(Transacciones transs) throws SQLException {
+    int filasAfectadas = 0;
+    try {
+        CallableStatement st = conectar.Conectar()
+            .prepareCall("{CALL actualizarHistorial(?,?,?,?,?,?)}");
 
-            st.setInt(1, transs.getId_transacion());
-            st.setInt(2, transs.getId_proveedor());
-            st.setInt(3, transs.getId_producto());
-            st.setInt(4, transs.getCantidad());
-            // Convertir java.util.Date a java.sql.Date si es necesario
-            java.sql.Date fechaSQL = new java.sql.Date(transs.getFecha().getTime());
-            st.setDate(5, fechaSQL);
+        st.setInt(1, transs.getId_transacion());
+        st.setInt(2, transs.getId_proveedor());
+        st.setInt(3, transs.getId_producto());
+        st.setInt(4, transs.getCantidad());
 
-            st.setString(6, transs.getEstado());
+        java.sql.Date fechaSQL = new java.sql.Date(transs.getFecha().getTime());
+        st.setDate(5, fechaSQL);
 
-            st.executeUpdate();
+        st.setString(6, transs.getEstado());
 
-        } catch (SQLException e) {
-            System.out.println(e + " Error al actualizar autor");
-            conectar.cerrarConexion();
-            return -1;
-        }
+        filasAfectadas = st.executeUpdate();
+
+    } catch (SQLException e) {
+        System.out.println(e + " Error al actualizar historial");
+        return -1;
+    } finally {
         conectar.cerrarConexion();
-        return 0;
     }
+    return filasAfectadas;
+}
+
 
     public void FacturaProvicional(int id_proveedor) throws JRException {
 

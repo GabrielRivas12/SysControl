@@ -300,11 +300,6 @@ public class JFrameProveedor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTableProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableProveedoresMouseClicked(evt);
-            }
-        });
         jTableProveedores.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTableProveedoresKeyReleased(evt);
@@ -947,7 +942,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
                 for (Transacciones trans : TransacionesModificados) {
                     int resultado = dao.Actualizar(trans);
-                    if (resultado == 0) {
+                    if (resultado > 0) {
                         resultadoExitoso++;
                     } else {
                         resultadoFallido++;
@@ -1001,7 +996,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date Fecha = formato.parse(fech);
 
-            Transacciones transaccion = new Transacciones(idProveedor, idProducto, Cantidad, Fecha, estado);
+            Transacciones transaccion = new Transacciones(idTransaccion,idProveedor, idProducto, Cantidad, Fecha, estado);
             // Verificar si ya existe en la lista y actualizar
             boolean encontrado = false;
             for (Transacciones transs : TransacionesModificados) {
@@ -1017,7 +1012,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
             if (!encontrado) {
                 TransacionesModificados.add(transaccion);
-                ObtenerHistoriales();
+                //ObtenerHistoriales();
                 botonImprimir(daoTrans);
 
             } else {
@@ -1026,7 +1021,7 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
         } catch (NumberFormatException e) {
             System.err.println("Error en conversión de valores numéricos: " + e.getMessage());
-        } catch (ParseException | SQLException ex) {
+        } catch (ParseException ex) {
             Logger.getLogger(JFrameProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jTableHistorialKeyReleased
@@ -1146,10 +1141,6 @@ public class JFrameProveedor extends javax.swing.JFrame {
         dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel33MouseClicked
-
-    private void jTableProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProveedoresMouseClicked
-
-    }//GEN-LAST:event_jTableProveedoresMouseClicked
 
     private void fullscreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

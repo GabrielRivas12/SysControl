@@ -11,10 +11,6 @@ import java.util.Map;
 import modelo.Database;
 import modelo.Producto;
 
-/**
- *
- * @author gabriel rivas
- */
 public class DAOProducto {
 
     Conexion conectar = Conexion.getInstance();
@@ -194,6 +190,9 @@ public class DAOProducto {
 
     return totalCantidad;
 }
+    
+    
+    // a poco si
 
     public double obtenerInventarioTotal() throws SQLException {
     double inventarioTotal = 0;
